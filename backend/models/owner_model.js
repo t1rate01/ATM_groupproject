@@ -20,7 +20,7 @@ const owner = {
   update: function(id, owner, callback) {
     return db.query(
       'update owner set fname=?,lname=?, address=?, phonenumber=?, email=? where id_owner=?',
-      [owner.fname, owner.lname, owner.address,phonenumber,email,id],
+      [owner.fname, owner.lname, owner.address,owner.phonenumber,owner.email,id],
       callback
     );
   }

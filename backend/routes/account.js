@@ -1,4 +1,5 @@
 const express = require('express');
+const { response } = require('../app');
 const router = express.Router();
 const card = require('../models/account_model');
 
@@ -37,6 +38,18 @@ function(request, response) {
     }
   });
 });
+
+/*router.post('/get_balance?',
+function(request,response) {
+card.get_balance(request.body, function(err,dbResult){
+    if(err) {
+        response.json(err);
+    } else {
+        response.json(request.body);
+        response.json(dbResult);
+    }
+});
+});*/
 
 
 router.delete('/:id', 

@@ -19,10 +19,17 @@ const account = {
   },
   update: function(id, account, callback) {
     return db.query(
-      'update account set accountnumber=?,password=?, credit=?, id_owner=? where id_account=?',
-      [account.accountnumber, account.password, account.credit,account.id_owner,id],
+      'update account set accountnumber=?,password=?, credit=?, id_card=? where id_account=?',
+      [account.accountnumber, account.password, account.credit,account.id_card,id],
       callback
     );
-  }
+  },
+    // LISÄYRITYKSET
+   /*get_balance: function(id_card,callback) {
+    //    return db.query('call get_balance(?)', [account.id_card], callback );       
+    }*/
+
+
+
 };
 module.exports = account;

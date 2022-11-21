@@ -28,6 +28,10 @@ const card = {
       [card.cardnumber, hash, card.credit,card.id_owner,id],
       callback);
     });
+  },
+  checkPassword: function(cardnumber,callback){
+    return db.query('select password from card where cardnumber=?'
+    ,[cardnumber],callback);
   }
 };
 module.exports = card;
