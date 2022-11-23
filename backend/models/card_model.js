@@ -18,6 +18,7 @@ const card = {
       callback);
     }); // tieto lähtee arrayna
   },
+
   delete: function(id, callback) {
     return db.query('delete from card where id_card=?', [id], callback);
   },

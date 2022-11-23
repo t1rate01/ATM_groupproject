@@ -25,9 +25,9 @@ const account = {
     );
   },
     // LISÄYRITYKSET
-   /*get_balance: function(id_card,callback) {
-    //    return db.query('call get_balance(?)', [account.id_card], callback );       
-    }*/
+   getBalance: function(id_card,callback) {
+       return db.query('call get_balance(?)', [id_card], callback );       
+    }
 
 
 

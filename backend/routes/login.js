@@ -12,9 +12,15 @@ router.post('/',
       const password = request.body.password;
         card.checkPassword(cardnumber, function(dbError, dbResult) {
           if(dbError){
+            if (dbError.errno = -4078){   // JOS DATABASE NURIN
+              console.log("database offline");
+              response.send(false);
+            }
+            else
             response.json(dbError.errno);
           }
-          else{
+          else
+          {
             if (dbResult.length > 0) {
               bcrypt.compare(password,dbResult[0].password, function(err,compareResult) {
                 if(compareResult) {
@@ -23,14 +29,14 @@ router.post('/',
                   response.send(token);
                 }
                 else {
-                    console.log("wrong password");
+                    console.log("Wrong password");
                     response.send(false);
                 }			
               }
               );
             }
             else{
-              console.log("card does not exists");
+              console.log("Card does not exists");
               response.send(false);
             }
           }
@@ -39,7 +45,7 @@ router.post('/',
       }
     else{
 
-      console.log("cardnumber or password missing");
+      console.log("Cardnumber or password missing");
       response.send(false);
     }
   }

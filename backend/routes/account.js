@@ -39,7 +39,7 @@ function(request, response) {
   });
 });
 
-/*router.post('/get_balance?',
+router.post('/getbalance',
 function(request,response) {
 card.get_balance(request.body, function(err,dbResult){
     if(err) {
@@ -49,7 +49,7 @@ card.get_balance(request.body, function(err,dbResult){
         response.json(dbResult);
     }
 });
-});*/
+});
 
 
 router.delete('/:id', 
