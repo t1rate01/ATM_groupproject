@@ -56,9 +56,10 @@ void MainWindow::loginSlot(QNetworkReply *reply)
     if (response_data.length() > 20 && response_data != "false"){
     token = response_data;
         qDebug()<<"Token on " + token;
-        ui->label_loginresponse->setText("Login succesful, opening menu...");
-        mainmenu = new MainMenu;
-        mainmenu->show();
+        ui->label_loginresponse->setText("Login succesful, opening menu...");          
+         // mainmenu = new MainMenu(token, cardnumber); kokeilu tehdä sessionin construktorissa
+        sessio = new session(token, cardnumber);
+        // mainmenu->show();
         //this->close();  ehkä myös delete this, mieti toteutusta
         reply->deleteLater();
         loginManager->deleteLater();

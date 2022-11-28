@@ -11,14 +11,19 @@ CONFIG += c++17
 SOURCES += \
     main.cpp \
     mainmenu.cpp \
-    mainwindow.cpp
+    mainmenucredit.cpp \
+    mainwindow.cpp \
+    session.cpp
 
 HEADERS += \
     mainmenu.h \
-    mainwindow.h
+    mainmenucredit.h \
+    mainwindow.h \
+    session.h
 
 FORMS += \
     mainmenu.ui \
+    mainmenucredit.ui \
     mainwindow.ui
 
 # Default rules for deployment.

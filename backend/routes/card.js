@@ -2,7 +2,7 @@ const express = require('express');
 const router = express.Router();
 const card = require('../models/card_model');
 
-router.get('/',
+/* router.get('/',
     function (request, response) {
         card.getAll(function (err, dbResult) {
             if (err) {
@@ -13,14 +13,14 @@ router.get('/',
             }
         })
     });
-
+*/
 router.get('/:id?',
     function (request, response) {
-        card.getById(request.params.id, function (err, dbResult) {
+        card.getById(request.id, function (err, dbResult) {
             if (err) {
                 response.json(err);
             } else {
-                response.json(dbResult[0]);
+                response.json(dbResult);
             }
         })
     });
@@ -35,6 +35,28 @@ function(request, response) {
     } else {
       response.json(request.body);
       response.json(dbResult.rows);
+    }
+  });
+});
+
+router.post('/cid', 
+function(request, response) {
+  card.getcardid(request.body, function(err, dbResult) {
+    if (err) {
+      response.json(err);
+    } else {
+      response.json(dbResult[0]);
+    }
+  });
+});
+
+router.post('/cred', 
+function(request, response) {
+  card.getcardcred(request.body, function(err, dbResult) {
+    if (err) {
+      response.json(err);
+    } else {
+      response.json(dbResult[0]);
     }
   });
 });

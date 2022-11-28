@@ -1,11 +1,12 @@
 const db = require('../database');
 const bcrypt = require('bcryptjs');
+const { response } = require('express');
 
 const saltRounds=10;
 
 const card = {
   getById: function(id, callback) {
-    return db.query('select * from card where id_card=?', [id], callback);
+    return db.query('select id_card from card where cardnumber=?', [id], callback);
   },
   getAll: function(callback) {
     return db.query('select * from card', callback);
@@ -19,6 +20,21 @@ const card = {
     }); // tieto lähtee arrayna
   },
 
+  getcardid: function(get_cardid, callback) {
+    return db.query(
+      'select id_card from card where cardnumber = ?',
+      [get_cardid.cardnumber],
+      callback);
+    },
+  
+    getcardcred: function(get_cardcred, callback) {
+      return db.query(
+        'select credit from card where id_card = ?',
+        [get_cardcred.id_card],
+        callback);
+      },
+    
+  
   delete: function(id, callback) {
     return db.query('delete from card where id_card=?', [id], callback);
   },
@@ -34,5 +50,5 @@ const card = {
     return db.query('select password from card where cardnumber=?'
     ,[cardnumber],callback);
   }
-};
+}; 
 module.exports = card;

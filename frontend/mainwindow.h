@@ -6,6 +6,7 @@
 #include <QtNetwork>
 #include <QNetworkAccessManager>
 #include <QJsonDocument>
+#include "session.h"
 
 
 QT_BEGIN_NAMESPACE
@@ -23,7 +24,8 @@ public:
     QString cardnumber;
     QString password;
     QString token;
-
+signals:
+    void reset30timer();
 
 private slots:
     void on_btn_login_clicked();
@@ -31,8 +33,9 @@ private slots:
 
 private:
     Ui::MainWindow *ui;
+    session * sessio;
     MainMenu * mainmenu;
-    QNetworkAccessManager * loginManager;   // loginia varten
+    QNetworkAccessManager * loginManager;// loginia varten
     QNetworkReply *reply;
     QByteArray response_data;
 
