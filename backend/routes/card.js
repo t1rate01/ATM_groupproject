@@ -2,7 +2,7 @@ const express = require('express');
 const router = express.Router();
 const card = require('../models/card_model');
 
-/* router.get('/',
+ router.get('/',
     function (request, response) {
         card.getAll(function (err, dbResult) {
             if (err) {
@@ -13,7 +13,7 @@ const card = require('../models/card_model');
             }
         })
     });
-*/
+
 router.get('/:id?',
     function (request, response) {
         card.getById(request.id, function (err, dbResult) {

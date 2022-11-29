@@ -24,12 +24,5 @@ const account = {
       callback
     );
   },
-    // LISÄYRITYKSET
-   getBalance: function(id_card,callback) {
-       return db.query('call get_balance(?)', [id_card], callback );       
-    }
-
-
-
 };
 module.exports = account;
