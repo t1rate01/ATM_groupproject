@@ -1,5 +1,5 @@
 QT       += core gui
-
+QT       +=network
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
 CONFIG += c++17
@@ -10,12 +10,20 @@ CONFIG += c++17
 
 SOURCES += \
     main.cpp \
-    mainwindow.cpp
+    mainmenu.cpp \
+    mainmenucredit.cpp \
+    mainwindow.cpp \
+    session.cpp
 
 HEADERS += \
-    mainwindow.h
+    mainmenu.h \
+    mainmenucredit.h \
+    mainwindow.h \
+    session.h
 
 FORMS += \
+    mainmenu.ui \
+    mainmenucredit.ui \
     mainwindow.ui
 
 # Default rules for deployment.
