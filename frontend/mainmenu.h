@@ -2,9 +2,7 @@
 #define MAINMENU_H
 
 #include <QMainWindow>
-#include <QtNetwork>
-#include <QNetworkAccessManager>
-#include <QJsonDocument>
+#include <QTimer>
 
 
 namespace Ui {
@@ -18,20 +16,21 @@ class MainMenu : public QMainWindow
 public:
     explicit MainMenu(QString, int, QWidget *parent = nullptr);
     ~MainMenu();
-    void getData();
-    int id_card;
+    int sessiontime10=0;
+    void resetAllTimers();
+
 signals:
     void resettimer30();
+    void timer10isup();
 
 private:
+    QTimer * timer10;
     Ui::MainMenu *ui;
+    int id_card;
     QString token;
-    QNetworkAccessManager *postManager;
-    QNetworkReply *reply;
-    QByteArray response_data;
+
 private slots:
-    void getDataSlot (QNetworkReply *reply);
-    void on_btn_Cardidhaku_clicked();
+    void timer10slot();
 };
 
 #endif // MAINMENU_H

@@ -55,7 +55,6 @@ void session::getandcheckcredit()                   // HAKEE KORTIN CREDITIN ID_
 }
 
 
-
 void session::getCardIDSlot(QNetworkReply *reply)   // ID CARDIN SAANTI SESSIONILLE
 {                                                   // KUTSUU CREDIT TIEDONHAKUFUNKTION
      cardresponse_data=reply->readAll();
@@ -90,11 +89,14 @@ void session::getCreditSlot(QNetworkReply *reply)   // VASTAANOTTAA CREDITIN, P�
         getcreditmanager->deleteLater();
 
         if(credit == 0){
+            currentwindow=1;
             mainmenu = new MainMenu(sessiontoken, id_card);  // DEBIT MAIN MENU, VÄLITÄ NÄMÄ SAMAT TIEDOT AINA KUN AVAAT IKKUNAOLION
             mainmenu->show();
-            connect(mainmenu,SIGNAL(resettimer30()),this,SLOT(resettimerslot()));  // IKKUNA AVATESSA AINA SIGNAALI KYTKETTÄVÄ
+            connect(mainmenu,SIGNAL(resettimer30()),this,SLOT(resettimerslot()));
+            connect(mainmenu,SIGNAL(timer10isup()),this,SLOT(backtomainmenu()));// IKKUNA AVATESSA AINA SIGNAALI KYTKETTÄVÄ
         }                                                                          // MUUTA VAIN "mainmenu" OMAN IKKUNAN NIMEKSI ja nimeä signaalisi "resettimer30()"
         if(credit > 0) {
+            currentwindow=2;
             creditmenu = new mainmenucredit(sessiontoken, id_card);  // DEBIT CREDIT MAIN MENU, VÄLITÄ NÄMÄ SAMAT TIEDOT AINA KUN AVAAT IKKUNAOLION
             creditmenu->show();
 
@@ -102,6 +104,8 @@ void session::getCreditSlot(QNetworkReply *reply)   // VASTAANOTTAA CREDITIN, P�
         }
 
 }
+
+
 
 void session::resettimerslot()    // Signaalislot johon valikko-olioiden resetsignaali kytketään
 {
@@ -113,8 +117,36 @@ void session::timer30slot()     // perus QTimerin signaalislotti
     timer30++;
     qDebug()<<"Session time is " << timer30;
 
+    if(timer30>30){
+        switch(currentwindow){
+        case 0:
+            delete this;
+            break;
+        case 1:
+            delete mainmenu;
+            delete this;// mainmenu 1 timeout
+            break;
+        case 2:
+            delete creditmenu;
+            delete this;// mainmenu credit 2 timeout
+            break;
+        }
+    }
+
     // TEE ERILLINEN FUNKTIO JOLLA 30SEK TÄYTTYESSÄ/LOGOUT PAINAESSA ISTUNTO TIETOINEEN NOLLATAAN
     // KUTSU TÄSSÄ 30SEK TÄYTYTTYÄ KYSEISTÄ FUNKTIOTA
+}
+
+void session::backtomainmenu()
+{
+    if(credit==0){
+        mainmenu->show();
+        currentwindow=1;
+    }
+    if(credit>0){
+        creditmenu->show();
+        currentwindow=2;
+    }
 }
 
 

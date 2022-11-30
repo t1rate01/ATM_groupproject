@@ -25,6 +25,8 @@ private:
     int id_card;                    // TALLENNA olion omiin muuttujiin ja käytä CRUD toiminnoissa
     int credit;
     int timer30=0;
+    int currentwindow=0;
+
 
     // -------NETWORK POINTTERIT JA MUUTTUJAT
     QNetworkAccessManager * getsessioncardmanager; // sessionin id card hakua varten
@@ -51,7 +53,7 @@ private slots:
     // -----TIMER SLOTIT-----
     void resettimerslot();   // Tähän kytketään muilta ikkunoilta signaali jolla 30sek ajastin nollataan aina nappia painettaessa
     void timer30slot();       // Normaali QTimerin slotti 30sek timeria varten, tänne toiminto kun 30sek tulee täyteen
-
+    void backtomainmenu();  // KUN IKKUNAN 10 SEK AJASTIN LOPPUU
 
 
 

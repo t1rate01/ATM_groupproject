@@ -8,8 +8,8 @@ MainMenu::MainMenu(QString t,int idcard, QWidget *parent) :
 {
     ui->setupUi(this);
     token = t;
-    ui->label_tokendemo->setText(token);  // POISTA MYÖHEMMIN TÄSSÄ NÄKYY TOKEN
     id_card = idcard;
+    timer10 = new QTimer;
 }
 
 MainMenu::~MainMenu()
@@ -17,13 +17,18 @@ MainMenu::~MainMenu()
     delete ui;
 }
 
-void MainMenu::getDataSlot(QNetworkReply *reply)
+void MainMenu::resetAllTimers()
 {
-
+    sessiontime10=0;
+    emit resettimer30();
 }
 
-void MainMenu::on_btn_Cardidhaku_clicked()
+void MainMenu::timer10slot()
 {
- emit resettimer30();
+    sessiontime10++;
+    if (sessiontime10){
+        emit timer10isup();
+    }
 }
+
 
