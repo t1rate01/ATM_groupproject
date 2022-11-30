@@ -53,6 +53,9 @@ void session::getandcheckcredit()                   // HAKEE KORTIN CREDITIN ID_
 
 void session::logout()
 {
+    session30timer->stop();
+    timer30=0;
+    sessiontoken="";
     loginwindow->cleartextsanddata();
     loginwindow->show();
     id_card=0;
@@ -104,13 +107,17 @@ void session::getCreditSlot(QNetworkReply *reply)   // VASTAANOTTAA CREDITIN, P�
         if(credit == 0){
             mainmenu = new MainMenu(sessiontoken, id_card);  // DEBIT MAIN MENU, VÄLITÄ NÄMÄ SAMAT TIEDOT AINA KUN AVAAT IKKUNAOLION
             mainmenu->show();
+            connect(mainmenu,SIGNAL(logout()),this,SLOT(logoutslot()));
             connect(mainmenu,SIGNAL(nextwindow(int)),this,SLOT(nextWindowSlot(int)));
             connect(mainmenu,SIGNAL(resettimer30()),this,SLOT(resettimerslot()));
-            connect(mainmenu,SIGNAL(timer10isup()),this,SLOT(backtomainmenu()));// IKKUNA AVATESSA AINA SIGNAALI KYTKETTÄVÄ
+            // IKKUNA AVATESSA AINA SIGNAALI KYTKETTÄVÄ
         }                                                                          // MUUTA VAIN "mainmenu" OMAN IKKUNAN NIMEKSI ja nimeä signaalisi "resettimer30()"
         if(credit > 0) {
             creditmenu = new MainMenuCredit(sessiontoken, id_card);  // DEBIT CREDIT MAIN MENU, VÄLITÄ NÄMÄ SAMAT TIEDOT AINA KUN AVAAT IKKUNAOLION
             creditmenu->show();
+            connect(creditmenu,SIGNAL(logout()),this,SLOT(logoutslot()));
+            connect(creditmenu,SIGNAL(nextwindow(int)),this,SLOT(nextWindowSlot(int)));
+            connect(creditmenu,SIGNAL(resettimer30()),this,SLOT(resettimerslot()));
 
             // TÄNNE TULEE SAMAT IKKUNANAVAUS KYTKENN*T JA VÄLITYKSET
         }
@@ -124,7 +131,13 @@ void session::loginsuccesfulSlot(QString cn, QString t)
     getidcard();
 }
 
-void session::nextWindowSlot(int i)
+void session::logoutslot()
+{
+
+    logout();
+}
+
+void session::nextWindowSlot(int i)   // MUISTA KYTKEÄ SIGNAALIT BACKTOMAINMENU
 {
  switch(i){
  case 1:
@@ -133,6 +146,7 @@ void session::nextWindowSlot(int i)
  case 2:
      transactions=new Transactions(sessiontoken,id_card);
      connect(transactions,SIGNAL(backtomainmenu()),this,SLOT(backtomainmenu()));
+     connect(transactions,SIGNAL(resettimer30()),this,SLOT(resettimerslot()));
      transactions->show();
      break;
 
@@ -150,12 +164,16 @@ void session::timer30slot()     // perus QTimerin signaalislotti
 {
     timer30++;
     qDebug()<<"Session time is " << timer30;
+    if(credit==0){
+        mainmenu->updateTimeUi(timer30);
+    }
+    if(credit>0){
+        creditmenu->updateTimeUi(timer30);
+    }
 
-    if(timer30>15){
+    if(timer30>29){
             logout();
-            session30timer->stop();
-            timer30=0;
-            sessiontoken="";
+
             qDebug()<< "sessiontoken on nyt " + sessiontoken;
     }
 

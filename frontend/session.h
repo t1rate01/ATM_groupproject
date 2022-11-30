@@ -10,7 +10,6 @@
 #include "mainmenu.h"
 #include "mainmenucredit.h"
 #include "mainwindow.h"
-#include "demowindow.h"
 #include "transactions.h"
 
 
@@ -41,7 +40,6 @@ private:
     MainMenu * mainmenu;
     MainMenuCredit * creditmenu;
     MainWindow * loginwindow;
-    demowindow * demo;
     Transactions * transactions;
 
     // -------AJASTIMET--------------
@@ -53,10 +51,11 @@ private slots:
     void getCreditSlot (QNetworkReply *reply);  // SAA credit tiedon ja LUO OIKEAN MENU OLION (Debit tai Debit/credit)
 
     void loginsuccesfulSlot(QString,QString);
-  // TÄNNE SLOTTIFUNKTIO AINA JOKA IKKUNALLE, KUN MAINMENUSTA VALITAAN ESIM DEBIT NOSTO
-    // TÄÄLLÄ ON "opendebitmenu()" TYYPPINEN SLOTTI JOHON MAINMENU VÄLITTÄÄ SEN SIGNAALIN
-    void nextWindowSlot(int);
-    // JA SLOTISSA ON FUNKTIO JOLLA KYSEISEN MENUN KONSTRUKTORI KUTSUTAAN
+    void logoutslot();  // mainmenujen logoutsignaalille
+
+
+    void nextWindowSlot(int);  // SISÄLTÄÄ SWITCH CASEN JOSTA MAINMENU AUKOO SEURAAVAA IKKUNAA, PÄÄTÄ IKKUNALLE UNIIKKI NRO JÄRJESTYKSESSÄ
+    // JA SLOTISSA ON FUNKTIO JOLLA KYSEISEN MENUN KONSTRUKTORI KUTSUTAAN JA CONNECTIT TEHDÄÄN
 
     // -----TIMER SLOTIT-----
     void resettimerslot();   // Tähän kytketään muilta ikkunoilta signaali jolla 30sek ajastin nollataan aina nappia painettaessa

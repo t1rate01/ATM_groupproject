@@ -21,7 +21,8 @@ Transactions::~Transactions()
 
 void Transactions::on_btn_Back_clicked()
 {
-emit backtomainmenu();
+    emit resettimer30();
+    emit backtomainmenu();
     this->close();
 }
 
@@ -71,7 +72,7 @@ void Transactions::logsSlots(QNetworkReply *reply)
 void Transactions::timer10Slot()
 {
     time10++;
-    if (time10>10){
+    if (time10>9){
         timer10sek->stop();
         emit backtomainmenu();
         this->close();

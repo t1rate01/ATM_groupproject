@@ -30,6 +30,7 @@ private slots:
 
 signals:
     void backtomainmenu();
+    void resettimer30();
 
 private:
     void getTransactions();
