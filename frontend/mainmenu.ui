@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>800</width>
-    <height>600</height>
+    <width>626</width>
+    <height>517</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -17,8 +17,8 @@
    <widget class="QLabel" name="label_menu">
     <property name="geometry">
      <rect>
-      <x>200</x>
-      <y>30</y>
+      <x>130</x>
+      <y>80</y>
       <width>351</width>
       <height>51</height>
      </rect>
@@ -30,8 +30,8 @@
    <widget class="QPushButton" name="btn_debit_withdraw">
     <property name="geometry">
      <rect>
-      <x>90</x>
-      <y>110</y>
+      <x>80</x>
+      <y>150</y>
       <width>211</width>
       <height>71</height>
      </rect>
@@ -40,11 +40,11 @@
      <string>Debit Withdraw</string>
     </property>
    </widget>
-   <widget class="QPushButton" name="btn_debit_withdraw_2">
+   <widget class="QPushButton" name="btn_debit_balance">
     <property name="geometry">
      <rect>
-      <x>90</x>
-      <y>200</y>
+      <x>80</x>
+      <y>230</y>
       <width>211</width>
       <height>71</height>
      </rect>
@@ -53,11 +53,11 @@
      <string>Debit Balance</string>
     </property>
    </widget>
-   <widget class="QPushButton" name="btn_debit_withdraw_3">
+   <widget class="QPushButton" name="btn_logs">
     <property name="geometry">
      <rect>
-      <x>90</x>
-      <y>290</y>
+      <x>310</x>
+      <y>230</y>
       <width>211</width>
       <height>71</height>
      </rect>
@@ -66,13 +66,65 @@
      <string>Logs</string>
     </property>
    </widget>
+   <widget class="QPushButton" name="btn_debit_settings">
+    <property name="geometry">
+     <rect>
+      <x>190</x>
+      <y>320</y>
+      <width>211</width>
+      <height>71</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Settings</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="label_greeting">
+    <property name="geometry">
+     <rect>
+      <x>140</x>
+      <y>20</y>
+      <width>351</width>
+      <height>51</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Ownername</string>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="btn_debit_deposit">
+    <property name="geometry">
+     <rect>
+      <x>310</x>
+      <y>150</y>
+      <width>211</width>
+      <height>71</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Debit Deposit</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="label_sessiontime">
+    <property name="geometry">
+     <rect>
+      <x>190</x>
+      <y>400</y>
+      <width>351</width>
+      <height>51</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Session time: </string>
+    </property>
+   </widget>
   </widget>
   <widget class="QMenuBar" name="menubar">
    <property name="geometry">
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>800</width>
+     <width>626</width>
      <height>21</height>
     </rect>
    </property>

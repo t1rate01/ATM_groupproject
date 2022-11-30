@@ -2,7 +2,7 @@
 #define MAINMENU_H
 
 #include <QMainWindow>
-#include <QTimer>
+
 
 
 namespace Ui {
@@ -16,22 +16,23 @@ class MainMenu : public QMainWindow
 public:
     explicit MainMenu(QString, int, QWidget *parent = nullptr);
     ~MainMenu();
-    int sessiontime10=0;
+
     void resetAllTimers();
     void cleardata();
 
 signals:
     void resettimer30();
     void timer10isup();
+    void nextwindow(int);
 
 private:
-    QTimer * timer10;
     Ui::MainMenu *ui;
     int id_card;
     QString token;
 
 private slots:
-    void timer10slot();
+    void on_btn_debit_withdraw_clicked();
+    void on_btn_logs_clicked();
 };
 
 #endif // MAINMENU_H

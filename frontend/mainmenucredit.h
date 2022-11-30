@@ -3,24 +3,34 @@
 
 #include <QMainWindow>
 
-
 namespace Ui {
-class mainmenucredit;
+class MainMenuCredit;
 }
 
-class mainmenucredit : public QMainWindow
+class MainMenuCredit : public QMainWindow
 {
     Q_OBJECT
 
 public:
-    explicit mainmenucredit(QString, int, QWidget *parent = nullptr);
-    ~mainmenucredit();
+    explicit MainMenuCredit(QString,int,QWidget *parent = nullptr);
+    ~MainMenuCredit();
+    void resetAllTimers();
     void cleardata();
 
+signals:
+    void resettimer30();
+    void timer10isup();
+    void nextwindow(int);
+
 private:
-    Ui::mainmenucredit *ui;
-    QString token;
+    Ui::MainMenuCredit *ui;
     int id_card;
+    QString token;
+
+private slots:
+    void on_btn_debit_withdraw_clicked();
+
+
 };
 
 #endif // MAINMENUCREDIT_H

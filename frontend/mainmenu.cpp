@@ -9,7 +9,6 @@ MainMenu::MainMenu(QString t,int idcard, QWidget *parent) :
     ui->setupUi(this);
     token = t;
     id_card = idcard;
-    timer10 = new QTimer;
 }
 
 MainMenu::~MainMenu()
@@ -19,7 +18,6 @@ MainMenu::~MainMenu()
 
 void MainMenu::resetAllTimers()
 {
-    sessiontime10=0;
     emit resettimer30();
 }
 
@@ -27,16 +25,20 @@ void MainMenu::cleardata()
 {
     id_card = 0;
     token = "";
-    timer10->stop();
-    sessiontime10=0;
 }
 
-void MainMenu::timer10slot()
+void MainMenu::on_btn_debit_withdraw_clicked()
 {
-    sessiontime10++;
-    if (sessiontime10){
-        emit timer10isup();
-    }
+    resetAllTimers();
+    emit nextwindow(1);
+    this->hide();
 }
 
+
+void MainMenu::on_btn_logs_clicked()
+{
+    resetAllTimers();
+    emit nextwindow(2);
+    this->hide();
+}
 

@@ -10,6 +10,8 @@
 #include "mainmenu.h"
 #include "mainmenucredit.h"
 #include "mainwindow.h"
+#include "demowindow.h"
+#include "transactions.h"
 
 
 class session : public QObject
@@ -37,8 +39,10 @@ private:
     QNetworkReply *reply;                   // sama reply toiminut tähänmennessä eri toimintojen välillä
    // -------IKKUNOITTEN POINTTERIT-------------
     MainMenu * mainmenu;
-    mainmenucredit * creditmenu;
+    MainMenuCredit * creditmenu;
     MainWindow * loginwindow;
+    demowindow * demo;
+    Transactions * transactions;
 
     // -------AJASTIMET--------------
     QTimer * session30timer;
@@ -51,6 +55,7 @@ private slots:
     void loginsuccesfulSlot(QString,QString);
   // TÄNNE SLOTTIFUNKTIO AINA JOKA IKKUNALLE, KUN MAINMENUSTA VALITAAN ESIM DEBIT NOSTO
     // TÄÄLLÄ ON "opendebitmenu()" TYYPPINEN SLOTTI JOHON MAINMENU VÄLITTÄÄ SEN SIGNAALIN
+    void nextWindowSlot(int);
     // JA SLOTISSA ON FUNKTIO JOLLA KYSEISEN MENUN KONSTRUKTORI KUTSUTAAN
 
     // -----TIMER SLOTIT-----

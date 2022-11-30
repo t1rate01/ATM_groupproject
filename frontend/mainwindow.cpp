@@ -35,13 +35,11 @@ void MainWindow::on_btn_login_clicked()
     qDebug()<<cardnumber + " " + password;
     if(cardnumber.length()<3){
         ui->label_loginresponse->setText("Please enter a valid cardnumber");
-        ui->lineEdit_cardnum->clear();
-        ui->lineEdit_password->clear();
+        cleartextsanddata();
     }
     else if (password.length()<1){
         ui->label_loginresponse->setText("Please enter a valid password");
-        ui->lineEdit_cardnum->clear();
-        ui->lineEdit_password->clear();
+        cleartextsanddata();
     }
     else {
 

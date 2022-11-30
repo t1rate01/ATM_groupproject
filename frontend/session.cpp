@@ -104,11 +104,12 @@ void session::getCreditSlot(QNetworkReply *reply)   // VASTAANOTTAA CREDITIN, P�
         if(credit == 0){
             mainmenu = new MainMenu(sessiontoken, id_card);  // DEBIT MAIN MENU, VÄLITÄ NÄMÄ SAMAT TIEDOT AINA KUN AVAAT IKKUNAOLION
             mainmenu->show();
+            connect(mainmenu,SIGNAL(nextwindow(int)),this,SLOT(nextWindowSlot(int)));
             connect(mainmenu,SIGNAL(resettimer30()),this,SLOT(resettimerslot()));
             connect(mainmenu,SIGNAL(timer10isup()),this,SLOT(backtomainmenu()));// IKKUNA AVATESSA AINA SIGNAALI KYTKETTÄVÄ
         }                                                                          // MUUTA VAIN "mainmenu" OMAN IKKUNAN NIMEKSI ja nimeä signaalisi "resettimer30()"
         if(credit > 0) {
-            creditmenu = new mainmenucredit(sessiontoken, id_card);  // DEBIT CREDIT MAIN MENU, VÄLITÄ NÄMÄ SAMAT TIEDOT AINA KUN AVAAT IKKUNAOLION
+            creditmenu = new MainMenuCredit(sessiontoken, id_card);  // DEBIT CREDIT MAIN MENU, VÄLITÄ NÄMÄ SAMAT TIEDOT AINA KUN AVAAT IKKUNAOLION
             creditmenu->show();
 
             // TÄNNE TULEE SAMAT IKKUNANAVAUS KYTKENN*T JA VÄLITYKSET
@@ -121,6 +122,21 @@ void session::loginsuccesfulSlot(QString cn, QString t)
     sessioncardnumber=cn;
     sessiontoken=t;
     getidcard();
+}
+
+void session::nextWindowSlot(int i)
+{
+ switch(i){
+ case 1:
+     demo=new demowindow;
+     demo->show();// debitikkunaauki
+     break;
+ case 2:
+     transactions=new Transactions(sessiontoken,id_card);
+     transactions->show();
+     break;
+
+}
 }
 
 
