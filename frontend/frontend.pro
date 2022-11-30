@@ -9,7 +9,6 @@ CONFIG += c++17
 #DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
 
 SOURCES += \
-    demowindow.cpp \
     main.cpp \
     mainmenu.cpp \
     mainmenucredit.cpp \
@@ -18,7 +17,6 @@ SOURCES += \
     transactions.cpp
 
 HEADERS += \
-    demowindow.h \
     mainmenu.h \
     mainmenucredit.h \
     mainwindow.h \
@@ -26,7 +24,6 @@ HEADERS += \
     transactions.h
 
 FORMS += \
-    demowindow.ui \
     mainmenu.ui \
     mainmenucredit.ui \
     mainwindow.ui \

@@ -5,6 +5,7 @@
 #include <QtNetwork>
 #include <QNetworkAccessManager>
 #include <QJsonDocument>
+#include <QTimer>
 
 namespace Ui {
 class Transactions;
@@ -25,13 +26,20 @@ private slots:
 
     void logsSlots(QNetworkReply *reply);
 
+    void timer10Slot();
+
+signals:
+    void backtomainmenu();
+
 private:
     void getTransactions();
     void setTransactionsView();
+    QTimer * timer10sek = new QTimer;
 
     Ui::Transactions *ui;
     QString token;
     int id_card;
+    int time10=0;
 
     QNetworkAccessManager *logsManager;
     QNetworkReply *reply;

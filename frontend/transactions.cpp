@@ -6,10 +6,11 @@ Transactions::Transactions(QString givenToken, int idcard, QWidget *parent) :
     QDialog(parent),
     ui(new Ui::Transactions)
 {
+    connect(timer10sek,SIGNAL(timeout()),this,SLOT(timer10Slot()));
+    timer10sek->start(1000);
     ui->setupUi(this);
     token = givenToken;
     id_card = idcard;
-    qDebug()<<id_card;
     getTransactions();
 }
 
@@ -20,7 +21,8 @@ Transactions::~Transactions()
 
 void Transactions::on_btn_Back_clicked()
 {
-
+emit backtomainmenu();
+    this->close();
 }
 
 
@@ -33,7 +35,7 @@ void Transactions::getTransactions()
 {
     QString wb = token;  //Haetaan saatu webToken
     QByteArray bearerToken = "Bearer "+wb.toUtf8();  //Tungetaan token qbytearrayhin
-    QString site_url = "localhost:3000/logs/" + QString::number(id_card);  //määritetään oikea id
+    QString site_url = "http://localhost:3000/logs/" + QString::number(id_card);  //määritetään oikea id
     QNetworkRequest request((site_url)); //määritetään requestiin urli
     request.setRawHeader(QByteArray("Authorization"), (bearerToken)); //asetetaan requestin Authorization headeri tokeniksi
 
@@ -64,6 +66,16 @@ void Transactions::logsSlots(QNetworkReply *reply)
     qDebug()<<response_data;
     qDebug()<<logs;
     reply->deleteLater();
+}
+
+void Transactions::timer10Slot()
+{
+    time10++;
+    if (time10>10){
+        timer10sek->stop();
+        emit backtomainmenu();
+        this->close();
+    }
 }
 
 void Transactions::setTransactionsView()

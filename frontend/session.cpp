@@ -128,11 +128,11 @@ void session::nextWindowSlot(int i)
 {
  switch(i){
  case 1:
-     demo=new demowindow;
-     demo->show();// debitikkunaauki
+    // debitikkunaauki
      break;
  case 2:
      transactions=new Transactions(sessiontoken,id_card);
+     connect(transactions,SIGNAL(backtomainmenu()),this,SLOT(backtomainmenu()));
      transactions->show();
      break;
 
