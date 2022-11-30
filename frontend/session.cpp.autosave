@@ -7,15 +7,15 @@ session::session()    // KONSTRUKTORI
  loginwindow = new MainWindow;
  loginwindow->show();
  connect(loginwindow,SIGNAL(login(QString,QString)),this,SLOT(loginsuccesfulSlot(QString,QString)));
-
+ session30timer=new QTimer;
 }
 
 void session::getidcard()                   // HAKEE ID_CARDIN CARDNUMBERIN PERUSTEELLA,
 {                                         // VASTAUS TULEE SLOTTIIN getCardIDSlot()
     // TIMERI 30SEK
-   session30timer=new QTimer;
+   
    session30timer->start(1000);  // NORMI 30SEK TIMERI JA KYTKENTÄ
-   connect(session30timer,SIGNAL(timeout()), this, SLOT(timer30slot()));
+   
   // TIMERI END
 
     QString site_url="http://localhost:3000/card/cid";

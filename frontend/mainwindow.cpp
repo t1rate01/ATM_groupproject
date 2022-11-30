@@ -16,6 +16,16 @@ MainWindow::~MainWindow()
     delete ui;
 }
 
+void MainWindow::cleartextsanddata()
+{
+ ui->lineEdit_cardnum->clear();
+ ui->lineEdit_password->clear();
+ui->label_loginresponse->setText(" ");
+cardnumber="";
+password="";
+token="";
+}
+
 
 void MainWindow::on_btn_login_clicked()
 {
@@ -58,11 +68,13 @@ void MainWindow::loginSlot(QNetworkReply *reply)
         qDebug()<<"Token on " + token;
         ui->label_loginresponse->setText("Login succesful, opening menu...");          
          // mainmenu = new MainMenu(token, cardnumber); kokeilu tehdä sessionin construktorissa
-        sessio = new session(token, cardnumber);
+       // sessio = new session(token, cardnumber);  ----------------------------------------------------------------------------------------
         // mainmenu->show();
         //this->close();  ehkä myös delete this, mieti toteutusta
+        emit login(cardnumber,token);
         reply->deleteLater();
         loginManager->deleteLater();
+        this->hide();
     }
     else {
         qDebug()<< response_data;
