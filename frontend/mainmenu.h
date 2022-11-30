@@ -18,6 +18,7 @@ public:
     ~MainMenu();
     int sessiontime10=0;
     void resetAllTimers();
+    void cleardata();
 
 signals:
     void resettimer30();

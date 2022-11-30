@@ -23,6 +23,14 @@ void MainMenu::resetAllTimers()
     emit resettimer30();
 }
 
+void MainMenu::cleardata()
+{
+    id_card = 0;
+    token = "";
+    timer10->stop();
+    sessiontime10=0;
+}
+
 void MainMenu::timer10slot()
 {
     sessiontime10++;

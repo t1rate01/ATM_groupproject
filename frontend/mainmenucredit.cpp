@@ -14,3 +14,9 @@ mainmenucredit::~mainmenucredit()
 {
     delete ui;
 }
+
+void mainmenucredit::cleardata()
+{
+ id_card=0;
+ token="";
+}

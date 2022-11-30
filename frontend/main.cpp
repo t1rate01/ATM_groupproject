@@ -10,5 +10,6 @@ int main(int argc, char *argv[])
     //w.show();
     session* sessio;
     sessio = new session;
+
     return a.exec();
 }

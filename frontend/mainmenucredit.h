@@ -15,6 +15,7 @@ class mainmenucredit : public QMainWindow
 public:
     explicit mainmenucredit(QString, int, QWidget *parent = nullptr);
     ~mainmenucredit();
+    void cleardata();
 
 private:
     Ui::mainmenucredit *ui;

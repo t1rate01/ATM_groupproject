@@ -7,17 +7,13 @@ session::session()    // KONSTRUKTORI
  loginwindow = new MainWindow;
  loginwindow->show();
  connect(loginwindow,SIGNAL(login(QString,QString)),this,SLOT(loginsuccesfulSlot(QString,QString)));
-
+ session30timer=new QTimer;
+ connect(session30timer,SIGNAL(timeout()), this, SLOT(timer30slot()));
 }
 
 void session::getidcard()                   // HAKEE ID_CARDIN CARDNUMBERIN PERUSTEELLA,
 {                                         // VASTAUS TULEE SLOTTIIN getCardIDSlot()
-    // TIMERI 30SEK
-   session30timer=new QTimer;
-   session30timer->start(1000);  // NORMI 30SEK TIMERI JA KYTKENTÄ
-   connect(session30timer,SIGNAL(timeout()), this, SLOT(timer30slot()));
-  // TIMERI END
-
+   session30timer->start(1000);
     QString site_url="http://localhost:3000/card/cid";
     QNetworkRequest request((site_url));
     //WEBTOKEN ALKU
@@ -59,15 +55,16 @@ void session::logout()
 {
     loginwindow->cleartextsanddata();
     loginwindow->show();
-    credit=0;
     id_card=0;
     if (credit==0){
+        mainmenu->cleardata();
         mainmenu->close();
     }
     if (credit > 0){
+        creditmenu->cleardata();
         creditmenu->close();
     }
-
+    credit=0;
 }
 
 
@@ -138,7 +135,7 @@ void session::timer30slot()     // perus QTimerin signaalislotti
     timer30++;
     qDebug()<<"Session time is " << timer30;
 
-    if(timer30>5){
+    if(timer30>15){
             logout();
             session30timer->stop();
             timer30=0;
