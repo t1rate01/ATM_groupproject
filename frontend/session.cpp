@@ -2,21 +2,18 @@
 #include <QDebug>
 #include <QObject>
 
-session::session(QString token, QString cardnumber)    // KONSTRUKTORI
+session::session()    // KONSTRUKTORI
 {
- sessiontoken=token;                            //TALLENTAA ITSELLEEN LOGINISTA (MAINWINDOW) SAADUT TOKEN JA CARDNUMBER
- sessioncardnumber=cardnumber;
- qDebug()<< "sessionin token on " + sessiontoken;
- getidcard();                   // KUTSUU FUNKTION JOSSA ID_CARD HAKU
-
- // TIMERI 30SEK
-session30timer=new QTimer;
-session30timer->start(1000);  // NORMI 30SEK TIMERI JA KYTKENTÄ
-connect(session30timer,SIGNAL(timeout()), this, SLOT(timer30slot()));
+ loginwindow = new MainWindow;
+ loginwindow->show();
+ connect(loginwindow,SIGNAL(login(QString,QString)),this,SLOT(loginsuccesfulSlot(QString,QString)));
+ session30timer=new QTimer;
+ connect(session30timer,SIGNAL(timeout()), this, SLOT(timer30slot()));
 }
 
 void session::getidcard()                   // HAKEE ID_CARDIN CARDNUMBERIN PERUSTEELLA,
-{                                           // VASTAUS TULEE SLOTTIIN getCardIDSlot()
+{                                         // VASTAUS TULEE SLOTTIIN getCardIDSlot()
+   session30timer->start(1000);
     QString site_url="http://localhost:3000/card/cid";
     QNetworkRequest request((site_url));
     //WEBTOKEN ALKU
@@ -54,6 +51,21 @@ void session::getandcheckcredit()                   // HAKEE KORTIN CREDITIN ID_
     reply = getcreditmanager->post(request, QJsonDocument(jsonObj).toJson());
 }
 
+void session::logout()
+{
+    loginwindow->cleartextsanddata();
+    loginwindow->show();
+    id_card=0;
+    if (credit==0){
+        mainmenu->cleardata();
+        mainmenu->close();
+    }
+    if (credit > 0){
+        creditmenu->cleardata();
+        creditmenu->close();
+    }
+    credit=0;
+}
 
 
 void session::getCardIDSlot(QNetworkReply *reply)   // ID CARDIN SAANTI SESSIONILLE
@@ -92,16 +104,42 @@ void session::getCreditSlot(QNetworkReply *reply)   // VASTAANOTTAA CREDITIN, P�
         if(credit == 0){
             mainmenu = new MainMenu(sessiontoken, id_card);  // DEBIT MAIN MENU, VÄLITÄ NÄMÄ SAMAT TIEDOT AINA KUN AVAAT IKKUNAOLION
             mainmenu->show();
-            connect(mainmenu,SIGNAL(resettimer30()),this,SLOT(resettimerslot()));  // IKKUNA AVATESSA AINA SIGNAALI KYTKETTÄVÄ
+            connect(mainmenu,SIGNAL(nextwindow(int)),this,SLOT(nextWindowSlot(int)));
+            connect(mainmenu,SIGNAL(resettimer30()),this,SLOT(resettimerslot()));
+            connect(mainmenu,SIGNAL(timer10isup()),this,SLOT(backtomainmenu()));// IKKUNA AVATESSA AINA SIGNAALI KYTKETTÄVÄ
         }                                                                          // MUUTA VAIN "mainmenu" OMAN IKKUNAN NIMEKSI ja nimeä signaalisi "resettimer30()"
         if(credit > 0) {
-            creditmenu = new mainmenucredit(sessiontoken, id_card);  // DEBIT CREDIT MAIN MENU, VÄLITÄ NÄMÄ SAMAT TIEDOT AINA KUN AVAAT IKKUNAOLION
+            creditmenu = new MainMenuCredit(sessiontoken, id_card);  // DEBIT CREDIT MAIN MENU, VÄLITÄ NÄMÄ SAMAT TIEDOT AINA KUN AVAAT IKKUNAOLION
             creditmenu->show();
 
             // TÄNNE TULEE SAMAT IKKUNANAVAUS KYTKENN*T JA VÄLITYKSET
         }
 
 }
+
+void session::loginsuccesfulSlot(QString cn, QString t)
+{
+    sessioncardnumber=cn;
+    sessiontoken=t;
+    getidcard();
+}
+
+void session::nextWindowSlot(int i)
+{
+ switch(i){
+ case 1:
+    // debitikkunaauki
+     break;
+ case 2:
+     transactions=new Transactions(sessiontoken,id_card);
+     connect(transactions,SIGNAL(backtomainmenu()),this,SLOT(backtomainmenu()));
+     transactions->show();
+     break;
+
+}
+}
+
+
 
 void session::resettimerslot()    // Signaalislot johon valikko-olioiden resetsignaali kytketään
 {
@@ -113,8 +151,26 @@ void session::timer30slot()     // perus QTimerin signaalislotti
     timer30++;
     qDebug()<<"Session time is " << timer30;
 
+    if(timer30>15){
+            logout();
+            session30timer->stop();
+            timer30=0;
+            sessiontoken="";
+            qDebug()<< "sessiontoken on nyt " + sessiontoken;
+    }
+
     // TEE ERILLINEN FUNKTIO JOLLA 30SEK TÄYTTYESSÄ/LOGOUT PAINAESSA ISTUNTO TIETOINEEN NOLLATAAN
     // KUTSU TÄSSÄ 30SEK TÄYTYTTYÄ KYSEISTÄ FUNKTIOTA
+}
+
+void session::backtomainmenu()   // 10 sek päättymisen signaalislotti, avaa cred perusteella oikean mainmenun
+{
+    if(credit==0){
+        mainmenu->show();
+    }
+    if(credit>0){
+        creditmenu->show();
+    }
 }
 
 

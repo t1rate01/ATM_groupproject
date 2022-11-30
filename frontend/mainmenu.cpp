@@ -8,7 +8,6 @@ MainMenu::MainMenu(QString t,int idcard, QWidget *parent) :
 {
     ui->setupUi(this);
     token = t;
-    ui->label_tokendemo->setText(token);  // POISTA MYÖHEMMIN TÄSSÄ NÄKYY TOKEN
     id_card = idcard;
 }
 
@@ -17,13 +16,29 @@ MainMenu::~MainMenu()
     delete ui;
 }
 
-void MainMenu::getDataSlot(QNetworkReply *reply)
+void MainMenu::resetAllTimers()
 {
-
+    emit resettimer30();
 }
 
-void MainMenu::on_btn_Cardidhaku_clicked()
+void MainMenu::cleardata()
 {
- emit resettimer30();
+    id_card = 0;
+    token = "";
+}
+
+void MainMenu::on_btn_debit_withdraw_clicked()
+{
+    resetAllTimers();
+    emit nextwindow(1);
+    this->hide();
+}
+
+
+void MainMenu::on_btn_logs_clicked()
+{
+    resetAllTimers();
+    emit nextwindow(2);
+    this->hide();
 }
 
