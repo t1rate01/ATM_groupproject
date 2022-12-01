@@ -23,7 +23,8 @@ public:
     ~session();// TÄMÄ OLIO SAA LOGINWINDOWILTA (MAINWINDOW)
     void getidcard();               // QSTRING TOKENIN JA QSTRING CARDNUMBERIN
     void getandcheckcredit();       // HAKEE NIILLÄ VÄLITTÖMÄSTI ID_CARD JA CREDIT TIEDOT
-
+    void createWindows();  // Luo kaikki mainmenun jälkeiset ikkunat, laita tänne "ikkunannimi" = new "ikkunasi"
+    void deleteWindows(); // Poistaa kaikki em. ikkunat, laita tänne delete "ikkunannimi"
 private:
     QString sessiontoken;           // MÄÄRITÄ jokainen ikkuna olio ottamaan vastaan QString ja int
     QString sessioncardnumber;      // VÄLITÄ aina luodessa sessiontoken ja id_card

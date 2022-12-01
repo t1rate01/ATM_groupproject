@@ -3,6 +3,7 @@
 #include <QDebug>
 
 
+
 Transactions::Transactions(QString givenToken, int idcard, QWidget *parent) :
     QDialog(parent),
     ui(new Ui::Transactions)
@@ -19,6 +20,7 @@ Transactions::~Transactions()
 {
     delete ui;
 }
+
 
 void Transactions::on_btn_Back_clicked()
 {

@@ -57,6 +57,20 @@ void session::getandcheckcredit()                   // HAKEE KORTIN CREDITIN ID_
     reply = getcreditmanager->post(request, QJsonDocument(jsonObj).toJson());
 }
 
+void session::createWindows()    // LISÄÄ TÄNNE IKKUNASI CONSTUCTORIN KUTSU
+{
+    transactions = new Transactions(sessiontoken,id_card);
+    saving = new savings(sessiontoken,id_card);
+    debitwindow = new DebitWindow(sessiontoken,id_card);
+}
+
+void session::deleteWindows()
+{
+    delete transactions;           // LISÄÄ TÄNNE IKKUNASI DESTRUCTORIN KUTSU
+    delete saving;
+    delete debitwindow;
+}
+
 void session::logout()
 {
     session30timer->stop();
@@ -65,13 +79,16 @@ void session::logout()
     loginwindow->cleartextsanddata();
     loginwindow->show();
     id_card=0;
+    deleteWindows();
     if (credit==0){
         mainmenu->cleardata();
         mainmenu->close();
+        delete mainmenu;
     }
     if (credit > 0){
         creditmenu->cleardata();
         creditmenu->close();
+        delete creditmenu;
     }
 
     credit=0;
@@ -92,7 +109,7 @@ void session::getCardIDSlot(QNetworkReply *reply)   // ID CARDIN SAANTI SESSIONI
 
 
          getsessioncardmanager->deleteLater();   // POISTA KERTAKÄYTTÖ ACCESS OLIO (?)
-
+            createWindows();// <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
          getandcheckcredit();   // KUTSU HETI UUTTA POST FUNKTIOTA CREDITIN SAAMISEKSI
 }
 
@@ -150,18 +167,18 @@ void session::nextWindowSlot(int i)   // MUISTA KYTKEÄ SIGNAALIT BACKTOMAINMENU
 {                                      // Rakenna oliosi konstruktori niin että se ottaa Qstring sessiontoken ja int id_card
  switch(i){
  case 1:
-    debitwindow = new DebitWindow(sessiontoken,id_card);
+    //debitwindow = new DebitWindow(sessiontoken,id_card);
     // LISÄÄ SIGNAALIT JA KYTKE SAMAAN SLOTTIIN KUIN CASE 2 ja 3 mallina
     debitwindow->show();
      break;
  case 2:
-     transactions=new Transactions(sessiontoken,id_card);
+     //transactions=new Transactions(sessiontoken,id_card);
      connect(transactions,SIGNAL(backtomainmenu()),this,SLOT(backtomainmenu()));
-     connect(transactions,SIGNAL(resettimer30()),this,SLOT(resettimerslot()));
+     connect(transactions,SIGNAL(resetTimer30()),this,SLOT(resettimerslot()));
      transactions->show();
      break;
  case 3:
-     saving = new savings(sessiontoken,id_card);
+     //saving = new savings(sessiontoken,id_card);
      connect(saving,SIGNAL(backtomainmenu()),this,SLOT(backtomainmenu()));
      connect(saving,SIGNAL(resettimer30()),this,SLOT(resettimerslot()));
      saving->show();
