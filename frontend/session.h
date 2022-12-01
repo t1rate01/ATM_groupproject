@@ -10,15 +10,17 @@
 #include "mainmenu.h"
 #include "mainmenucredit.h"
 #include "mainwindow.h"
-#include "demowindow.h"
 #include "transactions.h"
+#include "savings.h"
+#include "debitwindow.h"
 
 
 class session : public QObject
 {
     Q_OBJECT
 public:
-    session();   // TÄMÄ OLIO SAA LOGINWINDOWILTA (MAINWINDOW)
+    session();
+    ~session();// TÄMÄ OLIO SAA LOGINWINDOWILTA (MAINWINDOW)
     void getidcard();               // QSTRING TOKENIN JA QSTRING CARDNUMBERIN
     void getandcheckcredit();       // HAKEE NIILLÄ VÄLITTÖMÄSTI ID_CARD JA CREDIT TIEDOT
 
@@ -41,22 +43,26 @@ private:
     MainMenu * mainmenu;
     MainMenuCredit * creditmenu;
     MainWindow * loginwindow;
-    demowindow * demo;
     Transactions * transactions;
+    savings * saving;
+    DebitWindow * debitwindow;
 
     // -------AJASTIMET--------------
     QTimer * session30timer;
 signals:
+
 private slots:
    // ----SLOTIT JOIHIN TULEE SIGNAALI/VASTAUS QNETWORKACCESSMANAGEREILTA-----
     void getCardIDSlot (QNetworkReply *reply); // KUTSUU getandcheckcredit() saatuaan id_card
     void getCreditSlot (QNetworkReply *reply);  // SAA credit tiedon ja LUO OIKEAN MENU OLION (Debit tai Debit/credit)
 
     void loginsuccesfulSlot(QString,QString);
-  // TÄNNE SLOTTIFUNKTIO AINA JOKA IKKUNALLE, KUN MAINMENUSTA VALITAAN ESIM DEBIT NOSTO
-    // TÄÄLLÄ ON "opendebitmenu()" TYYPPINEN SLOTTI JOHON MAINMENU VÄLITTÄÄ SEN SIGNAALIN
-    void nextWindowSlot(int);
-    // JA SLOTISSA ON FUNKTIO JOLLA KYSEISEN MENUN KONSTRUKTORI KUTSUTAAN
+    void logoutslot();  // mainmenujen logoutsignaalille
+
+
+
+    void nextWindowSlot(int);  // SISÄLTÄÄ SWITCH CASEN JOSTA MAINMENU AUKOO SEURAAVAA IKKUNAA, PÄÄTÄ IKKUNALLE UNIIKKI NRO JÄRJESTYKSESSÄ
+    // JA SLOTISSA ON FUNKTIO JOLLA KYSEISEN MENUN KONSTRUKTORI KUTSUTAAN JA CONNECTIT TEHDÄÄN
 
     // -----TIMER SLOTIT-----
     void resettimerslot();   // Tähän kytketään muilta ikkunoilta signaali jolla 30sek ajastin nollataan aina nappia painettaessa

@@ -11,6 +11,12 @@ session::session()    // KONSTRUKTORI
  connect(session30timer,SIGNAL(timeout()), this, SLOT(timer30slot()));
 }
 
+session::~session()
+{
+
+
+}
+
 void session::getidcard()                   // HAKEE ID_CARDIN CARDNUMBERIN PERUSTEELLA,
 {                                         // VASTAUS TULEE SLOTTIIN getCardIDSlot()
    session30timer->start(1000);
@@ -53,6 +59,9 @@ void session::getandcheckcredit()                   // HAKEE KORTIN CREDITIN ID_
 
 void session::logout()
 {
+    session30timer->stop();
+    timer30=0;
+    sessiontoken="";
     loginwindow->cleartextsanddata();
     loginwindow->show();
     id_card=0;
@@ -64,6 +73,7 @@ void session::logout()
         creditmenu->cleardata();
         creditmenu->close();
     }
+
     credit=0;
 }
 
@@ -104,13 +114,17 @@ void session::getCreditSlot(QNetworkReply *reply)   // VASTAANOTTAA CREDITIN, P�
         if(credit == 0){
             mainmenu = new MainMenu(sessiontoken, id_card);  // DEBIT MAIN MENU, VÄLITÄ NÄMÄ SAMAT TIEDOT AINA KUN AVAAT IKKUNAOLION
             mainmenu->show();
+            connect(mainmenu,SIGNAL(logout()),this,SLOT(logoutslot()));
             connect(mainmenu,SIGNAL(nextwindow(int)),this,SLOT(nextWindowSlot(int)));
             connect(mainmenu,SIGNAL(resettimer30()),this,SLOT(resettimerslot()));
-            connect(mainmenu,SIGNAL(timer10isup()),this,SLOT(backtomainmenu()));// IKKUNA AVATESSA AINA SIGNAALI KYTKETTÄVÄ
-        }                                                                          // MUUTA VAIN "mainmenu" OMAN IKKUNAN NIMEKSI ja nimeä signaalisi "resettimer30()"
+            // IKKUNA AVATESSA AINA SIGNAALI KYTKETTÄVÄ
+        }
         if(credit > 0) {
             creditmenu = new MainMenuCredit(sessiontoken, id_card);  // DEBIT CREDIT MAIN MENU, VÄLITÄ NÄMÄ SAMAT TIEDOT AINA KUN AVAAT IKKUNAOLION
             creditmenu->show();
+            connect(creditmenu,SIGNAL(logout()),this,SLOT(logoutslot()));
+            connect(creditmenu,SIGNAL(nextwindow(int)),this,SLOT(nextWindowSlot(int)));
+            connect(creditmenu,SIGNAL(resettimer30()),this,SLOT(resettimerslot()));
 
             // TÄNNE TULEE SAMAT IKKUNANAVAUS KYTKENN*T JA VÄLITYKSET
         }
@@ -124,17 +138,33 @@ void session::loginsuccesfulSlot(QString cn, QString t)
     getidcard();
 }
 
-void session::nextWindowSlot(int i)
+void session::logoutslot()
 {
+
+    logout();
+}
+
+
+
+void session::nextWindowSlot(int i)   // MUISTA KYTKEÄ SIGNAALIT BACKTOMAINMENU
+{                                      // Rakenna oliosi konstruktori niin että se ottaa Qstring sessiontoken ja int id_card
  switch(i){
  case 1:
-    // debitikkunaauki
+    debitwindow = new DebitWindow(sessiontoken,id_card);
+    // LISÄÄ SIGNAALIT JA KYTKE SAMAAN SLOTTIIN KUIN CASE 2 ja 3 mallina
+    debitwindow->show();
      break;
  case 2:
      transactions=new Transactions(sessiontoken,id_card);
      connect(transactions,SIGNAL(backtomainmenu()),this,SLOT(backtomainmenu()));
+     connect(transactions,SIGNAL(resettimer30()),this,SLOT(resettimerslot()));
      transactions->show();
      break;
+ case 3:
+     saving = new savings(sessiontoken,id_card);
+     connect(saving,SIGNAL(backtomainmenu()),this,SLOT(backtomainmenu()));
+     connect(saving,SIGNAL(resettimer30()),this,SLOT(resettimerslot()));
+     saving->show();
 
 }
 }
@@ -150,12 +180,16 @@ void session::timer30slot()     // perus QTimerin signaalislotti
 {
     timer30++;
     qDebug()<<"Session time is " << timer30;
+    if(credit==0){
+        mainmenu->updateTimeUi(timer30);
+    }
+    if(credit>0){
+        creditmenu->updateTimeUi(timer30);
+    }
 
-    if(timer30>15){
+    if(timer30>29){
             logout();
-            session30timer->stop();
-            timer30=0;
-            sessiontoken="";
+
             qDebug()<< "sessiontoken on nyt " + sessiontoken;
     }
 

@@ -9,24 +9,30 @@ CONFIG += c++17
 #DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
 
 SOURCES += \
+    debitwindow.cpp \
     main.cpp \
     mainmenu.cpp \
     mainmenucredit.cpp \
     mainwindow.cpp \
+    savings.cpp \
     session.cpp \
     transactions.cpp
 
 HEADERS += \
+    debitwindow.h \
     mainmenu.h \
     mainmenucredit.h \
     mainwindow.h \
+    savings.h \
     session.h \
     transactions.h
 
 FORMS += \
+    debitwindow.ui \
     mainmenu.ui \
     mainmenucredit.ui \
     mainwindow.ui \
+    savings.ui \
     transactions.ui
 
 # Default rules for deployment.
