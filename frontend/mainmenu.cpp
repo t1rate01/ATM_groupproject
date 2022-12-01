@@ -7,6 +7,7 @@ MainMenu::MainMenu(QString t,int idcard, QWidget *parent) :
     ui(new Ui::MainMenu)
 {
     ui->setupUi(this);
+    this->showMaximized();
     token = t;
     id_card = idcard;
 

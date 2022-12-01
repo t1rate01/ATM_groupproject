@@ -11,6 +11,12 @@ session::session()    // KONSTRUKTORI
  connect(session30timer,SIGNAL(timeout()), this, SLOT(timer30slot()));
 }
 
+session::~session()
+{
+
+
+}
+
 void session::getidcard()                   // HAKEE ID_CARDIN CARDNUMBERIN PERUSTEELLA,
 {                                         // VASTAUS TULEE SLOTTIIN getCardIDSlot()
    session30timer->start(1000);
@@ -138,11 +144,15 @@ void session::logoutslot()
     logout();
 }
 
+
+
 void session::nextWindowSlot(int i)   // MUISTA KYTKEÄ SIGNAALIT BACKTOMAINMENU
 {                                      // Rakenna oliosi konstruktori niin että se ottaa Qstring sessiontoken ja int id_card
  switch(i){
  case 1:
-    // debitikkunaauki
+    debitwindow = new DebitWindow(sessiontoken,id_card);
+    // LISÄÄ SIGNAALIT JA KYTKE SAMAAN SLOTTIIN KUIN CASE 2 ja 3 mallina
+    debitwindow->show();
      break;
  case 2:
      transactions=new Transactions(sessiontoken,id_card);

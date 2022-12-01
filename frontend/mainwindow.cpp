@@ -6,8 +6,7 @@ MainWindow::MainWindow(QWidget *parent)
     , ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
-
-
+    ui->lineEdit_password->setEchoMode(QLineEdit::Password);
 
 }
 
@@ -25,6 +24,7 @@ cardnumber="";
 password="";
 token="";
 }
+
 
 
 void MainWindow::on_btn_login_clicked()
@@ -81,5 +81,7 @@ void MainWindow::loginSlot(QNetworkReply *reply)
 
 
 }
+
+
 
 

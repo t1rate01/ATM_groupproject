@@ -50,8 +50,8 @@ void MainMenuCredit::updateTimeUi(int time)
 void MainMenuCredit::on_btn_debit_withdraw_clicked()
 {
     resetAllTimers();
-    //emit nextwindow(1);
-    //this->hide();
+    emit nextwindow(1);
+    this->hide();
 }
 void MainMenuCredit::on_btn_logs_clicked()
 {
