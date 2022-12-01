@@ -67,6 +67,7 @@ void session::logout()
         creditmenu->cleardata();
         creditmenu->close();
     }
+
     credit=0;
 }
 
@@ -111,7 +112,7 @@ void session::getCreditSlot(QNetworkReply *reply)   // VASTAANOTTAA CREDITIN, P�
             connect(mainmenu,SIGNAL(nextwindow(int)),this,SLOT(nextWindowSlot(int)));
             connect(mainmenu,SIGNAL(resettimer30()),this,SLOT(resettimerslot()));
             // IKKUNA AVATESSA AINA SIGNAALI KYTKETTÄVÄ
-        }                                                                          // MUUTA VAIN "mainmenu" OMAN IKKUNAN NIMEKSI ja nimeä signaalisi "resettimer30()"
+        }
         if(credit > 0) {
             creditmenu = new MainMenuCredit(sessiontoken, id_card);  // DEBIT CREDIT MAIN MENU, VÄLITÄ NÄMÄ SAMAT TIEDOT AINA KUN AVAAT IKKUNAOLION
             creditmenu->show();
@@ -138,7 +139,7 @@ void session::logoutslot()
 }
 
 void session::nextWindowSlot(int i)   // MUISTA KYTKEÄ SIGNAALIT BACKTOMAINMENU
-{
+{                                      // Rakenna oliosi konstruktori niin että se ottaa Qstring sessiontoken ja int id_card
  switch(i){
  case 1:
     // debitikkunaauki
@@ -149,6 +150,11 @@ void session::nextWindowSlot(int i)   // MUISTA KYTKEÄ SIGNAALIT BACKTOMAINMENU
      connect(transactions,SIGNAL(resettimer30()),this,SLOT(resettimerslot()));
      transactions->show();
      break;
+ case 3:
+     saving = new savings(sessiontoken,id_card);
+     connect(saving,SIGNAL(backtomainmenu()),this,SLOT(backtomainmenu()));
+     connect(saving,SIGNAL(resettimer30()),this,SLOT(resettimerslot()));
+     saving->show();
 
 }
 }
