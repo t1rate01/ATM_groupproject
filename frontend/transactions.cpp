@@ -21,6 +21,7 @@ Transactions::~Transactions()
 
 void Transactions::on_btn_Back_clicked()
 {
+    timer10sek->stop();
     emit resettimer30();
     emit backtomainmenu();
     this->close();

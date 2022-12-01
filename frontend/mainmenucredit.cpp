@@ -79,3 +79,11 @@ void MainMenuCredit::getfnameSlot(QNetworkReply *reply)
        ui->label_greeting->setText("Welcome "+ fnamedata+ ", what do you want to do?");
 }
 
+
+void MainMenuCredit::on_btn_debit_settings_clicked()
+{
+    resetAllTimers();
+    emit nextwindow(3);
+    this->hide();
+}
+

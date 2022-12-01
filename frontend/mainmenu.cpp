@@ -86,6 +86,8 @@ void MainMenu::getfnameSlot(QNetworkReply *reply)
 
 void MainMenu::on_btn_debit_settings_clicked()
 {
+    resetAllTimers();
     emit nextwindow(3);
+    this->hide();
 }
 
