@@ -13,6 +13,7 @@
 #include "transactions.h"
 #include "savings.h"
 #include "debitwindow.h"
+#include "debitbalance.h"
 
 
 class session : public QObject
@@ -47,7 +48,7 @@ private:
     Transactions * transactions;
     savings * saving;
     DebitWindow * debitwindow;
-
+    Debitbalance * debitbalance;
     // -------AJASTIMET--------------
     QTimer * session30timer;
 signals:

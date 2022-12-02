@@ -62,6 +62,7 @@ void session::createWindows()    // LISÄÄ TÄNNE IKKUNASI CONSTUCTORIN KUTSU
     transactions = new Transactions(sessiontoken,id_card);
     saving = new savings(sessiontoken,id_card);
     debitwindow = new DebitWindow(sessiontoken,id_card);
+    debitbalance = new Debitbalance(sessiontoken,id_card);
 }
 
 void session::deleteWindows()
@@ -69,6 +70,7 @@ void session::deleteWindows()
     delete transactions;           // LISÄÄ TÄNNE IKKUNASI DESTRUCTORIN KUTSU
     delete saving;
     delete debitwindow;
+    delete debitbalance;
 }
 
 void session::logout()
@@ -79,7 +81,7 @@ void session::logout()
     loginwindow->cleartextsanddata();
     loginwindow->show();
     id_card=0;
-    deleteWindows();
+    deleteWindows(); // POISTAA KAIKKI OLIOT
     if (credit==0){
         mainmenu->cleardata();
         mainmenu->close();
@@ -109,7 +111,7 @@ void session::getCardIDSlot(QNetworkReply *reply)   // ID CARDIN SAANTI SESSIONI
 
 
          getsessioncardmanager->deleteLater();   // POISTA KERTAKÄYTTÖ ACCESS OLIO (?)
-            createWindows();// <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
+         createWindows();// LUO KAIKKI IKKUNAOLIOT, OTETAAN TARPEEN MUKAAN ESILLE
          getandcheckcredit();   // KUTSU HETI UUTTA POST FUNKTIOTA CREDITIN SAAMISEKSI
 }
 
@@ -182,6 +184,11 @@ void session::nextWindowSlot(int i)   // MUISTA KYTKEÄ SIGNAALIT BACKTOMAINMENU
      connect(saving,SIGNAL(backtomainmenu()),this,SLOT(backtomainmenu()));
      connect(saving,SIGNAL(resettimer30()),this,SLOT(resettimerslot()));
      saving->show();
+     break;
+ case 4:
+     // LISÄÄ CONNECTIT
+     debitbalance->show();
+     break;
 
 }
 }

@@ -92,3 +92,11 @@ void MainMenu::on_btn_debit_settings_clicked()
     this->hide();
 }
 
+
+void MainMenu::on_btn_debit_balance_clicked()
+{
+    resetAllTimers();
+    emit nextwindow(4);
+    this->hide();
+}
+
