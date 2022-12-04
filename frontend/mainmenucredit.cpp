@@ -87,3 +87,11 @@ void MainMenuCredit::on_btn_debit_settings_clicked()
     this->hide();
 }
 
+
+void MainMenuCredit::on_btn_debit_balance_clicked()
+{
+    resetAllTimers();
+    emit nextwindow(4);
+    this->hide();
+}
+
