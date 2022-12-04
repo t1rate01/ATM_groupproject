@@ -6,6 +6,7 @@
 #include <QNetworkAccessManager>
 #include <QJsonDocument>
 #include <QTimer>
+#include <QFont>
 // ---SESSION TÄYTYY INCLUDE JOKAINEN IKKUNA.H
 #include "mainmenu.h"
 #include "mainmenucredit.h"
@@ -14,6 +15,7 @@
 #include "savings.h"
 #include "debitwindow.h"
 #include "debitbalance.h"
+
 
 
 class session : public QObject
@@ -33,6 +35,7 @@ private:
     int credit;
     int timer30=0;
     void logout();   // ISTUNNON POISTO
+    void setFontsToUI();
 
 
     // -------NETWORK POINTTERIT JA MUUTTUJAT

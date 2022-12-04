@@ -22,6 +22,7 @@ public:
     void resetAllTimers();
     void cleardata();
     void updateTimeUi(int);
+    void setFonts();
 
 signals:
     void resettimer30();

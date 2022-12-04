@@ -17,12 +17,12 @@ class Debitbalance : public QWidget
     Q_OBJECT
 
 public:
-    explicit Debitbalance(QString, int, QWidget *parent = nullptr);
+    explicit Debitbalance(QString, int, int, QWidget *parent = nullptr);
     ~Debitbalance();
 
 private slots:
-//    void logsSlots(QNetworkReply *reply);
     void getdebitbalanceSlot(QNetworkReply *reply);
+    void getcreditbalanceSlot(QNetworkReply *reply);
     void timer10Slot();
 
 signals:
@@ -33,11 +33,13 @@ private:
     Ui::Debitbalance *ui;
     QTimer * timer10sek = new QTimer;
     QString token;
+    int credit;
     int account_balance;
     int id_card;
     int time10=0;
     QNetworkAccessManager * getdebitbalancemanager;
     QByteArray debitbalance_data;
+    QByteArray creditbalance_data;
     QNetworkReply * reply;
 
 };

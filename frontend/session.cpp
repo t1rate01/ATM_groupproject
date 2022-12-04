@@ -62,7 +62,7 @@ void session::createWindows()    // LISÄÄ TÄNNE IKKUNASI CONSTUCTORIN KUTSU
     transactions = new Transactions(sessiontoken,id_card);
     saving = new savings(sessiontoken,id_card);
     debitwindow = new DebitWindow(sessiontoken,id_card);
-    debitbalance = new Debitbalance(sessiontoken,id_card);
+    debitbalance = new Debitbalance(sessiontoken,id_card,credit);
 }
 
 void session::deleteWindows()
@@ -94,6 +94,11 @@ void session::logout()
     }
 
     credit=0;
+}
+
+void session::setFontsToUI()
+{
+
 }
 
 
@@ -169,8 +174,10 @@ void session::nextWindowSlot(int i)   // MUISTA KYTKEÄ SIGNAALIT BACKTOMAINMENU
 {                                      // Rakenna oliosi konstruktori niin että se ottaa Qstring sessiontoken ja int id_card
  switch(i){
  case 1:
-    //debitwindow = new DebitWindow(sessiontoken,id_card);
-    // LISÄÄ SIGNAALIT JA KYTKE SAMAAN SLOTTIIN KUIN CASE 2 ja 3 mallina
+     connect(debitwindow,SIGNAL(backtomainmenu()),this,SLOT(backtomainmenu()));
+     connect(debitwindow,SIGNAL(resettimer30()),this,SLOT(resettimerslot()));
+     connect(debitwindow,SIGNAL(nextwindow(int)),this,SLOT(nextWindowSlot(int)));
+     debitwindow->getbalance();
     debitwindow->show();
      break;
  case 2:
@@ -188,6 +195,8 @@ void session::nextWindowSlot(int i)   // MUISTA KYTKEÄ SIGNAALIT BACKTOMAINMENU
  case 4:
      // LISÄÄ CONNECTIT
      debitbalance->show();
+     connect(debitbalance,SIGNAL(backtomainmenu()),this,SLOT(backtomainmenu()));
+     connect(debitbalance,SIGNAL(resettimer30()),this,SLOT(resettimerslot()));
      break;
 
 }
