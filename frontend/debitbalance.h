@@ -19,11 +19,15 @@ class Debitbalance : public QWidget
 public:
     explicit Debitbalance(QString, int, int, QWidget *parent = nullptr);
     ~Debitbalance();
+    void startwindowtimer();
 
 private slots:
     void getdebitbalanceSlot(QNetworkReply *reply);
     void getcreditbalanceSlot(QNetworkReply *reply);
     void timer10Slot();
+
+
+    void on_btn_Back_2_clicked();
 
 signals:
     void backtomainmenu();
@@ -41,6 +45,7 @@ private:
     QByteArray debitbalance_data;
     QByteArray creditbalance_data;
     QNetworkReply * reply;
+    void on_btn_Back_clicked();
 
 };
 

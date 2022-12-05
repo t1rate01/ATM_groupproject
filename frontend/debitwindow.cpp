@@ -9,7 +9,6 @@ DebitWindow::DebitWindow(QString givenToken, int idcard,QWidget *parent) :
 {
     //AJASTIN
     connect(timer10sek,SIGNAL(timeout()),this,SLOT(timer10Slot()));
-    timer10sek->start(1000);
     ui->setupUi(this);
     id_card = idcard;
     token = givenToken;
@@ -54,6 +53,11 @@ void DebitWindow::getowner()
     reply = getOwnerInfoManager->post(request, QJsonDocument(jsonObj).toJson());
 }
 
+void DebitWindow::startwindowtimer()
+{
+    timer10sek->start(1000);
+}
+
 void DebitWindow::getBalanceSlot(QNetworkReply *reply)
 {
     account_balance_data=reply->readAll();
@@ -90,7 +94,7 @@ void DebitWindow::getOwnerInfoSlot(QNetworkReply *reply)
 void DebitWindow::on_btn20_clicked()
 {
     timer10sek->stop();
-    emit nextwindow(1);
+    emit nextwindow(5);
     this->close();
 }
 
@@ -98,7 +102,7 @@ void DebitWindow::on_btn20_clicked()
 void DebitWindow::on_btn40_clicked()
 {
     timer10sek->stop();
-    emit nextwindow(1);
+    emit nextwindow(5);
     this->close();
 }
 
@@ -106,7 +110,7 @@ void DebitWindow::on_btn40_clicked()
 void DebitWindow::on_btn60_clicked()
 {
     timer10sek->stop();
-    emit nextwindow(1);
+    emit nextwindow(5);
     this->close();
 }
 
@@ -114,7 +118,7 @@ void DebitWindow::on_btn60_clicked()
 void DebitWindow::on_btn100_clicked()
 {
     timer10sek->stop();
-    emit nextwindow(1);
+    emit nextwindow(5);
     this->close();
 }
 
@@ -122,7 +126,7 @@ void DebitWindow::on_btn100_clicked()
 void DebitWindow::on_btn200_clicked()
 {
     timer10sek->stop();
-    emit nextwindow(1);
+    emit nextwindow(5);
     this->close();
 }
 
@@ -130,7 +134,7 @@ void DebitWindow::on_btn200_clicked()
 void DebitWindow::on_btn500_clicked()
 {
     timer10sek->stop();
-    emit nextwindow(1);
+    emit nextwindow(5);
     this->close();
 }
 

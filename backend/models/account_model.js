@@ -15,6 +15,14 @@ const account = {
     ); // tieto lähtee arrayna
   },
 
+  getsavingsmode: function(id,callback) { // FRONTIN SAVINGS TARKASTUSTA VARTEN
+    return db.query(
+      'select savingsmode from account where id_card = ?',
+      [id], callback
+    );
+    
+   },
+
   balanceById: function(id, callback) {
     return db.query(
       'select account_balance from account where id_card = ?',

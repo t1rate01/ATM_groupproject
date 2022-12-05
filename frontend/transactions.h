@@ -20,7 +20,7 @@ class Transactions : public QDialog
 public:
     explicit Transactions(QString, int, QWidget *parent = nullptr);
     ~Transactions();
-
+    void startwindowtimer();
 
 private slots:
     void on_btn_Back_clicked();

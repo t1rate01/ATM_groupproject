@@ -9,7 +9,7 @@ Transactions::Transactions(QString givenToken, int idcard, QWidget *parent) :
     ui(new Ui::Transactions)
 {
     connect(timer10sek,SIGNAL(timeout()),this,SLOT(timer10Slot()));
-    timer10sek->start(1000);
+
     ui->setupUi(this);
     token = givenToken;
     id_card = idcard;
@@ -21,11 +21,16 @@ Transactions::~Transactions()
     delete ui;
 }
 
+void Transactions::startwindowtimer()
+{
+    timer10sek->start(1000);
+}
+
 
 void Transactions::on_btn_Back_clicked()
 {
     timer10sek->stop();
-emit backtomainmenu();
+    emit backtomainmenu();
     this->close();
 }
 

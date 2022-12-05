@@ -22,6 +22,7 @@ public:
     void resetAllTimers();
     void getbalance();
     void getowner();
+    void startwindowtimer();
 
 private slots:
     void on_btn20_clicked();

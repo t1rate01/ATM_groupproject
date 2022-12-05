@@ -8,12 +8,10 @@ Debitbalance::Debitbalance(QString givenToken, int idcard, int cred, QWidget *pa
 
 {
     connect(timer10sek,SIGNAL(timeout()),this,SLOT(timer10Slot()));
-    timer10sek->start(1000);
     ui->setupUi(this);
     token = givenToken;
     id_card = idcard;
     credit = cred;
-//    account_balance = debitbalance;
 
     // HAKEE DEBITBALANCEN TIETOKANNASTA
     QString site_url="http://localhost:3000/account/balance/"+QString::number(id_card);
@@ -25,11 +23,6 @@ Debitbalance::Debitbalance(QString givenToken, int idcard, int cred, QWidget *pa
     //WEBTOKEN LOPPU
 
     getdebitbalancemanager = new QNetworkAccessManager(this);
-/*
-    QJsonObject jsonObj;  // objekti jonka sisälle dbrequestiin lähtevä data
-    jsonObj.insert("id_card",id_card);
-    request.setHeader(QNetworkRequest::ContentTypeHeader, "application/json");
-*/
     connect(getdebitbalancemanager, SIGNAL(finished(QNetworkReply*)), this, SLOT(getdebitbalanceSlot(QNetworkReply*)));
     reply = getdebitbalancemanager->get(request);
 
@@ -39,6 +32,13 @@ Debitbalance::~Debitbalance()
 {
     delete ui;
 }
+
+void Debitbalance::startwindowtimer()
+{
+    timer10sek->start(1000);
+}
+
+
 
 void Debitbalance::getdebitbalanceSlot(QNetworkReply *reply)
 {
@@ -103,3 +103,11 @@ void Debitbalance::timer10Slot()
         this->close();
     }
 }
+
+void Debitbalance::on_btn_Back_2_clicked()
+{
+    timer10sek->stop();
+    emit backtomainmenu();
+    this->close();
+}
+

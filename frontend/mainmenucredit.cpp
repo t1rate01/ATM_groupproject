@@ -36,11 +36,6 @@ void MainMenuCredit::resetAllTimers()
     emit resettimer30();
 }
 
-void MainMenuCredit::cleardata()
-{
-    id_card = 0;
-    token = "";
-}
 
 void MainMenuCredit::updateTimeUi(int time)
 {

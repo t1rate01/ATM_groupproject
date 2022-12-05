@@ -1,10 +1,11 @@
 const express = require('express');
+const logs = require('../models/logs_model');
 const router = express.Router();
-const card = require('../models/logs_model');
+
 
 router.get('/',
     function (request, response) {
-        card.getAll(function (err, dbResult) {
+        logs.getAll(function (err, dbResult) {
             if (err) {
                 response.json(err);
             } else {
@@ -16,7 +17,7 @@ router.get('/',
 
 router.get('/:id?',
     function (request, response) {
-        card.getById(request.params.id, function (err, dbResult) {
+        logs.getById(request.params.id, function (err, dbResult) {
             if (err) {
                 response.json(err);
             } else {
@@ -25,10 +26,35 @@ router.get('/:id?',
         })
     });
 
+    router.get('/latest/:id?',
+    function (request, response){
+      logs.getlatestlog(request.params.id,function(err, dbResult){
+        if (err){
+          response.json(err);
+        }
+        else {
+          response.json(dbResult[0]);
+        }
+      })
+    });
+
+
+
+    router.get('/latestsave/:id?',
+    function (request, response){
+      logs.getlatestsave(request.params.id,function(err, dbResult){
+        if (err){
+          response.json(err);
+        }
+        else {
+          response.json(dbResult[0]);
+        }
+      })
+    });
 
 router.post('/', 
 function(request, response) {
-  card.add(request.body, function(err, dbResult) {
+  logs.add(request.body, function(err, dbResult) {
     if (err) {
       response.json(err);
     } else {
@@ -41,7 +67,7 @@ function(request, response) {
 
 router.delete('/:id', 
 function(request, response) {
-  card.delete(request.params.id, function(err, dbResult) {
+  logs.delete(request.params.id, function(err, dbResult) {
     if (err) {
       response.json(err);
     } else {
@@ -53,7 +79,7 @@ function(request, response) {
 
 router.put('/:id', 
 function(request, response) {
-  card.update(request.params.id, request.body, function(err, dbResult) {
+  logs.update(request.params.id, request.body, function(err, dbResult) {
     if (err) {
       response.json(err);
     } else {

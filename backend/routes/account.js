@@ -14,6 +14,18 @@ router.get('/balance/:id?',
         })
     });
 
+    router.get('/savingsmode/:id?',
+    function (request, response){
+      account.getsavingsmode(request.params.id,function(err, dbResult){
+        if (err){
+          response.json(err);
+        }
+        else {
+          response.json(dbResult[0]);
+        }
+      })
+    });
+
     router.get('/credit/:id?',
     function (request, response) {
         account.balanceCreditById(request.params.id, function (err, dbResult) {

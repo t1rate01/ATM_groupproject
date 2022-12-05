@@ -7,10 +7,8 @@ MainMenu::MainMenu(QString t,int idcard, QWidget *parent) :
     ui(new Ui::MainMenu)
 {
     ui->setupUi(this);
-    this->showMaximized();
     token = t;
     id_card = idcard;
-
 
     // HAE OWNERIN NIMI TERVEHDYKSEEN
     QString site_url="http://localhost:3000/owner/fname";
@@ -39,11 +37,7 @@ void MainMenu::resetAllTimers()
     emit resettimer30();
 }
 
-void MainMenu::cleardata()
-{
-    id_card = 0;
-    token = "";
-}
+
 
 void MainMenu::updateTimeUi(int time)
 {
@@ -106,4 +100,5 @@ void MainMenu::on_btn_debit_balance_clicked()
     emit nextwindow(4);
     this->hide();
 }
+
 

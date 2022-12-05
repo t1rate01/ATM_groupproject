@@ -8,7 +8,6 @@ MainWindow::MainWindow(QWidget *parent)
     ui->setupUi(this);
     ui->lineEdit_password->setEchoMode(QLineEdit::Password);   // Salasana kenttään tulee vain palloja
     ui->label_greeting->setText("Welcome to Group_2 ATM, please log in");
-    pingServer();
 
 }
 
@@ -27,21 +26,6 @@ password="";
 token="";
 }
 
-void MainWindow::pingServer()  // tekee get reguestin lukittuun osaan db:tä, tarkistaa onko db päällä
-{
-    QString site_url="http://localhost:3000/card/1";
-    QNetworkRequest request((site_url));
-
-    pingmanager = new QNetworkAccessManager(this);
-
-    connect(pingmanager, SIGNAL(finished (QNetworkReply*)), this, SLOT(pingSlot(QNetworkReply*)));
-
-    reply = pingmanager->get(request);
-
-}
-
-
-
 void MainWindow::on_btn_login_clicked()
 {
 
@@ -57,7 +41,6 @@ void MainWindow::on_btn_login_clicked()
         cleartextsanddata();
     }
     else {
-
     QJsonObject jsonObj;
     jsonObj.insert("cardnumber",cardnumber);
     jsonObj.insert("password",password);
@@ -89,26 +72,9 @@ void MainWindow::loginSlot(QNetworkReply *reply)
         qDebug()<< response_data;
         ui->label_loginresponse->setText(response_data);
     }
-
-
 }
 
-void MainWindow::pingSlot(QNetworkReply *reply)
-{
-    response_data=reply->readAll();
-     qDebug()<<"DATA : "+response_data;
-     if(response_data=="Unauthorized"){
-         ui->label_greeting->setText("Welcome to Group_2 ATM, please log in");
-         reply->deleteLater();
-         pingmanager->deleteLater();
-     }
-     if(response_data!="Unauthorized"){
-         ui->label_greeting->setText("Error: Rest Api is offline");
-         reply->deleteLater();
-         pingmanager->deleteLater();
-     }
 
-}
 
 
 
