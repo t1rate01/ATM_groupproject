@@ -4,6 +4,10 @@
 #include <QMainWindow>
 #include <QTimer>
 
+
+/* Tämän ikkunaolion tehtävä on kysyä ottaako käyttäjä kuitin
+  ja välittää sessionille signaali päätöksestä
+ */
 namespace Ui {
 class AskForReceipt;
 }

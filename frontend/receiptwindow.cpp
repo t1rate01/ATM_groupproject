@@ -74,7 +74,7 @@ void ReceiptWindow::getlatestlogSlot(QNetworkReply * reply)
         QString latestlogdata;
         QString test="Debit withdraw";
         QString amount;
-        QString timeholder, date, time;
+        QString timeholder, date, time;  // Jussi Mäen transactions ikkunasta opeteltu/lainattu metodi erotella aika
         QStringList splittedDateTime;
         latestlogdata=json_obj["log"].toString();
         amount = QString::number(json_obj["amount"].toInt());
@@ -83,11 +83,12 @@ void ReceiptWindow::getlatestlogSlot(QNetworkReply * reply)
         date = splittedDateTime[0];
         timeholder = splittedDateTime[1].split(".")[0];
         time = timeholder;
-        ui->label_logs->setText(latestlogdata+ "   " + amount+"€");
+        ui->label_logs->setText(latestlogdata);
+        ui->label_amount1->setText("-"+amount+"€");
         ui->label_date->setText(date);
         ui->label_timestamp_2->setText(time);
         ui->label_cardnum->setText(cardnumber);
-        if(savings>0 && latestlogdata==test){
+        if(savings>0 && latestlogdata==test){  // Aiemmin haettu savingsmoden arvon tarkistus, jos edellinen tapahtuma ollut "debit withdraw", täytyy hakea savelogi
             getsavelog();
         }
 }
@@ -113,7 +114,8 @@ void ReceiptWindow::getsavelogSlot(QNetworkReply *reply)
         QString amount;
         amount = QString::number(json_obj["amount"].toInt());
         qDebug()<<"Viimeisin savelog summa on  " <<amount;
-        ui->label_savelogs->setText("Sent to designated savings account "+amount+"€");
+        ui->label_savelogs->setText("Sent to savings");
+        ui->label_amount_save->setText("-"+amount+"€");
 }
 
 void ReceiptWindow::timer10sekslot()

@@ -6,7 +6,8 @@
 #include <QNetworkAccessManager>
 #include <QJsonDocument>
 #include <QTimer>
-
+/* TÄMÄ IKKUNAOLIO
+*/
 namespace Ui {
 class ReceiptWindow;
 }
