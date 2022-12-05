@@ -61,7 +61,8 @@ void session::createWindows()    // KAIKKIEN IKKUNAOLIOIDEN KONSTRUKTORIN KUTSU
     saving = new savings(sessiontoken,id_card);
     debitwindow = new DebitWindow(sessiontoken,id_card);
     debitbalance = new Debitbalance(sessiontoken,id_card,credit);
-    receiptwindow = new ReceiptWindow(sessiontoken,id_card);
+    receiptwindow = new ReceiptWindow(sessiontoken,sessioncardnumber,id_card);
+    askforreceipt = new AskForReceipt;
     // ----------------TARKISTETAAN SAADUN CREDIT ARVON PERUSTEELLA KUMPI MAINMENU AVATAAN------------------------------------
     if(credit == 0){
         mainmenu = new MainMenu(sessiontoken, id_card);  // DEBIT MAIN MENU
@@ -85,6 +86,8 @@ void session::deleteWindows()  // KAIKKIEN IKKUNAOLIOIDEN TUHOAMINEN
     delete saving;
     delete debitwindow;
     delete debitbalance;
+    delete receiptwindow;
+    delete askforreceipt;
     if (credit==0){             // Tarkistaa ennen credit nollausta kumpi mainmenu on luotu sen perusteella
         mainmenu->close();        // ja kutsuu sen destruktorin. Sitten nollaa creditin.
         delete mainmenu;
@@ -93,7 +96,6 @@ void session::deleteWindows()  // KAIKKIEN IKKUNAOLIOIDEN TUHOAMINEN
         creditmenu->close();
         delete creditmenu;
     }
-
     credit=0;
 }
 
@@ -107,9 +109,6 @@ void session::logout()  // Ylikirjoittaa ja kutsuu kaikki tietojen ylikirjoitus 
     id_card=0;
     deleteWindows(); // POISTAA KAIKKI OLIOT
 }
-
-
-
 
 void session::getCardIDSlot(QNetworkReply *reply)   // ID CARDIN SAANTI SESSIONILLE
 {                                                   // KUTSUU CREDIT TIEDONHAKUFUNKTION JOKA JATKAA IKKUNOIDEN LUOMISEEN
@@ -193,6 +192,13 @@ void session::nextWindowSlot(int i) // IKKUNOIDEN AVAAMISLOGIIKKA JA SIGNAALIEN 
      receiptwindow->getLatestLog();
      receiptwindow->startwindowtimer();
      receiptwindow->show();
+     break;
+ case 6:
+     connect(askforreceipt,SIGNAL(resettimer30()),this,SLOT(resettimerslot()));
+     connect(askforreceipt,SIGNAL(nextwindow(int)),this,SLOT(nextWindowSlot(int)));
+     connect(askforreceipt,SIGNAL(logout()),this,SLOT(logoutslot()));
+     connect(askforreceipt,SIGNAL(backtomainmenu()),this,SLOT(backtomainmenu()));
+     askforreceipt->show();
      break;
 }
 }

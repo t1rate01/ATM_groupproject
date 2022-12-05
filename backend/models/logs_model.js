@@ -26,7 +26,7 @@ const logs = {
   },
    getlatestlog: function(id,callback) { // KUITIN VIIMEISTÄ LOGIA VARTEN
     return db.query(
-      'select log, amount from logs where log like "Debit%" OR log like "Credit%" AND id_account=(select id_account from card where id_card = ?) ORDER BY log_time DESC LIMIT 1',
+      'select log, amount, log_time from logs where log like "Debit%" OR log like "Credit%" AND id_account=(select id_account from card where id_card = ?) ORDER BY log_time DESC LIMIT 1',
       [id], callback
     );
    },

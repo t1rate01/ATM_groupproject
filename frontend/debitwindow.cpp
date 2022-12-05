@@ -94,7 +94,7 @@ void DebitWindow::getOwnerInfoSlot(QNetworkReply *reply)
 void DebitWindow::on_btn20_clicked()
 {
     timer10sek->stop();
-    emit nextwindow(5);
+    emit nextwindow(6);
     this->close();
 }
 
@@ -102,7 +102,7 @@ void DebitWindow::on_btn20_clicked()
 void DebitWindow::on_btn40_clicked()
 {
     timer10sek->stop();
-    emit nextwindow(5);
+    emit nextwindow(6);
     this->close();
 }
 
@@ -110,7 +110,7 @@ void DebitWindow::on_btn40_clicked()
 void DebitWindow::on_btn60_clicked()
 {
     timer10sek->stop();
-    emit nextwindow(5);
+    emit nextwindow(6);
     this->close();
 }
 
@@ -118,7 +118,7 @@ void DebitWindow::on_btn60_clicked()
 void DebitWindow::on_btn100_clicked()
 {
     timer10sek->stop();
-    emit nextwindow(5);
+    emit nextwindow(6);
     this->close();
 }
 
@@ -126,7 +126,7 @@ void DebitWindow::on_btn100_clicked()
 void DebitWindow::on_btn200_clicked()
 {
     timer10sek->stop();
-    emit nextwindow(5);
+    emit nextwindow(6);
     this->close();
 }
 
@@ -134,7 +134,7 @@ void DebitWindow::on_btn200_clicked()
 void DebitWindow::on_btn500_clicked()
 {
     timer10sek->stop();
-    emit nextwindow(5);
+    emit nextwindow(6);
     this->close();
 }
 

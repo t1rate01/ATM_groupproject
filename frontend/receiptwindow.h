@@ -16,7 +16,7 @@ class ReceiptWindow : public QMainWindow
     Q_OBJECT
 
 public:
-    explicit ReceiptWindow(QString, int,QWidget *parent = nullptr);
+    explicit ReceiptWindow(QString, QString, int,QWidget *parent = nullptr);
     ~ReceiptWindow();
     void getLatestLog();
     void getsavingsmode();
@@ -41,6 +41,7 @@ private:
     int time10=0;
     QString token;
     int savings;
+    QString cardnumber;
 
 private slots:
     void getlatestlogSlot(QNetworkReply * reply);

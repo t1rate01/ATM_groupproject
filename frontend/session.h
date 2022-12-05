@@ -16,6 +16,7 @@
 #include "debitwindow.h"
 #include "debitbalance.h"
 #include "receiptwindow.h"
+#include "askforreceipt.h"
 
 /*  TÄMÄ OLIO TOIMII MOOTTORINA IKKUNAOLIOITTEN VÄLILLÄ
     TÄTÄ OLIOTA EI TUHOTA OHJELMAN AJON AIKANA,
@@ -77,6 +78,7 @@ private:
     DebitWindow * debitwindow;
     Debitbalance * debitbalance;
     ReceiptWindow * receiptwindow;
+    AskForReceipt * askforreceipt;
     // -------AJASTIMET--------------
     QTimer * session30timer;
 signals:

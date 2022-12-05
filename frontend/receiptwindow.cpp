@@ -1,7 +1,7 @@
 #include "receiptwindow.h"
 #include "ui_receiptwindow.h"
 
-ReceiptWindow::ReceiptWindow(QString tok, int cid,QWidget *parent) :
+ReceiptWindow::ReceiptWindow(QString tok, QString cn, int cid,QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::ReceiptWindow)
 {
@@ -10,6 +10,7 @@ ReceiptWindow::ReceiptWindow(QString tok, int cid,QWidget *parent) :
     token = tok;
     id_card = cid;
     ui->label_savelogs->clear();
+    cardnumber = cn;
 }
 
 ReceiptWindow::~ReceiptWindow()
@@ -71,12 +72,22 @@ void ReceiptWindow::getlatestlogSlot(QNetworkReply * reply)
     QJsonDocument json_doc = QJsonDocument::fromJson(latest_data);
         QJsonObject json_obj = json_doc.object();
         QString latestlogdata;
+        QString test="Debit withdraw";
         QString amount;
+        QString timeholder, date, time;
+        QStringList splittedDateTime;
         latestlogdata=json_obj["log"].toString();
         amount = QString::number(json_obj["amount"].toInt());
-        qDebug()<<"Kortinomistajan etunimi on  " <<latestlogdata;
-        ui->label_logs->setText(latestlogdata+ "   " + amount);
-        if(savings>0){
+        timeholder = json_obj["log_time"].toString();
+        splittedDateTime = timeholder.split("T");
+        date = splittedDateTime[0];
+        timeholder = splittedDateTime[1].split(".")[0];
+        time = timeholder;
+        ui->label_logs->setText(latestlogdata+ "   " + amount+"€");
+        ui->label_date->setText(date);
+        ui->label_timestamp_2->setText(time);
+        ui->label_cardnum->setText(cardnumber);
+        if(savings>0 && latestlogdata==test){
             getsavelog();
         }
 }
@@ -102,7 +113,7 @@ void ReceiptWindow::getsavelogSlot(QNetworkReply *reply)
         QString amount;
         amount = QString::number(json_obj["amount"].toInt());
         qDebug()<<"Viimeisin savelog summa on  " <<amount;
-        ui->label_savelogs->setText(amount+" € sent to designated savings account");
+        ui->label_savelogs->setText("Sent to designated savings account "+amount+"€");
 }
 
 void ReceiptWindow::timer10sekslot()
@@ -117,13 +128,17 @@ if(time10>10){
 
 void ReceiptWindow::on_btn_logout_clicked()
 {
+    timer10sek->stop();
     emit logoutsignal();
+    // ei tarvi this->close kun tuhoutuu enivei, aiheuttaa kaatumisen
 }
 
 
 void ReceiptWindow::on_btn_back_clicked()
 {
     emit resettimer30();
+    timer10sek->stop();
     emit backtomainmenu();
+    this->close();
 }
 
