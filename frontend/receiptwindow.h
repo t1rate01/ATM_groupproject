@@ -6,7 +6,12 @@
 #include <QNetworkAccessManager>
 #include <QJsonDocument>
 #include <QTimer>
-/* TÄMÄ IKKUNAOLIO
+/* TÄMÄ IKKUNAOLIO TARKISTAA VIIMEISIMMÄN LOKITAPAHTUMAN JA KORTIN SAVINGSMODEN
+ * Jos Savingsmode on aktiivinen, ja viimeisin tapahtuma on ollut debit withdraw
+   Haetaan myös viimeisin logi joka kirjoitettu savingsmoden kanssa.
+ * Hakee logeista viimeisimmän nostotyypin credit withdraw, debit withdraw tai debit deposit
+   ja antaa siitä tapahtumatekstin ja summan.
+   Tehnyt: Tero Rantanen
 */
 namespace Ui {
 class ReceiptWindow;

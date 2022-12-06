@@ -25,6 +25,16 @@ router.get('/:id?',
         })
     });
 
+    router.get('/alldata/:id?',
+    function (request, response) {
+        owner.getAllOwnerInfo(request.params.id, function (err, dbResult) {
+            if (err) {
+                response.json(err);
+            } else {
+                response.json(dbResult[0]);
+            }
+        })
+    });
 
 router.post('/', 
 function(request, response) {

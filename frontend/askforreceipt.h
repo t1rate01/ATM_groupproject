@@ -7,6 +7,7 @@
 
 /* Tämän ikkunaolion tehtävä on kysyä ottaako käyttäjä kuitin
   ja välittää sessionille signaali päätöksestä
+  Tehnyt: Tero Rantanen
  */
 namespace Ui {
 class AskForReceipt;

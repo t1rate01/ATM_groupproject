@@ -40,6 +40,28 @@ function(request, response) {
   });
 });
 
+router.post('/debitwithdraw', 
+function(request, response) {
+  card.debitwithdraw(request.body, function(err, dbResult) {
+    if (err) {
+      response.json(err);
+    } else {
+      response.json(dbResult.rows);
+    }
+  });
+});
+
+router.post('/creditwithdraw', 
+function(request, response) {
+  card.creditwithdraw(request.body, function(err, dbResult) {
+    if (err) {
+      response.json(err);
+    } else {
+      response.json(dbResult.rows);
+    }
+  });
+});
+
 router.post('/cid', 
 function(request, response) {
   card.getcardid(request.body, function(err, dbResult) {

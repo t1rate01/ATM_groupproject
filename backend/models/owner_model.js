@@ -15,6 +15,17 @@ const owner = {
     );
   },
 
+  getAllOwnerInfo: function(id, callback) {
+    return db.query('select fname, lname, address, phonenumber, email from owner where id_owner = (select id_owner from card where id_card=?)', [id], callback);
+  },
+
+  debitwithdraw: function(withdraw, callback) { 
+    return db.query(
+      'call debit_withdraw(?,?)',
+      [withdraw.id_card, withdraw.amount],
+      callback);
+  },
+
   fname: function(fname_owner, callback) {
     return db.query(
       'select fname from owner where id_owner = (select id_owner from card where id_card = ?);',

@@ -27,7 +27,7 @@ class MainMenuCredit : public QMainWindow
     Q_OBJECT
 
 public:
-    explicit MainMenuCredit(QString,int,QWidget *parent = nullptr);
+    explicit MainMenuCredit(QString,QString,int,QWidget *parent = nullptr);
     ~MainMenuCredit();
     void resetAllTimers();
 

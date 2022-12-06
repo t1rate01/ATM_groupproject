@@ -10,6 +10,7 @@ ReceiptWindow::ReceiptWindow(QString tok, QString cn, int cid,QWidget *parent) :
     token = tok;
     id_card = cid;
     ui->label_savelogs->clear();
+    ui->label_amount_save->clear();
     cardnumber = cn;
 }
 

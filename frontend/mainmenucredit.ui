@@ -74,7 +74,7 @@
     <property name="geometry">
      <rect>
       <x>950</x>
-      <y>310</y>
+      <y>200</y>
       <width>240</width>
       <height>90</height>
      </rect>
@@ -93,7 +93,7 @@
     <property name="geometry">
      <rect>
       <x>950</x>
-      <y>420</y>
+      <y>310</y>
       <width>240</width>
       <height>90</height>
      </rect>
@@ -127,25 +127,6 @@
      <string>Ownername</string>
     </property>
    </widget>
-   <widget class="QPushButton" name="btn_debit_deposit">
-    <property name="geometry">
-     <rect>
-      <x>90</x>
-      <y>420</y>
-      <width>240</width>
-      <height>90</height>
-     </rect>
-    </property>
-    <property name="font">
-     <font>
-      <family>Century Gothic</family>
-      <pointsize>14</pointsize>
-     </font>
-    </property>
-    <property name="text">
-     <string>Debit Deposit</string>
-    </property>
-   </widget>
    <widget class="QLabel" name="label_sessiontime">
     <property name="geometry">
      <rect>
@@ -168,8 +149,8 @@
    <widget class="QPushButton" name="btn_credit_withdraw">
     <property name="geometry">
      <rect>
-      <x>950</x>
-      <y>200</y>
+      <x>90</x>
+      <y>420</y>
       <width>240</width>
       <height>90</height>
      </rect>
@@ -188,7 +169,7 @@
     <property name="geometry">
      <rect>
       <x>950</x>
-      <y>530</y>
+      <y>420</y>
       <width>240</width>
       <height>90</height>
      </rect>

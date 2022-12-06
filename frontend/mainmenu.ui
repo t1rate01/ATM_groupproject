@@ -115,25 +115,6 @@
      <string>Ownername</string>
     </property>
    </widget>
-   <widget class="QPushButton" name="btn_debit_deposit">
-    <property name="geometry">
-     <rect>
-      <x>90</x>
-      <y>420</y>
-      <width>240</width>
-      <height>90</height>
-     </rect>
-    </property>
-    <property name="font">
-     <font>
-      <family>Century Gothic</family>
-      <pointsize>14</pointsize>
-     </font>
-    </property>
-    <property name="text">
-     <string>Debit Deposit</string>
-    </property>
-   </widget>
    <widget class="QLabel" name="label_sessiontime">
     <property name="geometry">
      <rect>

@@ -234,7 +234,7 @@
       <x>640</x>
       <y>270</y>
       <width>101</width>
-      <height>21</height>
+      <height>31</height>
      </rect>
     </property>
     <property name="font">
@@ -244,7 +244,7 @@
      </font>
     </property>
     <property name="text">
-     <string>Time</string>
+     <string>sum2</string>
     </property>
     <property name="alignment">
      <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>

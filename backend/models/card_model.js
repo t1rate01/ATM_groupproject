@@ -20,7 +20,14 @@ const card = {
     }); // tieto lähtee arrayna
   },
 
+  
 
+  creditwithdraw: function(withdraw, callback) { 
+    return db.query(
+      'call credit_withdraw(?,?)',
+      [withdraw.id_card, withdraw.amount],
+      callback);
+  },
 
   getcardid: function(get_cardid, callback) {
     return db.query(

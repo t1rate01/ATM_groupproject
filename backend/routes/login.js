@@ -15,7 +15,7 @@ router.post('/',
           if(dbError){
             if (dbError.errno = -4078){   // JOS DATABASE NURIN
               console.log("database offline");
-              response.send("offline");
+              response.send("Database offline");
             }
             else
             response.json(dbError.errno);
@@ -38,7 +38,7 @@ router.post('/',
             }
             else{
               console.log("Card does not exists");
-              response.send("No card");
+              response.send("No such card");
             }
           }
           }
@@ -47,7 +47,7 @@ router.post('/',
     else{
 
       console.log("Cardnumber or password missing");
-      response.send("Missing info");
+      response.send("Check cardnumber/password");
     }
   }
 );

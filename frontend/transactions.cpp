@@ -12,7 +12,6 @@ Transactions::Transactions(QString givenToken, int idcard, QWidget *parent) :
     ui->setupUi(this);
     token = givenToken;
     id_card = idcard;
-    getTransactions();
 
     connect(ui->transactions_Table->verticalScrollBar(),SIGNAL(valueChanged(int)),this,SLOT(timerReset()));
 }
@@ -37,6 +36,8 @@ void Transactions::on_btn_Back_clicked()
 
 void Transactions::on_btn_LogOut_clicked()
 {
+    timer10sek->stop();
+    emit logoutsignal();
     qDebug()<<"logout";
 }
 

@@ -88,7 +88,6 @@ void DebitWindow::getOwnerInfoSlot(QNetworkReply *reply)
 
     ui->label_info->setText("Account owner is: "+ ownerdata+ "");
 
-
 }
 
 void DebitWindow::on_btn20_clicked()

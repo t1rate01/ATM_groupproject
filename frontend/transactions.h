@@ -20,6 +20,7 @@ public:
     explicit Transactions(QString, int, QWidget *parent = nullptr);
     ~Transactions();
     void startwindowtimer();
+    void getTransactions();
 
 private slots:
     void on_btn_Back_clicked();
@@ -35,12 +36,13 @@ private slots:
 signals:
     void backtomainmenu();
     void resettimer30();
+    void logoutsignal();
 
 private:
     QTimer * timer10sek = new QTimer;
     Ui::Transactions *ui;
 
-    void getTransactions();
+
     void setTransactionsView();
     void TokenEditor(QJsonDocument);
 

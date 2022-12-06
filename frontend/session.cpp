@@ -65,14 +65,14 @@ void session::createWindows()    // KAIKKIEN IKKUNAOLIOIDEN KONSTRUKTORIN KUTSU
     askforreceipt = new AskForReceipt;
     // ----------------TARKISTETAAN SAADUN CREDIT ARVON PERUSTEELLA KUMPI MAINMENU AVATAAN------------------------------------
     if(credit == 0){
-        mainmenu = new MainMenu(sessiontoken, id_card);  // DEBIT MAIN MENU
+        mainmenu = new MainMenu(sessiontoken,fname, id_card);  // DEBIT MAIN MENU
         mainmenu->show();
         connect(mainmenu,SIGNAL(logout()),this,SLOT(logoutslot()));
         connect(mainmenu,SIGNAL(nextwindow(int)),this,SLOT(nextWindowSlot(int)));
         connect(mainmenu,SIGNAL(resettimer30()),this,SLOT(resettimerslot()));
     }
     if(credit > 0) {
-        creditmenu = new MainMenuCredit(sessiontoken, id_card);  // DEBIT CREDIT MAIN MENU
+        creditmenu = new MainMenuCredit(sessiontoken,fname, id_card);  // DEBIT CREDIT MAIN MENU
         creditmenu->show();
         connect(creditmenu,SIGNAL(logout()),this,SLOT(logoutslot()));
         connect(creditmenu,SIGNAL(nextwindow(int)),this,SLOT(nextWindowSlot(int)));
@@ -103,6 +103,11 @@ void session::logout()  // Ylikirjoittaa ja kutsuu kaikki tietojen ylikirjoitus 
 {
     session30timer->stop();
     timer30=0;
+    fname="";
+    lname="";
+    address="";
+    email="";
+    phonenumber="";
     sessiontoken="";
     loginwindow->cleartextsanddata();
     loginwindow->show();
@@ -110,8 +115,26 @@ void session::logout()  // Ylikirjoittaa ja kutsuu kaikki tietojen ylikirjoitus 
     deleteWindows(); // POISTAA KAIKKI OLIOT
 }
 
+void session::getOwnerData()
+{
+    QString site_url="http://localhost:3000/owner/alldata/"+QString::number(id_card);
+    QNetworkRequest request((site_url));
+    //WEBTOKEN ALKU
+    QByteArray myToken="Bearer "+sessiontoken.toLocal8Bit();
+    request.setRawHeader(QByteArray("Authorization"),(myToken));
+    //WEBTOKEN LOPPU
+
+    getownerdatamanager = new QNetworkAccessManager(this);  // Olion luonti, muista poistaa
+
+    request.setHeader(QNetworkRequest::ContentTypeHeader, "application/json");  // requestin headeri, tarvitsee jotta url encoded muoto kuten loginissa
+
+    connect(getownerdatamanager, SIGNAL(finished (QNetworkReply*)), this, SLOT(getownerDataSlot(QNetworkReply*)));    // KYTKEE VASTAUSSIGNAALIN VASTAUSSLOTTIIN
+                                                                                                          // VASTAUSSIGNAALI SISÄLTÄÄ DATAN (*REPLY)
+    reply = getownerdatamanager->get(request);
+}
+
 void session::getCardIDSlot(QNetworkReply *reply)   // ID CARDIN SAANTI SESSIONILLE
-{                                                   // KUTSUU CREDIT TIEDONHAKUFUNKTION JOKA JATKAA IKKUNOIDEN LUOMISEEN
+{
      cardresponse_data=reply->readAll();
      qDebug()<<"DATA : "+cardresponse_data;
      QJsonDocument json_doc = QJsonDocument::fromJson(cardresponse_data);
@@ -121,7 +144,7 @@ void session::getCardIDSlot(QNetworkReply *reply)   // ID CARDIN SAANTI SESSIONI
          id_card=id_carddata.toInt();  // Muoto jolla saa vastausdatasta tallennettua tämän olion int muuttujaan arvon
          qDebug()<<"Id card intti on = " <<id_card;
          getsessioncardmanager->deleteLater();   // POISTA KERTAKÄYTTÖ NETWORK OLIO
-         getandcheckcredit();   // KUTSU HETI UUTTA FUNKTIOTA CREDITIN SAAMISEKSI
+         getOwnerData();  // KUTSU OMISTAJAN TIEDONHAKU JA TALLENNUS
 }
 
 void session::getCreditSlot(QNetworkReply *reply)   // VASTAANOTTAA CREDITIN, KUTSUU IKKUNOIDENAVAUSFUNKTION
@@ -138,6 +161,23 @@ void session::getCreditSlot(QNetworkReply *reply)   // VASTAANOTTAA CREDITIN, KU
         reply->deleteLater();
         getcreditmanager->deleteLater();
         createWindows();// LUO OIKEAN MAINMENUN JA KAIKKI IKKUNAOLIOT, OTETAAN TARPEEN MUKAAN ESILLE
+}
+
+void session::getownerDataSlot(QNetworkReply *reply)
+{
+    ownerresponse_data=reply->readAll();
+    QJsonDocument json_doc = QJsonDocument::fromJson(ownerresponse_data);
+        QJsonObject json_obj = json_doc.object();
+        fname=json_obj["fname"].toString();
+        lname=json_obj["lname"].toString();
+        address=json_obj["address"].toString();
+        phonenumber=json_obj["phonenumber"].toString();
+        email=json_obj["email"].toString();
+        qDebug()<<"All owner data : "+fname+" "+lname+" "+address+ " " +phonenumber+ " "+email;
+        reply->deleteLater();
+        getownerdatamanager->deleteLater();
+        getandcheckcredit(); // KUTSU CREDIT HAKU JOKA LUO OIKEAN MAINMENUN
+
 }
 
 void session::loginsuccesfulSlot(QString cn, QString t) // saadaan loginikkunalta cardnunber ja token, käynnistetään id_cardin haku
@@ -169,6 +209,8 @@ void session::nextWindowSlot(int i) // IKKUNOIDEN AVAAMISLOGIIKKA JA SIGNAALIEN 
  case 2:
      connect(transactions,SIGNAL(backtomainmenu()),this,SLOT(backtomainmenu()));
      connect(transactions,SIGNAL(resettimer30()),this,SLOT(resettimerslot()));
+     connect(transactions,SIGNAL(logoutsignal()),this,SLOT(logoutslot()));
+     transactions->getTransactions();
      transactions->startwindowtimer();
      transactions->show();
      break;
@@ -198,6 +240,7 @@ void session::nextWindowSlot(int i) // IKKUNOIDEN AVAAMISLOGIIKKA JA SIGNAALIEN 
      connect(askforreceipt,SIGNAL(nextwindow(int)),this,SLOT(nextWindowSlot(int)));
      connect(askforreceipt,SIGNAL(logout()),this,SLOT(logoutslot()));
      connect(askforreceipt,SIGNAL(backtomainmenu()),this,SLOT(backtomainmenu()));
+     askforreceipt->starttimer();
      askforreceipt->show();
      break;
 }
@@ -214,14 +257,13 @@ void session::timer30slot()     // perus QTimerin signaalislotti istunnon 30sek 
 {
     timer30++;
     qDebug()<<"Session time is " << timer30;
-    if(credit==0){
+    if(credit==0){                          // katsotaan kumpi mainmenuolio on luotu ja päivitetään sen aikaa
         mainmenu->updateTimeUi(timer30);
     }
     if(credit>0){
         creditmenu->updateTimeUi(timer30);
     }
-
-    if(timer30>29){
+    if(timer30>29){                         // istunnon idleajan täyttyminen
             logout();
             qDebug()<< "sessiontoken on nyt " + sessiontoken;
     }
