@@ -78,7 +78,7 @@ background-color: transparent;
     </rect>
    </property>
    <property name="text">
-    <string>dfg</string>
+    <string/>
    </property>
   </widget>
   <widget class="QLabel" name="label">
