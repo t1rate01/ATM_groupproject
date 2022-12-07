@@ -67,7 +67,7 @@
      </font>
     </property>
     <property name="text">
-     <string>Debit Balance</string>
+     <string>Balance</string>
     </property>
    </widget>
    <widget class="QPushButton" name="btn_logs">
@@ -86,7 +86,7 @@
      </font>
     </property>
     <property name="text">
-     <string>Logs</string>
+     <string>Transations</string>
     </property>
    </widget>
    <widget class="QPushButton" name="btn_debit_settings">

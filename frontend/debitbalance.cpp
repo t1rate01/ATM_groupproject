@@ -89,7 +89,7 @@ void Debitbalance::getcreditbalanceSlot(QNetworkReply *reply)
         creditbalance = creditbalancedata.toInt();
 
         qDebug()<<"Debit saldo on  " <<creditbalance;
-        ui->label_creditbalance->setText("Your credit balance is: " +creditbalancedata+ " €.");
+        ui->label_creditbalance->setText("Available credit: " +creditbalancedata+ " €.");
 
 }
 
@@ -104,7 +104,7 @@ void Debitbalance::timer10Slot()
     }
 }
 
-void Debitbalance::on_btn_Back_2_clicked()
+void Debitbalance::on_btn_Back_clicked()
 {
     timer10sek->stop();
     emit backtomainmenu();

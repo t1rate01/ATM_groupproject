@@ -19,6 +19,11 @@
   <property name="windowTitle">
    <string>Main Menu</string>
   </property>
+  <property name="styleSheet">
+   <string notr="true">background-color: qlineargradient(spread:pad, x1:0.46, y1:0, x2:0.472, y2:1, stop:0 rgba(0, 20, 15, 255), stop:1 rgba(17, 73, 74, 255));
+color: #c9bfb6;
+QLabel{background-color: transparent;}</string>
+  </property>
   <widget class="QWidget" name="centralwidget">
    <widget class="QPushButton" name="btn_debit_withdraw">
     <property name="geometry">
@@ -34,6 +39,13 @@
       <family>Century Gothic</family>
       <pointsize>14</pointsize>
      </font>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">background-color: qlineargradient(spread:pad, x1:0.494, y1:0, x2:0.517, y2:1, stop:0 rgba(36, 39, 43, 255), stop:1 rgba(72, 74, 78, 255));
+border:0px solid black;
+border-radius: 12px;
+color: #c9bfb6;
+</string>
     </property>
     <property name="text">
      <string>Debit Withdraw</string>
@@ -54,6 +66,13 @@
       <pointsize>14</pointsize>
      </font>
     </property>
+    <property name="styleSheet">
+     <string notr="true">background-color: qlineargradient(spread:pad, x1:0.494, y1:0, x2:0.517, y2:1, stop:0 rgba(36, 39, 43, 255), stop:1 rgba(72, 74, 78, 255));
+border:0px solid black;
+border-radius: 12px;
+color: #c9bfb6;
+font-size: 14;</string>
+    </property>
     <property name="text">
      <string>Balance</string>
     </property>
@@ -72,6 +91,13 @@
       <family>Century Gothic</family>
       <pointsize>14</pointsize>
      </font>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">background-color: qlineargradient(spread:pad, x1:0.494, y1:0, x2:0.517, y2:1, stop:0 rgba(36, 39, 43, 255), stop:1 rgba(72, 74, 78, 255));
+border:0px solid black;
+border-radius: 12px;
+color: #c9bfb6;
+font-size: 14;</string>
     </property>
     <property name="text">
      <string>Transactions</string>
@@ -92,6 +118,13 @@
       <pointsize>14</pointsize>
      </font>
     </property>
+    <property name="styleSheet">
+     <string notr="true">background-color: qlineargradient(spread:pad, x1:0.494, y1:0, x2:0.517, y2:1, stop:0 rgba(36, 39, 43, 255), stop:1 rgba(72, 74, 78, 255));
+border:0px solid black;
+border-radius: 12px;
+color: #c9bfb6;
+font-size: 14;</string>
+    </property>
     <property name="text">
      <string>Settings</string>
     </property>
@@ -110,6 +143,11 @@
       <family>Century Gothic</family>
       <pointsize>14</pointsize>
      </font>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">background-color: transparent;
+border: 1px solid #c9bfb6;
+padding: 8px;</string>
     </property>
     <property name="text">
      <string>Ownername</string>
@@ -130,6 +168,11 @@
       <pointsize>10</pointsize>
      </font>
     </property>
+    <property name="styleSheet">
+     <string notr="true">background-color: transparent;
+border: 1px solid #c9bfb6;
+padding: 8px;</string>
+    </property>
     <property name="text">
      <string>Session will end in 30 sec</string>
     </property>
@@ -148,6 +191,13 @@
       <family>Century Gothic</family>
       <pointsize>14</pointsize>
      </font>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">background-color: qlineargradient(spread:pad, x1:0.494, y1:0, x2:0.517, y2:1, stop:0 rgba(36, 39, 43, 255), stop:1 rgba(72, 74, 78, 255));
+border:0px solid black;
+border-radius: 12px;
+color: #c9bfb6;
+font-size: 14;</string>
     </property>
     <property name="text">
      <string>Logout</string>

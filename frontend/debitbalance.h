@@ -27,7 +27,7 @@ private slots:
     void timer10Slot();
 
 
-    void on_btn_Back_2_clicked();
+    void on_btn_Back_clicked();
 
 signals:
     void backtomainmenu();
@@ -45,7 +45,7 @@ private:
     QByteArray debitbalance_data;
     QByteArray creditbalance_data;
     QNetworkReply * reply;
-    void on_btn_Back_clicked();
+
 
 };
 
