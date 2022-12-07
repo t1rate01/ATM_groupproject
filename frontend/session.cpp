@@ -60,6 +60,7 @@ void session::createWindows()    // KAIKKIEN IKKUNAOLIOIDEN KONSTRUKTORIN KUTSU
     transactions = new Transactions(sessiontoken,id_card);
     saving = new savings(sessiontoken,id_card);
     debitwindow = new DebitWindow(sessiontoken,id_card);
+    creditwindow = new CreditWindow(sessiontoken, id_card);
     debitbalance = new Debitbalance(sessiontoken,id_card,credit);
     receiptwindow = new ReceiptWindow(sessiontoken,sessioncardnumber,id_card);
     askforreceipt = new AskForReceipt;
