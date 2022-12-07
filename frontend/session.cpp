@@ -17,22 +17,22 @@ session::~session()
 
 void session::getidcard()                   // HAKEE ID_CARDIN CARDNUMBERIN PERUSTEELLA,
 {                                         // VASTAUS TULEE SLOTTIIN getCardIDSlot()
-   session30timer->start(1000); // login on tehty, laitetaan idletimer käyntiin
-    QString site_url="http://localhost:3000/card/cid";
-    QNetworkRequest request((site_url));
-    //WEBTOKEN ALKU
-    QByteArray myToken="Bearer "+sessiontoken.toLocal8Bit();
-    request.setRawHeader(QByteArray("Authorization"),(myToken));
-    //WEBTOKEN LOPPU
-    getsessioncardmanager = new QNetworkAccessManager(this);
+    session30timer->start(1000);
+       QString site_url="http://localhost:3000/card/cid";
+       QNetworkRequest request((site_url));
+       //WEBTOKEN ALKU
+       QByteArray myToken="Bearer "+sessiontoken.toLocal8Bit();
+       request.setRawHeader(QByteArray("Authorization"),(myToken));
+       //WEBTOKEN LOPPU
+       getsessioncardmanager = new QNetworkAccessManager(this);  // toiminnoille jokaiselle oma manageri (?)
 
-    QJsonObject jsonObj;  // objekti jonka sisälle dbrequestiin lähtevä data
-    jsonObj.insert("cardnumber",sessioncardnumber);
-    request.setHeader(QNetworkRequest::ContentTypeHeader, "application/json");  // requestin headeri, tarvitsee jotta url encoded muoto kuten loginissa
-                                                                                // tarvitseeko olla juuri application/json, miksi ?
-    connect(getsessioncardmanager, SIGNAL(finished (QNetworkReply*)), this, SLOT(getCardIDSlot(QNetworkReply*)));
+       QJsonObject jsonObj;  // objekti jonka sisälle dbrequestiin lähtevä data
+       jsonObj.insert("cardnumber",sessioncardnumber);
+       request.setHeader(QNetworkRequest::ContentTypeHeader, "application/json");  // requestin headeri, tarvitsee jotta url encoded muoto kuten loginissa
+                                                                                   // tarvitseeko olla juuri application/json, miksi ?
+       connect(getsessioncardmanager, SIGNAL(finished (QNetworkReply*)), this, SLOT(getCardIDSlot(QNetworkReply*)));
 
-    reply = getsessioncardmanager->post(request, QJsonDocument(jsonObj).toJson());
+       reply = getsessioncardmanager->post(request, QJsonDocument(jsonObj).toJson());
 }
 
 void session::getandcheckcredit()                   // HAKEE KORTIN CREDITIN ID_CARD PERUSTEELLA
@@ -109,7 +109,7 @@ void session::logout()  // Ylikirjoittaa ja kutsuu kaikki tietojen ylikirjoitus 
     email="";
     phonenumber="";
     sessiontoken="";
-    loginwindow->cleartextsanddata();
+    loginwindow->cleartextsanddata(0);
     loginwindow->show();
     id_card=0;
     deleteWindows(); // POISTAA KAIKKI OLIOT
@@ -123,28 +123,27 @@ void session::getOwnerData()
     QByteArray myToken="Bearer "+sessiontoken.toLocal8Bit();
     request.setRawHeader(QByteArray("Authorization"),(myToken));
     //WEBTOKEN LOPPU
-
     getownerdatamanager = new QNetworkAccessManager(this);  // Olion luonti, muista poistaa
-
     request.setHeader(QNetworkRequest::ContentTypeHeader, "application/json");  // requestin headeri, tarvitsee jotta url encoded muoto kuten loginissa
-
-    connect(getownerdatamanager, SIGNAL(finished (QNetworkReply*)), this, SLOT(getownerDataSlot(QNetworkReply*)));    // KYTKEE VASTAUSSIGNAALIN VASTAUSSLOTTIIN
-                                                                                                          // VASTAUSSIGNAALI SISÄLTÄÄ DATAN (*REPLY)
+    connect(getownerdatamanager, SIGNAL(finished (QNetworkReply*)), this, SLOT(getownerDataSlot(QNetworkReply*)));    // KYTKEE VASTAUSSIGNAALIN VASTAUSSLOTTIIN                                                                                                         // VASTAUSSIGNAALI SISÄLTÄÄ DATAN (*REPLY)
     reply = getownerdatamanager->get(request);
 }
 
 void session::getCardIDSlot(QNetworkReply *reply)   // ID CARDIN SAANTI SESSIONILLE
 {
-     cardresponse_data=reply->readAll();
-     qDebug()<<"DATA : "+cardresponse_data;
-     QJsonDocument json_doc = QJsonDocument::fromJson(cardresponse_data);
-         QJsonObject json_obj = json_doc.object();    // Tätä menetelmää voi käyttää kun vastauksena on 1 objekti
-         QString id_carddata;                           // Jos vastaus on array (esim logs), käytä QBYTEARRAY
-         id_carddata=QString::number(json_obj["id_card"].toInt());
-         id_card=id_carddata.toInt();  // Muoto jolla saa vastausdatasta tallennettua tämän olion int muuttujaan arvon
-         qDebug()<<"Id card intti on = " <<id_card;
-         getsessioncardmanager->deleteLater();   // POISTA KERTAKÄYTTÖ NETWORK OLIO
-         getOwnerData();  // KUTSU OMISTAJAN TIEDONHAKU JA TALLENNUS
+    cardresponse_data=reply->readAll();
+        qDebug()<<"DATA : "+cardresponse_data;
+
+        QJsonDocument json_doc = QJsonDocument::fromJson(cardresponse_data);
+            QJsonObject json_obj = json_doc.object();    // Tätä menetelmää voi käyttää kun vastauksena on 1 objekti
+            QString id_carddata;                           // Jos vastaus on array (esim logs), käytä QBYTEARRAY
+            id_carddata=QString::number(json_obj["id_card"].toInt());
+            id_card=id_carddata.toInt();  // Muoto jolla saa vastausdatasta tallennettua tämän olion int muuttujaan arvon
+            qDebug()<<"Id card intti on = " <<id_card;
+
+
+            getsessioncardmanager->deleteLater();   // POISTA KERTAKÄYTTÖ ACCESS OLIO (?)
+            getOwnerData();
 }
 
 void session::getCreditSlot(QNetworkReply *reply)   // VASTAANOTTAA CREDITIN, KUTSUU IKKUNOIDENAVAUSFUNKTION
@@ -191,8 +190,6 @@ void session::logoutslot()  // logout signaali saatua kutsutaan logout funktio, 
 {
     logout();
 }
-
-
 
 void session::nextWindowSlot(int i) // IKKUNOIDEN AVAAMISLOGIIKKA JA SIGNAALIEN KYTKENTÄ, TARPEELLISTEN CHILD FUNKTIOIDEN KUTSU
                                     // MUISTA KYTKEÄ SIGNAALIT BACKTOMAINMENU, RESETTIMER30 JA NEXTWINDOW
@@ -267,7 +264,6 @@ void session::timer30slot()     // perus QTimerin signaalislotti istunnon 30sek 
             logout();
             qDebug()<< "sessiontoken on nyt " + sessiontoken;
     }
-
 }
 
 void session::backtomainmenu()   // 10 sek päättymisen signaalislotti, palauttaa cred perusteella oikean mainmenun esiin

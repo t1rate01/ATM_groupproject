@@ -16,29 +16,30 @@ MainWindow::~MainWindow()
     delete ui;
 }
 
-void MainWindow::cleartextsanddata()
+void MainWindow::cleartextsanddata(int i)
 {
  ui->lineEdit_cardnum->clear();
  ui->lineEdit_password->clear();
-ui->label_loginresponse->setText(" ");
 cardnumber="";
 password="";
 token="";
+if(i != 1){
+    ui->label_loginresponse->setText(" ");
+}
 }
 
 void MainWindow::on_btn_login_clicked()
 {
-
     cardnumber = ui->lineEdit_cardnum->text();
     password = ui->lineEdit_password->text();
     qDebug()<<cardnumber + " " + password;
-    if(cardnumber.length()<3){
+    if(cardnumber.isEmpty()){
         ui->label_loginresponse->setText("Check cardnumber");
-        cleartextsanddata();
+        cleartextsanddata(1);
     }
-    else if (password.length()<1){
+    else if (password.isEmpty()){
         ui->label_loginresponse->setText("Check password");
-        cleartextsanddata();
+        cleartextsanddata(1);
     }
     else {
     QJsonObject jsonObj;

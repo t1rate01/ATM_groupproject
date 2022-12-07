@@ -75,6 +75,48 @@ void DebitWindow::getBalanceSlot(QNetworkReply *reply)
     getowner();
 }
 
+void DebitWindow::getwithdrawdataSlot(QNetworkReply *reply)
+{
+    withdraw_data=reply->readAll();
+    qDebug()<<"DATA : "+withdraw_data;
+    QJsonDocument json_doc = QJsonDocument::fromJson(withdraw_data);
+        QJsonObject json_obj = json_doc.object();    // Tätä menetelmää voi käyttää kun vastauksena on 1 objekti
+        int test;                           // Jos vastaus on array (esim logs), käytä QBYTEARRAY
+        test=json_obj["affectedRows"].toInt();
+        debitwithdrawmanager->deleteLater();
+        if(test>0){
+            timer10sek->stop();
+            emit nextwindow(6);
+            this->close();
+        }
+        if(test==0){
+            time10=0;
+            emit resettimer30();
+            ui->label_error->setText("Insufficient funds");
+        }
+}
+
+void DebitWindow::withdraw(int amount)
+{
+    // HAKEE DEBITBALANCEN TIETOKANNASTA
+    QString site_url="http://localhost:3000/card/debitwithdraw";
+    QNetworkRequest request((site_url));
+
+    //WEBTOKEN ALKU
+    QByteArray myToken="Bearer "+token.toLocal8Bit();
+    request.setRawHeader(QByteArray("Authorization"),(myToken));
+    //WEBTOKEN LOPPU
+
+    QJsonObject jsonObj;  // objekti jonka sisälle dbrequestiin lähtevä data
+    jsonObj.insert("id_card",id_card);
+    jsonObj.insert("amount",amount);
+    request.setHeader(QNetworkRequest::ContentTypeHeader, "application/json");
+
+    debitwithdrawmanager = new QNetworkAccessManager(this);
+    connect(debitwithdrawmanager, SIGNAL(finished(QNetworkReply*)), this, SLOT(getwithdrawdataSlot(QNetworkReply*)));
+    reply = debitwithdrawmanager->post(request,QJsonDocument(jsonObj).toJson());
+}
+
 void DebitWindow::getOwnerInfoSlot(QNetworkReply *reply)
 {
     owner_data=reply->readAll();
@@ -92,49 +134,50 @@ void DebitWindow::getOwnerInfoSlot(QNetworkReply *reply)
 
 void DebitWindow::on_btn20_clicked()
 {
-    timer10sek->stop();
-    emit nextwindow(6);
-    this->close();
+    time10=0;
+    emit resettimer30();
+    withdraw(20);
 }
 
 
 void DebitWindow::on_btn40_clicked()
 {
-    timer10sek->stop();
-    emit nextwindow(6);
-    this->close();
+    time10=0;
+    emit resettimer30();
+    withdraw(40);
+
 }
 
 
 void DebitWindow::on_btn60_clicked()
 {
-    timer10sek->stop();
-    emit nextwindow(6);
-    this->close();
+    time10=0;
+    emit resettimer30();
+    withdraw(60);
 }
 
 
 void DebitWindow::on_btn100_clicked()
 {
-    timer10sek->stop();
-    emit nextwindow(6);
-    this->close();
+    time10=0;
+    emit resettimer30();
+    withdraw(100);
 }
 
 
 void DebitWindow::on_btn200_clicked()
 {
-    timer10sek->stop();
-    emit nextwindow(6);
-    this->close();
+    time10=0;
+    emit resettimer30();
+    withdraw(200);
 }
 
 
 void DebitWindow::on_btn500_clicked()
 {
-    timer10sek->stop();
-    emit nextwindow(6);
-    this->close();
+  time10=0;
+  emit resettimer30();
+  withdraw(500);
 }
 
 

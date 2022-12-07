@@ -35,8 +35,7 @@ private slots:
     void timer10Slot();
     void getOwnerInfoSlot(QNetworkReply *reply);
     void getBalanceSlot(QNetworkReply *reply);
-
-
+    void getwithdrawdataSlot(QNetworkReply * reply);
 
 signals:
     void resettimer30();
@@ -50,10 +49,13 @@ private:
     int account_balance;
     int id_card;
     int time10=0;
+    void withdraw(int);
 
     QNetworkAccessManager *getOwnerInfoManager;
+    QNetworkAccessManager * debitwithdrawmanager;
     QNetworkReply *reply;
     QByteArray owner_data;
+    QByteArray withdraw_data;
     QNetworkAccessManager *getBalanceManager;
     QByteArray account_balance_data;
 };

@@ -31,7 +31,7 @@ public:
     QString cardnumber;
     QString password;
     QString token;
-    void cleartextsanddata();  // resettaa tallennetun datan
+    void cleartextsanddata(int);  // resettaa tallennetun datan
 signals:
     void reset30timer();
     void login(QString,QString);

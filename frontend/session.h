@@ -22,7 +22,7 @@
     TÄTÄ OLIOTA EI TUHOTA OHJELMAN AJON AIKANA,
     TÄMÄ OLIO LUO JA TUHOAA ISTUNTOJEN VÄLISSÄ IKKUNAOLIOITA
     TÄMÄ OLIO PITÄÄ TALLESSA TIEDOT JOITA TULEE VÄLITTÄÄ IKKUNOILLE
-    TÄMÄN OLION LOGIIKKAAN OMMELLAAN KAIKKI MUUT IKKUNAOLIOT
+    JA YLIKIRJOITTAA TALLENNETUT TIEDOT ISTUNNON PÄÄTTYESSÄ
     OLION TOIMINTA VAIHEINA:
 
  1. Olion konstruktori luo ja avaa Loginwindow (mainwindow.h)
@@ -31,8 +31,9 @@
      cardnumberilla haetaan id_card jota muut ikkunat käyttävät database
      kommunikointiin.
 
- 2.  Id_cardin saatua haetaan myös heti kortin credit arvo, jonka perusteella
-        tiedetään onko kortti debit vai debit/credit ja avataan oikea mainmenu.
+ 2.  Id_cardin saatua haetaan myös heti kortinomistajan tiedot ja kortin credit arvo,
+        jonka perusteella tiedetään onko kortti debit vai debit/credit
+        ja avataan oikea mainmenu.
         Kaikki muutkin istunnon ikkunaoliot luodaan, muttei tuoda esiin.
         Avattavat mainmenun signaalit kytketään luonnin yhteydessä.
 

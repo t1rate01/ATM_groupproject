@@ -155,9 +155,9 @@
    <widget class="QLabel" name="txtSelect">
     <property name="geometry">
      <rect>
-      <x>610</x>
+      <x>510</x>
       <y>80</y>
-      <width>211</width>
+      <width>481</width>
       <height>71</height>
      </rect>
     </property>
@@ -212,9 +212,9 @@
    <widget class="QLabel" name="label_balance">
     <property name="geometry">
      <rect>
-      <x>890</x>
-      <y>10</y>
-      <width>351</width>
+      <x>950</x>
+      <y>0</y>
+      <width>321</width>
       <height>81</height>
      </rect>
     </property>
@@ -223,6 +223,38 @@
       <family>Century Gothic</family>
       <pointsize>14</pointsize>
      </font>
+    </property>
+    <property name="text">
+     <string/>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="btnOther">
+    <property name="geometry">
+     <rect>
+      <x>600</x>
+      <y>580</y>
+      <width>240</width>
+      <height>90</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <family>Century Gothic</family>
+      <pointsize>14</pointsize>
+     </font>
+    </property>
+    <property name="text">
+     <string>Other amount</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="label_error">
+    <property name="geometry">
+     <rect>
+      <x>920</x>
+      <y>610</y>
+      <width>351</width>
+      <height>61</height>
+     </rect>
     </property>
     <property name="text">
      <string/>

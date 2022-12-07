@@ -1,6 +1,18 @@
 const db = require('../database');
 
 const owner = {
+  getAllOwnerInfo: function(id, callback) {
+    return db.query('select fname, lname, address, phonenumber, email from owner where id_owner = (select id_owner from card where id_card=?)', [id], callback);
+  },
+
+  fname: function(fname_owner, callback) {
+    return db.query(
+      'select fname from owner where id_owner = (select id_owner from card where id_card = ?);',
+      [fname_owner.id_card],
+      callback
+    );
+  },
+  /*
   getById: function(id, callback) {
     return db.query('select * from owner where id_owner=?', [id], callback);
   },
@@ -14,25 +26,8 @@ const owner = {
       callback
     );
   },
-
-  getAllOwnerInfo: function(id, callback) {
-    return db.query('select fname, lname, address, phonenumber, email from owner where id_owner = (select id_owner from card where id_card=?)', [id], callback);
-  },
-
-  debitwithdraw: function(withdraw, callback) { 
-    return db.query(
-      'call debit_withdraw(?,?)',
-      [withdraw.id_card, withdraw.amount],
-      callback);
-  },
-
-  fname: function(fname_owner, callback) {
-    return db.query(
-      'select fname from owner where id_owner = (select id_owner from card where id_card = ?);',
-      [fname_owner.id_card],
-      callback
-    );
-  },
+*/
+ /*
   delete: function(id, callback) {
     return db.query('delete from owner where id_owner=?', [id], callback);
   },
@@ -42,6 +37,6 @@ const owner = {
       [owner.fname, owner.lname, owner.address,owner.phonenumber,owner.email,id],
       callback
     );
-  }
+  }*/
 };
 module.exports = owner;
