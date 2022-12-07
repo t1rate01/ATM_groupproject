@@ -6,6 +6,7 @@
 #include <QNetworkAccessManager>
 #include <QJsonDocument>
 #include <QTimer>
+#include "creditamountwindow.h"
 
 namespace Ui {
 class CreditWindow;
@@ -23,6 +24,7 @@ public:
     void getbalance();
     void getowner();
     void startwindowtimer();
+    void resets();
 
 private slots:
     void on_btn20_clicked();
@@ -36,11 +38,16 @@ private slots:
     void getOwnerInfoSlot(QNetworkReply *reply);
     void getBalanceSlot(QNetworkReply *reply);
     void getwithdrawdataSlot(QNetworkReply * reply);
+    void customAmount(int);
+
+    void showUI();
+    void on_btnOther_clicked();
 
 signals:
     void resettimer30();
     void backtomainmenu();
     void nextwindow(int);
+
 
 private:
     Ui::CreditWindow *ui;
@@ -52,12 +59,13 @@ private:
     void withdraw(int);
 
     QNetworkAccessManager *getOwnerInfoManager;
-    QNetworkAccessManager * debitwithdrawmanager;
+    QNetworkAccessManager * creditwithdrawmanager;
     QNetworkReply *reply;
     QByteArray owner_data;
     QByteArray withdraw_data;
     QNetworkAccessManager *getBalanceManager;
     QByteArray account_balance_data;
+    CreditAmountWindow *amountWindow;
 };
 
 #endif // CREDITWINDOW_H

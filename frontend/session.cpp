@@ -241,6 +241,14 @@ void session::nextWindowSlot(int i) // IKKUNOIDEN AVAAMISLOGIIKKA JA SIGNAALIEN 
      askforreceipt->starttimer();
      askforreceipt->show();
      break;
+ case 7:
+     connect(creditwindow,SIGNAL(backtomainmenu()),this,SLOT(backtomainmenu()));
+     connect(creditwindow,SIGNAL(resettimer30()),this,SLOT(resettimerslot()));
+     connect(creditwindow,SIGNAL(nextwindow(int)),this,SLOT(nextWindowSlot(int)));
+     creditwindow->startwindowtimer();
+     creditwindow->getbalance();
+     creditwindow->show();
+     break;
 }
 }
 

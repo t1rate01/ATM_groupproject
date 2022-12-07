@@ -56,6 +56,7 @@ private slots:
     void getfnameSlot(QNetworkReply *reply);
     void on_btn_debit_settings_clicked();
     void on_btn_debit_balance_clicked();
+    void on_btn_credit_withdraw_clicked();
 };
 
 #endif // MAINMENUCREDIT_H

@@ -1,11 +1,12 @@
-#include "debitwindow.h"
-#include "ui_debitwindow.h"
+#include "creditwindow.h"
+#include "ui_creditwindow.h"
 #include <QDebug>
 #include <QByteArray>
 
-DebitWindow::DebitWindow(QString givenToken, int idcard,QWidget *parent) :
+
+CreditWindow::CreditWindow(QString givenToken, int idcard,QWidget *parent) :
     QMainWindow(parent),
-    ui(new Ui::DebitWindow)
+    ui(new Ui::CreditWindow)
 {
     //AJASTIN
     connect(timer10sek,SIGNAL(timeout()),this,SLOT(timer10Slot()));
@@ -15,16 +16,16 @@ DebitWindow::DebitWindow(QString givenToken, int idcard,QWidget *parent) :
 
 }
 
-DebitWindow::~DebitWindow()
+CreditWindow::~CreditWindow()
 {
     delete ui;
 }
 
-void DebitWindow::getbalance()
+void CreditWindow::getbalance()
 {
     //HAKEE TILIN SALDON
-    QString site_url="http://localhost:3000/account/"+QString::number(id_card);
-    QNetworkRequest request((site_url));
+    QString site_url="http://localhost:3000/account/credit/"+QString::number(id_card);
+    QNetworkRequest request(site_url);
     //WEBTOKEN ALKU
     QByteArray myToken="Bearer "+token.toLocal8Bit();
     request.setRawHeader(QByteArray("Authorization"),(myToken));
@@ -34,11 +35,11 @@ void DebitWindow::getbalance()
     reply = getBalanceManager->get(request);
 }
 
-void DebitWindow::getowner()
+void CreditWindow::getowner()
 {
     //HAKEE TILINOMISTAJAN TIEDOT
     QString site_url="http://localhost:3000/owner/fname"; //mites sukunimi??
-    QNetworkRequest request((site_url));
+    QNetworkRequest request(site_url);
     //WEBTOKEN ALKU
     QByteArray myToken="Bearer "+token.toLocal8Bit();
     request.setRawHeader(QByteArray("Authorization"),(myToken));
@@ -53,12 +54,18 @@ void DebitWindow::getowner()
     reply = getOwnerInfoManager->post(request, QJsonDocument(jsonObj).toJson());
 }
 
-void DebitWindow::startwindowtimer()
+void CreditWindow::startwindowtimer()
 {
     timer10sek->start(1000);
 }
 
-void DebitWindow::getBalanceSlot(QNetworkReply *reply)
+void CreditWindow::resets()
+{
+    time10=0;
+    emit resettimer30();
+}
+
+void CreditWindow::getBalanceSlot(QNetworkReply *reply)
 {
     account_balance_data=reply->readAll();
     qDebug()<<"TILITIEDOT : "+account_balance_data;
@@ -67,15 +74,15 @@ void DebitWindow::getBalanceSlot(QNetworkReply *reply)
     QJsonObject json_obj = json_doc.object();
     QString balancedata;
     int balance;
-    balancedata=QString::number(json_obj["account_balance"].toInt());
+    balancedata=QString::number(json_obj["credit_balance"].toInt());
     balance=balancedata.toInt();
     qDebug()<<"Kortin saldo on  " <<balance;
 
-    ui->label_balance->setText("Your account balance is: "+ QString::number(balance));
+    ui->label_balance->setText("Your available credit is: "+ QString::number(balance));
     getowner();
 }
 
-void DebitWindow::getwithdrawdataSlot(QNetworkReply *reply)
+void CreditWindow::getwithdrawdataSlot(QNetworkReply *reply)
 {
     withdraw_data=reply->readAll();
     qDebug()<<"DATA : "+withdraw_data;
@@ -83,24 +90,35 @@ void DebitWindow::getwithdrawdataSlot(QNetworkReply *reply)
         QJsonObject json_obj = json_doc.object();    // Tätä menetelmää voi käyttää kun vastauksena on 1 objekti
         int test;                           // Jos vastaus on array (esim logs), käytä QBYTEARRAY
         test=json_obj["affectedRows"].toInt();
-        debitwithdrawmanager->deleteLater();
+        creditwithdrawmanager->deleteLater();
         if(test>0){
             timer10sek->stop();
             emit nextwindow(6);
             this->close();
         }
         if(test==0){
-            time10=0;
-            emit resettimer30();
+            resets();
             ui->label_error->setText("Insufficient funds");
         }
 }
 
-void DebitWindow::withdraw(int amount)
+void CreditWindow::customAmount(int amount)
 {
-    // HAKEE DEBITBALANCEN TIETOKANNASTA
-    QString site_url="http://localhost:3000/card/debitwithdraw";
-    QNetworkRequest request((site_url));
+    this->show();
+    resets();
+    withdraw(amount);
+}
+
+void CreditWindow::showUI()
+{
+    resets();
+    this->show();
+}
+
+void CreditWindow::withdraw(int amount)
+{
+    QString site_url="http://localhost:3000/card/creditwithdraw";
+    QNetworkRequest request(site_url);
 
     //WEBTOKEN ALKU
     QByteArray myToken="Bearer "+token.toLocal8Bit();
@@ -108,16 +126,16 @@ void DebitWindow::withdraw(int amount)
     //WEBTOKEN LOPPU
 
     QJsonObject jsonObj;  // objekti jonka sisälle dbrequestiin lähtevä data
-    jsonObj.insert("id_card",id_card);
-    jsonObj.insert("amount",amount);
+    jsonObj.insert("id_card", id_card);
+    jsonObj.insert("amount", amount);
     request.setHeader(QNetworkRequest::ContentTypeHeader, "application/json");
 
-    debitwithdrawmanager = new QNetworkAccessManager(this);
-    connect(debitwithdrawmanager, SIGNAL(finished(QNetworkReply*)), this, SLOT(getwithdrawdataSlot(QNetworkReply*)));
-    reply = debitwithdrawmanager->post(request,QJsonDocument(jsonObj).toJson());
+    creditwithdrawmanager = new QNetworkAccessManager(this);
+    connect(creditwithdrawmanager, SIGNAL(finished(QNetworkReply*)), this, SLOT(getwithdrawdataSlot(QNetworkReply*)));
+    reply = creditwithdrawmanager->post(request,QJsonDocument(jsonObj).toJson());
 }
 
-void DebitWindow::getOwnerInfoSlot(QNetworkReply *reply)
+void CreditWindow::getOwnerInfoSlot(QNetworkReply *reply)
 {
     owner_data=reply->readAll();
     qDebug()<<"DATA : "+owner_data;
@@ -129,66 +147,54 @@ void DebitWindow::getOwnerInfoSlot(QNetworkReply *reply)
     qDebug()<<"Tilinomistaja on  " <<ownerdata;
 
     ui->label_info->setText("Account owner is: "+ ownerdata+ "");
-
 }
 
-void DebitWindow::on_btn20_clicked()
+void CreditWindow::on_btn20_clicked()
 {
-    time10=0;
-    emit resettimer30();
+    resets();
     withdraw(20);
 }
 
-
-void DebitWindow::on_btn40_clicked()
+void CreditWindow::on_btn40_clicked()
 {
-    time10=0;
-    emit resettimer30();
+    resets();
     withdraw(40);
-
 }
 
-
-void DebitWindow::on_btn60_clicked()
+void CreditWindow::on_btn60_clicked()
 {
-    time10=0;
-    emit resettimer30();
+    resets();
     withdraw(60);
 }
 
-
-void DebitWindow::on_btn100_clicked()
+void CreditWindow::on_btn100_clicked()
 {
-    time10=0;
-    emit resettimer30();
+    resets();
     withdraw(100);
 }
 
-
-void DebitWindow::on_btn200_clicked()
+void CreditWindow::on_btn200_clicked()
 {
-    time10=0;
-    emit resettimer30();
+    resets();
     withdraw(200);
 }
 
 
-void DebitWindow::on_btn500_clicked()
+void CreditWindow::on_btn500_clicked()
 {
-  time10=0;
-  emit resettimer30();
+    resets();
   withdraw(500);
 }
 
 
-void DebitWindow::on_btnBack_clicked()
+void CreditWindow::on_btnBack_clicked()
 {
     timer10sek->stop();
     emit backtomainmenu();
     this->close();
 }
 
-void DebitWindow::timer10Slot()
+void CreditWindow::timer10Slot()
 {
     time10++;
     if (time10>10){
@@ -196,4 +202,14 @@ void DebitWindow::timer10Slot()
         emit backtomainmenu();
         this->close();
     }
+}
+
+void CreditWindow::on_btnOther_clicked()
+{
+    amountWindow = new CreditAmountWindow(this);
+    connect(amountWindow, SIGNAL(customAmount(int)), this, SLOT(customAmount(int)));
+    connect(amountWindow, SIGNAL(back()), this, SLOT(showUI()));
+    amountWindow->show();
+    resets();
+    this->hide();
 }

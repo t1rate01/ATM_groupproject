@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
- <class>DebitWindow</class>
- <widget class="QMainWindow" name="DebitWindow">
+ <class>CreditWindow</class>
+ <widget class="QMainWindow" name="CreditWindow">
   <property name="geometry">
    <rect>
     <x>0</x>
@@ -28,7 +28,7 @@
   <property name="styleSheet">
    <string notr="true">QWidget{
 	background-color: qlineargradient(spread:pad, x1:0.46, y1:0, x2:0.472, y2:1, stop:0 rgba(0, 20, 15, 255), stop:1 rgba(17, 73, 74, 255));
-color: #c9bfb6;
+	color: #c9bfb6;
 }
 QPushButton{
 	background-color: qlineargradient(spread:pad, x1:0.494, y1:0, x2:0.517, y2:1, stop:0 rgba(36, 39, 43, 255), stop:1 rgba(72, 74, 78, 255));
@@ -39,6 +39,11 @@ QPushButton{
 }
 QLabel{
 	background-color: transparent;
+}
+QLineEdit{
+	border: 1px solid #c9bfb6;
+	padding: 8px;
+	color: #c9bfb6;
 }</string>
   </property>
   <widget class="QWidget" name="centralwidget">
