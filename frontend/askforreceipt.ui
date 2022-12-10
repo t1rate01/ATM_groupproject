@@ -31,6 +31,11 @@
   <property name="windowTitle">
    <string>MainWindow</string>
   </property>
+  <property name="styleSheet">
+   <string notr="true">background-color: qlineargradient(spread:pad, x1:0.46, y1:0, x2:0.472, y2:1, stop:0 rgba(0, 20, 15, 255), stop:1 rgba(17, 73, 74, 255));
+color: #c9bfb6;
+QLabel{background-color: transparent;}</string>
+  </property>
   <widget class="QWidget" name="centralwidget">
    <widget class="QLabel" name="label">
     <property name="geometry">
@@ -46,6 +51,9 @@
       <family>Century Gothic</family>
       <pointsize>24</pointsize>
      </font>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">background-color: transparent;</string>
     </property>
     <property name="text">
      <string>Receipt?</string>
@@ -72,6 +80,13 @@
       <pointsize>14</pointsize>
      </font>
     </property>
+    <property name="styleSheet">
+     <string notr="true">background-color: qlineargradient(spread:pad, x1:0.494, y1:0, x2:0.517, y2:1, stop:0 rgba(36, 39, 43, 255), stop:1 rgba(72, 74, 78, 255));
+border:0px solid black;
+border-radius: 12px;
+color: #c9bfb6;
+font-size: 14;</string>
+    </property>
     <property name="text">
      <string>No</string>
     </property>
@@ -97,6 +112,13 @@
       <pointsize>14</pointsize>
      </font>
     </property>
+    <property name="styleSheet">
+     <string notr="true">background-color: qlineargradient(spread:pad, x1:0.494, y1:0, x2:0.517, y2:1, stop:0 rgba(36, 39, 43, 255), stop:1 rgba(72, 74, 78, 255));
+border:0px solid black;
+border-radius: 12px;
+color: #c9bfb6;
+font-size: 14;</string>
+    </property>
     <property name="text">
      <string>Yes</string>
     </property>
@@ -121,6 +143,13 @@
       <family>Century Gothic</family>
       <pointsize>14</pointsize>
      </font>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">background-color: qlineargradient(spread:pad, x1:0.494, y1:0, x2:0.517, y2:1, stop:0 rgba(36, 39, 43, 255), stop:1 rgba(72, 74, 78, 255));
+border:0px solid black;
+border-radius: 12px;
+color: #c9bfb6;
+font-size: 14;</string>
     </property>
     <property name="text">
      <string>No, Logout</string>

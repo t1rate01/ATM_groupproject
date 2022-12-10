@@ -40,6 +40,8 @@ private slots:
     void on_btn_login_clicked();
     void loginSlot (QNetworkReply *reply);   // loginiin
 
+    void on_lineEdit_cardnum_cursorPositionChanged(int arg1, int arg2);
+
 private:
     Ui::MainWindow *ui;
 

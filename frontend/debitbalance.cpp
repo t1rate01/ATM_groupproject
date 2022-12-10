@@ -90,9 +90,7 @@ void Debitbalance::getcreditbalanceSlot(QNetworkReply *reply)
 
         qDebug()<<"Debit saldo on  " <<creditbalance;
         ui->label_creditbalance->setText("Available credit: " +creditbalancedata+ " €.");
-
 }
-
 
 void Debitbalance::timer10Slot()
 {

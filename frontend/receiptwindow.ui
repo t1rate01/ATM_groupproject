@@ -31,6 +31,11 @@
   <property name="windowTitle">
    <string>MainWindow</string>
   </property>
+  <property name="styleSheet">
+   <string notr="true">background-color: qlineargradient(spread:pad, x1:0.46, y1:0, x2:0.472, y2:1, stop:0 rgba(0, 20, 15, 255), stop:1 rgba(17, 73, 74, 255));
+color: #c9bfb6;
+QLabel{background-color: transparent;}</string>
+  </property>
   <widget class="QWidget" name="centralwidget">
    <widget class="QLabel" name="label_logs">
     <property name="geometry">
@@ -46,6 +51,9 @@
       <family>Century Gothic</family>
       <pointsize>12</pointsize>
      </font>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">background-color: transparent;</string>
     </property>
     <property name="text">
      <string>TextLabel</string>
@@ -66,6 +74,9 @@
       <pointsize>12</pointsize>
      </font>
     </property>
+    <property name="styleSheet">
+     <string notr="true">background-color: transparent;</string>
+    </property>
     <property name="text">
      <string>TextLabel</string>
     </property>
@@ -84,6 +95,13 @@
       <family>Century Gothic</family>
       <pointsize>14</pointsize>
      </font>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">background-color: qlineargradient(spread:pad, x1:0.494, y1:0, x2:0.517, y2:1, stop:0 rgba(36, 39, 43, 255), stop:1 rgba(72, 74, 78, 255));
+border:0px solid black;
+border-radius: 12px;
+color: #c9bfb6;
+font-size: 14;</string>
     </property>
     <property name="text">
      <string>MainMenu</string>
@@ -104,6 +122,13 @@
       <pointsize>14</pointsize>
      </font>
     </property>
+    <property name="styleSheet">
+     <string notr="true">background-color: qlineargradient(spread:pad, x1:0.494, y1:0, x2:0.517, y2:1, stop:0 rgba(36, 39, 43, 255), stop:1 rgba(72, 74, 78, 255));
+border:0px solid black;
+border-radius: 12px;
+color: #c9bfb6;
+font-size: 14;</string>
+    </property>
     <property name="text">
      <string>Log Out</string>
     </property>
@@ -122,6 +147,9 @@
       <family>Century Gothic</family>
       <pointsize>14</pointsize>
      </font>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">background-color: transparent;</string>
     </property>
     <property name="text">
      <string>Date/Time</string>
@@ -142,6 +170,9 @@
       <pointsize>12</pointsize>
      </font>
     </property>
+    <property name="styleSheet">
+     <string notr="true">background-color: transparent;</string>
+    </property>
     <property name="text">
      <string>Date</string>
     </property>
@@ -161,6 +192,9 @@
       <pointsize>24</pointsize>
      </font>
     </property>
+    <property name="styleSheet">
+     <string notr="true">background-color: transparent;</string>
+    </property>
     <property name="text">
      <string>Please take receipt</string>
     </property>
@@ -179,6 +213,9 @@
       <family>Century Gothic</family>
       <pointsize>12</pointsize>
      </font>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">background-color: transparent;</string>
     </property>
     <property name="text">
      <string>Time</string>
@@ -202,6 +239,9 @@
       <pointsize>12</pointsize>
      </font>
     </property>
+    <property name="styleSheet">
+     <string notr="true">background-color: transparent;</string>
+    </property>
     <property name="text">
      <string>TextLabel</string>
     </property>
@@ -220,6 +260,9 @@
       <family>Century Gothic</family>
       <pointsize>12</pointsize>
      </font>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">background-color: transparent;</string>
     </property>
     <property name="text">
      <string>Sum</string>
@@ -242,6 +285,9 @@
       <family>Century Gothic</family>
       <pointsize>12</pointsize>
      </font>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">background-color: transparent;</string>
     </property>
     <property name="text">
      <string>sum2</string>
