@@ -14,6 +14,28 @@ router.get('/balance/:id?',
         })
     });
 
+    router.get('/savingsmode/:id?',
+    function (request, response){
+      account.getsavingsmode(request.params.id,function(err, dbResult){
+        if (err){
+          response.json(err);
+        }
+        else {
+          response.json(dbResult[0]);
+        }
+      })
+    });
+    router.post('/savingsmode',
+function(request, response) {
+  account.update_savingsmode(request.body, function(err, dbResult) {  
+    if (err) {
+      response.json(err);
+    } else {
+      response.json(dbResult);
+    }
+  });
+});
+
     router.get('/credit/:id?',
     function (request, response) {
         account.balanceCreditById(request.params.id, function (err, dbResult) {
@@ -26,6 +48,17 @@ router.get('/balance/:id?',
         })
     });
 
+    router.get('/:id?',
+    function (request, response) {
+        account.getById(request.params.id, function (err, dbResult) {
+            if (err) {
+                response.json(err);
+            } else {
+                response.json(dbResult[0]);
+            }
+        })
+    });
+/*
 router.get('/',
     function (request, response) {
         account.getAll(function (err, dbResult) {
@@ -36,21 +69,12 @@ router.get('/',
                 response.json(dbResult);
             }
         })
-    });
-
-router.get('/:id?',
-    function (request, response) {
-        account.getById(request.params.id, function (err, dbResult) {
-            if (err) {
-                response.json(err);
-            } else {
-                response.json(dbResult[0]);
-            }
-        })
-    });
+    });*/
 
 
-router.post('/', 
+
+
+/*router.post('/', 
 function(request, response) {
   account.add(request.body, function(err, dbResult) {
     if (err) {
@@ -60,9 +84,8 @@ function(request, response) {
       response.json(dbResult.rows);
     }
   });
-});
-
-
+});*/
+/*
 router.delete('/:id', 
 function(request, response) {
   account.delete(request.params.id, function(err, dbResult) {
@@ -73,8 +96,8 @@ function(request, response) {
     }
   });
 });
-
-
+*/
+/*
 router.put('/:id', 
 function(request, response) {
   account.update(request.params.id, request.body, function(err, dbResult) {
@@ -85,5 +108,5 @@ function(request, response) {
     }
   });
 });
-
+*/
 module.exports = router;

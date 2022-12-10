@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
- <class>DebitWindow</class>
- <widget class="QMainWindow" name="DebitWindow">
+ <class>CreditWindow</class>
+ <widget class="QMainWindow" name="CreditWindow">
   <property name="geometry">
    <rect>
     <x>0</x>
@@ -35,7 +35,7 @@ QPushButton{
 	border:0px solid black;
 	border-radius: 12px;
 	color: #c9bfb6;
-	font-size: 14;
+	font-size: 14px;
 }
 QLabel{
 	background-color: transparent;
@@ -70,8 +70,7 @@ QLineEdit{
     </property>
     <property name="font">
      <font>
-      <family>Century Gothic</family>
-      <pointsize>14</pointsize>
+      <pointsize>-1</pointsize>
      </font>
     </property>
     <property name="text">
@@ -89,8 +88,7 @@ QLineEdit{
     </property>
     <property name="font">
      <font>
-      <family>Century Gothic</family>
-      <pointsize>14</pointsize>
+      <pointsize>-1</pointsize>
      </font>
     </property>
     <property name="text">
@@ -108,8 +106,7 @@ QLineEdit{
     </property>
     <property name="font">
      <font>
-      <family>Century Gothic</family>
-      <pointsize>14</pointsize>
+      <pointsize>-1</pointsize>
      </font>
     </property>
     <property name="text">
@@ -127,8 +124,7 @@ QLineEdit{
     </property>
     <property name="font">
      <font>
-      <family>Century Gothic</family>
-      <pointsize>14</pointsize>
+      <pointsize>-1</pointsize>
      </font>
     </property>
     <property name="text">
@@ -146,8 +142,7 @@ QLineEdit{
     </property>
     <property name="font">
      <font>
-      <family>Century Gothic</family>
-      <pointsize>14</pointsize>
+      <pointsize>-1</pointsize>
      </font>
     </property>
     <property name="text">
@@ -165,8 +160,7 @@ QLineEdit{
     </property>
     <property name="font">
      <font>
-      <family>Century Gothic</family>
-      <pointsize>14</pointsize>
+      <pointsize>-1</pointsize>
      </font>
     </property>
     <property name="text">
@@ -176,15 +170,14 @@ QLineEdit{
    <widget class="QLabel" name="txtSelect">
     <property name="geometry">
      <rect>
-      <x>560</x>
-      <y>100</y>
+      <x>510</x>
+      <y>80</y>
       <width>481</width>
       <height>71</height>
      </rect>
     </property>
     <property name="font">
      <font>
-      <family>Century Gothic</family>
       <pointsize>24</pointsize>
      </font>
     </property>
@@ -203,8 +196,7 @@ QLineEdit{
     </property>
     <property name="font">
      <font>
-      <family>Century Gothic</family>
-      <pointsize>14</pointsize>
+      <pointsize>-1</pointsize>
      </font>
     </property>
     <property name="text">
@@ -216,13 +208,12 @@ QLineEdit{
      <rect>
       <x>0</x>
       <y>0</y>
-      <width>401</width>
-      <height>191</height>
+      <width>331</width>
+      <height>261</height>
      </rect>
     </property>
     <property name="font">
      <font>
-      <family>Century Gothic</family>
       <pointsize>14</pointsize>
      </font>
     </property>
@@ -241,7 +232,6 @@ QLineEdit{
     </property>
     <property name="font">
      <font>
-      <family>Century Gothic</family>
       <pointsize>14</pointsize>
      </font>
     </property>
@@ -260,8 +250,7 @@ QLineEdit{
     </property>
     <property name="font">
      <font>
-      <family>Century Gothic</family>
-      <pointsize>14</pointsize>
+      <pointsize>-1</pointsize>
      </font>
     </property>
     <property name="text">
@@ -282,17 +271,6 @@ QLineEdit{
     </property>
    </widget>
   </widget>
-  <widget class="QMenuBar" name="menubar">
-   <property name="geometry">
-    <rect>
-     <x>0</x>
-     <y>0</y>
-     <width>1280</width>
-     <height>21</height>
-    </rect>
-   </property>
-  </widget>
-  <widget class="QStatusBar" name="statusbar"/>
  </widget>
  <resources/>
  <connections/>
