@@ -13,7 +13,6 @@ CreditWindow::CreditWindow(QString givenToken, int idcard,QWidget *parent) :
     ui->setupUi(this);
     id_card = idcard;
     token = givenToken;
-
 }
 
 CreditWindow::~CreditWindow()
@@ -38,7 +37,7 @@ void CreditWindow::getbalance()
 void CreditWindow::getowner()
 {
     //HAKEE TILINOMISTAJAN TIEDOT
-    QString site_url="http://localhost:3000/owner/fname"; //mites sukunimi??
+    QString site_url="http://localhost:3000/owner/alldata/" + QString::number(id_card); //mites sukunimi??
     QNetworkRequest request(site_url);
     //WEBTOKEN ALKU
     QByteArray myToken="Bearer "+token.toLocal8Bit();
@@ -46,12 +45,8 @@ void CreditWindow::getowner()
     //WEBTOKEN LOPPU
     getOwnerInfoManager = new QNetworkAccessManager(this);
 
-    QJsonObject jsonObj;  // objekti jonka sisälle dbrequestiin lähtevä data
-    jsonObj.insert("id_card",id_card);
-    request.setHeader(QNetworkRequest::ContentTypeHeader, "application/json");
-
     connect(getOwnerInfoManager, SIGNAL(finished (QNetworkReply*)), this, SLOT(getOwnerInfoSlot(QNetworkReply*)));
-    reply = getOwnerInfoManager->post(request, QJsonDocument(jsonObj).toJson());
+    reply = getOwnerInfoManager->get(request);
 }
 
 void CreditWindow::startwindowtimer()
@@ -142,11 +137,17 @@ void CreditWindow::getOwnerInfoSlot(QNetworkReply *reply)
 
     QJsonDocument json_doc = QJsonDocument::fromJson(owner_data);
     QJsonObject json_obj = json_doc.object();
-    QString ownerdata;
-    ownerdata=json_obj["fname"].toString();
-    qDebug()<<"Tilinomistaja on  " <<ownerdata;
-
-    ui->label_info->setText("Account owner is: "+ ownerdata+ "");
+    QString ownerfname = json_obj["fname"].toString();
+    QString ownerlname = json_obj["lname"].toString();
+    QString address = json_obj["address"].toString();
+    QString phonenumber = json_obj["phonenumber"].toString();
+    QString email = json_obj["email"].toString();
+    QString ownerInfo =
+            "Account owner: " + ownerfname + " " + ownerlname + "\n" +
+            "Address: " + address + "\n" +
+            "Phonenumber: " + phonenumber + "\n"
+            "Email: " + email + "\n";
+    ui->label_info->setText(ownerInfo);
 }
 
 void CreditWindow::on_btn20_clicked()
@@ -191,6 +192,7 @@ void CreditWindow::on_btnBack_clicked()
 {
     timer10sek->stop();
     emit backtomainmenu();
+    time10 = 0;
     this->close();
 }
 
@@ -198,7 +200,9 @@ void CreditWindow::timer10Slot()
 {
     time10++;
     if (time10>10){
+        qDebug()<<time10;
         timer10sek->stop();
+        time10 = 0;
         emit backtomainmenu();
         this->close();
     }
