@@ -23,6 +23,13 @@ const account = {
       [id],
       callback);
      // tieto lähtee arrayna
+  },
+  update_savingsmode: function( update, callback) { //testi
+    return db.query(
+      'call update_savingsmode(?,?)' , 
+      [update.id_card, update.savings],
+      callback
+    );
   },/*
   getAll: function(callback) {
     return db.query('select * from account', callback);

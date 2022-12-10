@@ -18,28 +18,56 @@ class savings : public QWidget
 public:
     explicit savings(QString, int, QWidget *parent = nullptr);
     ~savings();
+
+    QString savingsUpdate;
+    //QString savingsOff;
+    QString savingsmode;
     void startwindowtimer();
+
+
 private slots:
-    void on_btn_savingsOn_clicked();
+
 
     void on_btn_savingsOff_clicked();
 
-    void logsSlots(QNetworkReply *reply);
+    void savingsOffSlot (QNetworkReply *reply);
 
     void timer10Slot();
 
+    void getSavingsSlot(QNetworkReply *reply);
+
+    void updateSavingsSlot(QNetworkReply *reply);
+
+    void on_btn_save_savings_clicked();
+
+    void on_btn_Back_clicked();
+
+    void on_btn_logout_clicked();
+
 signals:
     void backtomainmenu();
-    void resettimer30();
+    void logout();
+    void resetTimer30();
+
 
 private:
+
     Ui::savings *ui;
     QTimer * timer10sek = new QTimer;
     QString token;
+    int saving;
     int id_card;
     int time10=0;
 
-    QNetworkAccessManager *savingsManager; //!!!
+
+    QByteArray savingsmode_data;
+
+    QByteArray savingsUpdate_data; //vai QString
+
+    QNetworkAccessManager *getSavingsManager;
+
+    QNetworkAccessManager *updateSavingsManager; //!!!
+
     QNetworkReply *reply;
     QByteArray response_data;
 };

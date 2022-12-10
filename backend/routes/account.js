@@ -25,6 +25,16 @@ router.get('/balance/:id?',
         }
       })
     });
+    router.post('/savingsmode',
+function(request, response) {
+  account.update_savingsmode(request.body, function(err, dbResult) {  
+    if (err) {
+      response.json(err);
+    } else {
+      response.json(dbResult);
+    }
+  });
+});
 
     router.get('/credit/:id?',
     function (request, response) {
