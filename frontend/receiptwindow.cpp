@@ -140,6 +140,8 @@ void ReceiptWindow::on_btn_logout_clicked()
 void ReceiptWindow::on_btn_back_clicked()
 {
     emit resettimer30();
+    ui->label_amount_save->setText("");
+    ui->label_savelogs->setText("");
     timer10sek->stop();
     emit backtomainmenu();
     this->close();

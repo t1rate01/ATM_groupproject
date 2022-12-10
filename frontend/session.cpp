@@ -130,6 +130,20 @@ void session::getOwnerData()
     reply = getownerdatamanager->get(request);
 }
 
+void session::getSavings()
+{
+    QString site_url="http://localhost:3000/account/savingsmode/"+QString::number(id_card);
+    QNetworkRequest request((site_url));
+       //WEBTOKEN ALKU
+    QByteArray myToken="Bearer "+sessiontoken.toLocal8Bit();
+    request.setRawHeader(QByteArray("Authorization"),(myToken));
+       //WEBTOKEN LOPPU
+    QNetworkAccessManager * getSavingsManager = new QNetworkAccessManager(this);
+
+    connect(getSavingsManager, SIGNAL(finished (QNetworkReply*)), this, SLOT(getSavingsSlot(QNetworkReply*)));
+    reply = getSavingsManager->get(request);
+}
+
 void session::getCardIDSlot(QNetworkReply *reply)   // ID CARDIN SAANTI SESSIONILLE
 {
     cardresponse_data=reply->readAll();
@@ -180,6 +194,16 @@ void session::getownerDataSlot(QNetworkReply *reply)
 
 }
 
+void session::getSavingsSlot(QNetworkReply *reply)
+{
+    savingsmode_data=reply->readAll();
+    QJsonDocument json_doc = QJsonDocument::fromJson(savingsmode_data);
+    QJsonObject json_obj = json_doc.object();
+    savemode =json_obj["savingsmode"].toInt();
+    emit giveSavemode(savemode);
+
+}
+
 void session::loginsuccesfulSlot(QString cn, QString t) // saadaan loginikkunalta cardnunber ja token, käynnistetään id_cardin haku
 {                                                       // id_card hakufunktio käynnistää creditinhaun, joka kutsuu ikkunoidenluontifunktion
     sessioncardnumber=cn;
@@ -200,6 +224,9 @@ void session::nextWindowSlot(int i) // IKKUNOIDEN AVAAMISLOGIIKKA JA SIGNAALIEN 
      connect(debitwindow,SIGNAL(backtomainmenu()),this,SLOT(backtomainmenu()));
      connect(debitwindow,SIGNAL(resettimer30()),this,SLOT(resettimerslot()));
      connect(debitwindow,SIGNAL(nextwindow(int)),this,SLOT(nextWindowSlot(int)));
+     connect(debitwindow,SIGNAL(askSaveMode()),this,SLOT(saveModeRequestSlot()));
+     connect(this,SIGNAL(giveSavemode(int)),debitwindow,SLOT(receiveSaveModeSlot(int)));
+     debitwindow->getsavingsmode();
      debitwindow->startwindowtimer();
      debitwindow->getbalance();
      debitwindow->show();
@@ -215,12 +242,14 @@ void session::nextWindowSlot(int i) // IKKUNOIDEN AVAAMISLOGIIKKA JA SIGNAALIEN 
  case 3:
      connect(saving,SIGNAL(backtomainmenu()),this,SLOT(backtomainmenu()));
      connect(saving,SIGNAL(resettimer30()),this,SLOT(resettimerslot()));
+     connect(saving,SIGNAL(logout()),this,SLOT(logoutslot()));
      saving->startwindowtimer();
      saving->show();
      break;
  case 4:
      connect(debitbalance,SIGNAL(backtomainmenu()),this,SLOT(backtomainmenu()));
      connect(debitbalance,SIGNAL(resettimer30()),this,SLOT(resettimerslot()));
+     debitbalance->getBalances();
      debitbalance->startwindowtimer();
      debitbalance->show();
      break;
@@ -249,7 +278,12 @@ void session::nextWindowSlot(int i) // IKKUNOIDEN AVAAMISLOGIIKKA JA SIGNAALIEN 
      creditwindow->getbalance();
      creditwindow->show();
      break;
+ }
 }
+
+void session::saveModeRequestSlot()
+{
+    getSavings();
 }
 
 

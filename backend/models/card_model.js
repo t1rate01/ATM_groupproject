@@ -5,16 +5,16 @@ const { response } = require('express');
 const saltRounds=10;
 
 const card = {
-  debitwithdraw: function(withdraw, callback) { 
+  debitwithdraw: function(dwithdraw, callback) { 
     return db.query(
       'call debit_withdraw(?,?)',
-      [withdraw.id_card, withdraw.amount],
+      [dwithdraw.id_card, dwithdraw.amount],
       callback);
   },
-  creditwithdraw: function(withdraw, callback) { 
+  creditwithdraw: function(cwithdraw, callback) { 
     return db.query(
       'call credit_withdraw(?,?)',
-      [withdraw.id_card, withdraw.amount],
+      [cwithdraw.id_card, cwithdraw.amount],
       callback);
   },
   getcardid: function(get_cardid, callback) {

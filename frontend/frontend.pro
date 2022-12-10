@@ -12,6 +12,7 @@ SOURCES += \
     askforreceipt.cpp \
     creditamountwindow.cpp \
     creditwindow.cpp \
+    debitamountwindow.cpp \
     debitbalance.cpp \
     debitwindow.cpp \
     main.cpp \
@@ -27,6 +28,7 @@ HEADERS += \
     askforreceipt.h \
     creditamountwindow.h \
     creditwindow.h \
+    debitamountwindow.h \
     debitbalance.h \
     debitwindow.h \
     mainmenu.h \
@@ -41,6 +43,7 @@ FORMS += \
     askforreceipt.ui \
     creditamountwindow.ui \
     creditwindow.ui \
+    debitamountwindow.ui \
     debitbalance.ui \
     debitwindow.ui \
     mainmenu.ui \

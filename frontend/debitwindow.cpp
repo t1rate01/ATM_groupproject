@@ -34,23 +34,29 @@ void DebitWindow::getbalance()
     reply = getBalanceManager->get(request);
 }
 
+void DebitWindow::resets()
+{
+    time10=0;
+    emit resettimer30();
+}
 void DebitWindow::getowner()
 {
     //HAKEE TILINOMISTAJAN TIEDOT
-    QString site_url="http://localhost:3000/owner/fname"; //mites sukunimi??
-    QNetworkRequest request((site_url));
+    QString site_url="http://localhost:3000/owner/alldata/" + QString::number(id_card); //mites sukunimi??
+    QNetworkRequest request(site_url);
     //WEBTOKEN ALKU
     QByteArray myToken="Bearer "+token.toLocal8Bit();
     request.setRawHeader(QByteArray("Authorization"),(myToken));
     //WEBTOKEN LOPPU
     getOwnerInfoManager = new QNetworkAccessManager(this);
 
-    QJsonObject jsonObj;  // objekti jonka sisälle dbrequestiin lähtevä data
-    jsonObj.insert("id_card",id_card);
-    request.setHeader(QNetworkRequest::ContentTypeHeader, "application/json");
-
     connect(getOwnerInfoManager, SIGNAL(finished (QNetworkReply*)), this, SLOT(getOwnerInfoSlot(QNetworkReply*)));
-    reply = getOwnerInfoManager->post(request, QJsonDocument(jsonObj).toJson());
+    reply = getOwnerInfoManager->get(request);
+}
+
+void DebitWindow::getsavingsmode()
+{
+    emit askSaveMode();
 }
 
 void DebitWindow::startwindowtimer()
@@ -69,6 +75,7 @@ void DebitWindow::getBalanceSlot(QNetworkReply *reply)
     int balance;
     balancedata=QString::number(json_obj["account_balance"].toInt());
     balance=balancedata.toInt();
+    currentBalance=balance;
     qDebug()<<"Kortin saldo on  " <<balance;
 
     ui->label_balance->setText("Your account balance is: "+ QString::number(balance));
@@ -79,25 +86,49 @@ void DebitWindow::getwithdrawdataSlot(QNetworkReply *reply)
 {
     withdraw_data=reply->readAll();
     qDebug()<<"DATA : "+withdraw_data;
-    QJsonDocument json_doc = QJsonDocument::fromJson(withdraw_data);
+    getbalance();
+    timer10sek->stop();
+    emit nextwindow(6);
+    this->close();
+    /*QJsonDocument json_doc = QJsonDocument::fromJson(withdraw_data);
         QJsonObject json_obj = json_doc.object();    // Tätä menetelmää voi käyttää kun vastauksena on 1 objekti
-        int test;                           // Jos vastaus on array (esim logs), käytä QBYTEARRAY
+        int test=currentBalance;// Jos vastaus on array (esim logs), käytä QBYTEARRAY
         test=json_obj["affectedRows"].toInt();
         debitwithdrawmanager->deleteLater();
-        if(test>0){
+        if(test>currentBalance){
             timer10sek->stop();
             emit nextwindow(6);
             this->close();
+            getbalance();
         }
-        if(test==0){
-            time10=0;
-            emit resettimer30();
+        if(test==currentBalance){
+            resets();
             ui->label_error->setText("Insufficient funds");
-        }
+            getbalance();
+        }*/
+}
+
+void DebitWindow::showUI()
+{
+    resets();
+    this->show();
+}
+
+void DebitWindow::customAmount(int amount)
+{
+    this->show();
+    resets();
+    withdraw(amount);
+}
+
+void DebitWindow::receiveSaveModeSlot(int save)
+{
+ savingsmode=save;
 }
 
 void DebitWindow::withdraw(int amount)
 {
+    if((currentBalance-amount-((amount/100)*savingsmode))>=0){
     // HAKEE DEBITBALANCEN TIETOKANNASTA
     QString site_url="http://localhost:3000/card/debitwithdraw";
     QNetworkRequest request((site_url));
@@ -115,6 +146,11 @@ void DebitWindow::withdraw(int amount)
     debitwithdrawmanager = new QNetworkAccessManager(this);
     connect(debitwithdrawmanager, SIGNAL(finished(QNetworkReply*)), this, SLOT(getwithdrawdataSlot(QNetworkReply*)));
     reply = debitwithdrawmanager->post(request,QJsonDocument(jsonObj).toJson());
+    }
+    else {
+        resets();
+        ui->label_error->setText("Insufficient funds");
+    }
 }
 
 void DebitWindow::getOwnerInfoSlot(QNetworkReply *reply)
@@ -124,18 +160,23 @@ void DebitWindow::getOwnerInfoSlot(QNetworkReply *reply)
 
     QJsonDocument json_doc = QJsonDocument::fromJson(owner_data);
     QJsonObject json_obj = json_doc.object();
-    QString ownerdata;
-    ownerdata=json_obj["fname"].toString();
-    qDebug()<<"Tilinomistaja on  " <<ownerdata;
-
-    ui->label_info->setText("Account owner is: "+ ownerdata+ "");
-
+    QString ownerfname = json_obj["fname"].toString();
+    QString ownerlname = json_obj["lname"].toString();
+    QString address = json_obj["address"].toString();
+    QString phonenumber = json_obj["phonenumber"].toString();
+    QString email = json_obj["email"].toString();
+    QString ownerInfo =
+            "Account owner: " + ownerfname + " " + ownerlname + "\n" +
+            "Address: " + address + "\n" +
+            "Phonenumber: " + phonenumber + "\n"
+            "Email: " + email + "\n";
+    ui->label_info->setText(ownerInfo);
 }
 
 void DebitWindow::on_btn20_clicked()
 {
     time10=0;
-    emit resettimer30();
+    resets();
     withdraw(20);
 }
 
@@ -143,7 +184,7 @@ void DebitWindow::on_btn20_clicked()
 void DebitWindow::on_btn40_clicked()
 {
     time10=0;
-    emit resettimer30();
+    resets();
     withdraw(40);
 
 }
@@ -152,15 +193,16 @@ void DebitWindow::on_btn40_clicked()
 void DebitWindow::on_btn60_clicked()
 {
     time10=0;
-    emit resettimer30();
+    resets();
     withdraw(60);
+
 }
 
 
 void DebitWindow::on_btn100_clicked()
 {
     time10=0;
-    emit resettimer30();
+    resets();
     withdraw(100);
 }
 
@@ -168,7 +210,7 @@ void DebitWindow::on_btn100_clicked()
 void DebitWindow::on_btn200_clicked()
 {
     time10=0;
-    emit resettimer30();
+    resets();
     withdraw(200);
 }
 
@@ -176,7 +218,7 @@ void DebitWindow::on_btn200_clicked()
 void DebitWindow::on_btn500_clicked()
 {
   time10=0;
-  emit resettimer30();
+  resets();
   withdraw(500);
 }
 
@@ -197,3 +239,14 @@ void DebitWindow::timer10Slot()
         this->close();
     }
 }
+
+void DebitWindow::on_btnOther_clicked()
+{
+        amountWindow = new DebitAmountWindow(this);
+        connect(amountWindow, SIGNAL(customAmount(int)), this, SLOT(customAmount(int)));
+        connect(amountWindow, SIGNAL(back()), this, SLOT(showUI()));
+        amountWindow->show();
+        resets();
+        this->hide();
+}
+

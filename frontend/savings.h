@@ -23,6 +23,7 @@ public:
     //QString savingsOff;
     QString savingsmode;
     void startwindowtimer();
+    void getSavings();
 
 
 private slots:

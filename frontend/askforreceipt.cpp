@@ -46,7 +46,7 @@ void AskForReceipt::on_btn_logout_clicked()
 void AskForReceipt::receipttimerslot()
 {
     time++;
-    if(time>5){
+    if(time>10){
         receipttimer->stop();
         emit backtomainmenu();
     }

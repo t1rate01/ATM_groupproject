@@ -13,6 +13,21 @@ savings::savings(QString givenToken, int idcard, QWidget *parent) :
     id_card = idcard;
 
 
+   getSavings();
+}
+
+savings::~savings()
+{
+    delete ui;
+}
+
+void savings::startwindowtimer()
+{
+    timer10sek->start(1000);
+}
+
+void savings::getSavings()
+{
     //hakee nykyisen savings moden
     QString site_url="http://localhost:3000/account/savingsmode/"+QString::number(id_card);
     QNetworkRequest request((site_url));
@@ -24,16 +39,6 @@ savings::savings(QString givenToken, int idcard, QWidget *parent) :
 
     connect(getSavingsManager, SIGNAL(finished (QNetworkReply*)), this, SLOT(getSavingsSlot(QNetworkReply*)));
     reply = getSavingsManager->get(request);
-}
-
-savings::~savings()
-{
-    delete ui;
-}
-
-void savings::startwindowtimer()
-{
-    timer10sek->start(1000);
 }
 
 void savings::getSavingsSlot(QNetworkReply *reply)
@@ -65,6 +70,8 @@ void savings::on_btn_save_savings_clicked()
     //luetaan annettu nro, ja viedään tietokantaan ehtorakenteen kautta
     emit resetTimer30();
     savingsUpdate =ui->lineEdit_savingsOn->text();
+    ui->label_savingsresponse->clear();
+    ui->label_savingsOff->clear();
 
     int savings=savingsUpdate.toInt();
 
@@ -110,6 +117,7 @@ void savings::updateSavingsSlot(QNetworkReply *reply)
     if (updateSavings >0){
         qDebug()<<"Updated successfully: " <<updateSavings;
         ui->label_savingsresponse->setText("Savings mode is updated succesfully! You can now log out. ");
+        getSavings();
     }
 
     if(updateSavings==0){
@@ -126,6 +134,7 @@ void savings::on_btn_savingsOff_clicked()
     QJsonObject jsonObj;
     jsonObj.insert("id_card",id_card);
     jsonObj.insert("savings",0);
+    ui->label_savingsresponse->clear();
 
 
     QString site_url = "http://localhost:3000/account/savingsmode";
@@ -142,7 +151,7 @@ void savings::on_btn_savingsOff_clicked()
     connect(updateSavingsManager, SIGNAL(finished(QNetworkReply*)), this, SLOT(savingsOffSlot(QNetworkReply*)));
     reply = updateSavingsManager->post(request, QJsonDocument(jsonObj).toJson());
 
-   ui->label_savingsOff->setText("Saving mode is updated to be 0%, now you can log out.");
+
 
 }
 
@@ -152,6 +161,8 @@ void savings::savingsOffSlot(QNetworkReply *reply)
     qDebug()<<"Updated: "<<response_data;
     reply->deleteLater();
     updateSavingsManager->deleteLater();
+    ui->label_savingsOff->setText("Saving mode is updated to be 0%, now you can log out.");
+    getSavings();
 
 
 }

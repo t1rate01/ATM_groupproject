@@ -62,11 +62,12 @@ private:
     QString sessiontoken;           // MÄÄRITÄ jokainen ikkuna olio ottamaan vastaan QString ja int
     QString sessioncardnumber;      // VÄLITÄ aina luodessa ainakin sessiontoken ja id_card
     int id_card;                    // TALLENNA olion omiin muuttujiin ja käytä CRUD toiminnoissa
-    int credit;
+    int credit, savemode;
     int timer30=0;
     void logout();                  // ISTUNNON WIPE
     QString fname, lname, address, email, phonenumber;  // omistajan datan tallennuslohkot
     void getOwnerData();
+    void getSavings();
 
     // -------NETWORK POINTTERIT JA MUUTTUJAT
     QNetworkAccessManager * getsessioncardmanager; // sessionin id card hakua varten
@@ -75,6 +76,7 @@ private:
     QByteArray creditresponse_data;
     QByteArray cardresponse_data;
     QByteArray ownerresponse_data;
+    QByteArray savingsmode_data;
     QNetworkReply *reply;
    // -------IKKUNOITTEN POINTTERIT-------------
     MainMenu * mainmenu;
@@ -90,17 +92,20 @@ private:
     // -------AJASTIMET--------------
     QTimer * session30timer;
 signals:
+    void giveSavemode(int);
 
 private slots:
    // ----SLOTIT JOIHIN TULEE SIGNAALI/VASTAUS QNETWORKACCESSMANAGEREILTA-----
     void getCardIDSlot (QNetworkReply *reply); // KUTSUU getandcheckcredit() saatuaan id_card
     void getCreditSlot (QNetworkReply *reply);  // SAA credit tiedon ja LUO OIKEAN MENU OLION (Debit tai Debit/credit)
     void getownerDataSlot(QNetworkReply * reply); // saa ownerin tiedot
+    void getSavingsSlot(QNetworkReply* reply);
     // ----SLOTIT JOIHIN TULEE SIGNAALIT IKKUNAOLIOILTA---------
     void loginsuccesfulSlot(QString,QString); // loginwindow lähettää signaalin joka käynnistää id_card ja credithakuketjun
     void logoutslot();                          // mainmenujen logoutsignaalille
     void nextWindowSlot(int);  // SISÄLTÄÄ SWITCH CASEN JOSTA MAINMENU AUKOO SEURAAVAA IKKUNAA, PÄÄTÄ IKKUNALLE UNIIKKI NRO JÄRJESTYKSESSÄ
                                 // JA SLOTISSA ON FUNKTIO JOLLA KYSEISEN MENUN KONSTRUKTORI KUTSUTAAN JA CONNECTIT TEHDÄÄN
+    void saveModeRequestSlot();
     // -----TIMER SLOTIT-----
     void resettimerslot();   // Tähän kytketään muilta ikkunoilta signaali jolla 30sek ajastin nollataan aina nappia painettaessa
     void timer30slot();       // Normaali QTimerin slotti 30sek timeria varten, tänne toiminto kun 30sek tulee täyteen
