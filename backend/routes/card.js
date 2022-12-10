@@ -21,7 +21,8 @@ function(request, response) {
     if (err) {
       response.json(err);
     } else {
-      response.json(dbResult.rows);
+      console.log(dbResult);
+      response.json(dbResult);
     }
   });
 });

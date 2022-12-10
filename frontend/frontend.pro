@@ -10,6 +10,8 @@ CONFIG += c++17
 
 SOURCES += \
     askforreceipt.cpp \
+    creditamountwindow.cpp \
+    creditwindow.cpp \
     debitbalance.cpp \
     debitwindow.cpp \
     main.cpp \
@@ -23,6 +25,8 @@ SOURCES += \
 
 HEADERS += \
     askforreceipt.h \
+    creditamountwindow.h \
+    creditwindow.h \
     debitbalance.h \
     debitwindow.h \
     mainmenu.h \
@@ -35,6 +39,8 @@ HEADERS += \
 
 FORMS += \
     askforreceipt.ui \
+    creditamountwindow.ui \
+    creditwindow.ui \
     debitbalance.ui \
     debitwindow.ui \
     mainmenu.ui \

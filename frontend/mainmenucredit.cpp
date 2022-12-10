@@ -76,3 +76,11 @@ void MainMenuCredit::on_btn_debit_balance_clicked()
     this->hide();
 }
 
+
+void MainMenuCredit::on_btn_credit_withdraw_clicked()
+{
+    resetAllTimers();
+    emit nextwindow(7);
+    this->hide();
+}
+

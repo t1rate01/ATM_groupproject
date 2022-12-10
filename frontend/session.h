@@ -14,6 +14,7 @@
 #include "transactions.h"
 #include "savings.h"
 #include "debitwindow.h"
+#include "creditwindow.h"
 #include "debitbalance.h"
 #include "receiptwindow.h"
 #include "askforreceipt.h"
@@ -82,6 +83,7 @@ private:
     Transactions * transactions;
     savings * saving;
     DebitWindow * debitwindow;
+    CreditWindow * creditwindow;
     Debitbalance * debitbalance;
     ReceiptWindow * receiptwindow;
     AskForReceipt * askforreceipt;
