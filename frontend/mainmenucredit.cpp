@@ -17,7 +17,7 @@ MainMenuCredit::~MainMenuCredit()
     delete ui;
 }
 
-void MainMenuCredit::resetAllTimers()
+void MainMenuCredit::resetAllTimers() // Tämä nyt on olemassa erillisenä funktiona in case tällä olisi omia ajastimia joskus
 {
     emit resettimer30();
 }

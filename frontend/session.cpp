@@ -241,7 +241,7 @@ void session::nextWindowSlot(int i) // IKKUNOIDEN AVAAMISLOGIIKKA JA SIGNAALIEN 
      break;
  case 3:
      connect(saving,SIGNAL(backtomainmenu()),this,SLOT(backtomainmenu()));
-     connect(saving,SIGNAL(resettimer30()),this,SLOT(resettimerslot()));
+     connect(saving,SIGNAL(resetTimer30()),this,SLOT(resettimerslot()));
      connect(saving,SIGNAL(logout()),this,SLOT(logoutslot()));
      saving->startwindowtimer();
      saving->show();

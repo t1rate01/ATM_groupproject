@@ -22,6 +22,7 @@ void AskForReceipt::starttimer()
 void AskForReceipt::on_btn_no_clicked()
 {
     receipttimer->stop();
+    time=0;
     emit resettimer30();
     emit backtomainmenu();
     this->close();
@@ -31,6 +32,7 @@ void AskForReceipt::on_btn_no_clicked()
 void AskForReceipt::on_btn_yes_clicked()
 {
     receipttimer->stop();
+    time=0;
     emit resettimer30();
     emit nextwindow(5);
     this->close();

@@ -25,7 +25,6 @@ public:
     void startwindowtimer();
     void getSavings();
 
-
 private slots:
 
 
