@@ -226,6 +226,7 @@ void DebitWindow::on_btn500_clicked()
 void DebitWindow::on_btnBack_clicked()
 {
     timer10sek->stop();
+    emit resettimer30();
     emit backtomainmenu();
     this->close();
 }
@@ -234,6 +235,7 @@ void DebitWindow::timer10Slot()
 {
     time10++;
     if (time10>10){
+        time10=0;
         timer10sek->stop();
         emit backtomainmenu();
         this->close();

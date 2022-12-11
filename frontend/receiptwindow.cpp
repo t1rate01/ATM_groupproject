@@ -124,6 +124,7 @@ void ReceiptWindow::timer10sekslot()
 time10++;
 if(time10>10){
     timer10sek->stop();
+    time10=0;
     emit backtomainmenu();
     this->close();
 }
@@ -132,6 +133,7 @@ if(time10>10){
 void ReceiptWindow::on_btn_logout_clicked()
 {
     timer10sek->stop();
+    time10=0;
     emit logoutsignal();
     // ei tarvi this->close kun tuhoutuu enivei, aiheuttaa kaatumisen
 }
@@ -140,6 +142,7 @@ void ReceiptWindow::on_btn_logout_clicked()
 void ReceiptWindow::on_btn_back_clicked()
 {
     emit resettimer30();
+    time10=0;
     ui->label_amount_save->setText("");
     ui->label_savelogs->setText("");
     timer10sek->stop();

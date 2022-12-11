@@ -28,6 +28,8 @@ void Transactions::startwindowtimer()
 void Transactions::on_btn_Back_clicked()
 {
     timer10sek->stop();
+    time10=0;
+    emit resetTimer30();
     emit backtomainmenu();
     this->close();
 }
@@ -68,6 +70,7 @@ void Transactions::timer10Slot()
 {
     time10++;
     if (time10>10){
+        time10=0;
         timer10sek->stop();
         emit backtomainmenu();
         this->close();

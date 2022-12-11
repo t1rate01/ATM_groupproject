@@ -17,7 +17,7 @@ MainMenu::~MainMenu()
     delete ui;
 }
 
-void MainMenu::resetAllTimers()
+void MainMenu::resetAllTimers() // Tämä nyt on olemassa erillisenä funktiona in case tällä olisi omia ajastimia joskus
 {
     emit resettimer30();
 }

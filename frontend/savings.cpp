@@ -12,8 +12,8 @@ savings::savings(QString givenToken, int idcard, QWidget *parent) :
     token = givenToken;
     id_card = idcard;
 
-
-   getSavings();
+    connect(timer10sek,SIGNAL(timeout()),this,SLOT(timer10Slot()));
+    getSavings();
 }
 
 savings::~savings()
@@ -58,6 +58,7 @@ void savings::timer10Slot()
 {
     time10++;
     if (time10>10){
+        time10 = 0;
         timer10sek->stop();
         emit backtomainmenu();
         this->close();
@@ -69,6 +70,7 @@ void savings::on_btn_save_savings_clicked()
 {
     //luetaan annettu nro, ja viedään tietokantaan ehtorakenteen kautta
     emit resetTimer30();
+    time10=0;
     savingsUpdate =ui->lineEdit_savingsOn->text();
     ui->label_savingsresponse->clear();
     ui->label_savingsOff->clear();
@@ -129,6 +131,7 @@ void savings::updateSavingsSlot(QNetworkReply *reply)
 
 void savings::on_btn_savingsOff_clicked()
 {
+    time10=0;
     emit resetTimer30();
     ui->lineEdit_savingsOn->clear();
     QJsonObject jsonObj;
@@ -170,6 +173,7 @@ void savings::savingsOffSlot(QNetworkReply *reply)
 
 void savings::on_btn_logout_clicked()
 {
+    time10=0;
     emit logout();
 }
 
@@ -178,6 +182,7 @@ void savings::on_btn_logout_clicked()
 
 void savings::on_btn_Back_clicked()
 {
+    time10=0;
     emit resetTimer30();
     timer10sek->stop();
     emit backtomainmenu();

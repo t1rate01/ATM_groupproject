@@ -22,6 +22,12 @@
     <height>720</height>
    </size>
   </property>
+  <property name="font">
+   <font>
+    <family>Century Gothic</family>
+    <pointsize>14</pointsize>
+   </font>
+  </property>
   <property name="windowTitle">
    <string>MainWindow</string>
   </property>
@@ -35,7 +41,6 @@ QPushButton{
 	border:0px solid black;
 	border-radius: 12px;
 	color: #c9bfb6;
-	font-size: 14px;
 }
 QLabel{
 	background-color: transparent;
@@ -70,7 +75,8 @@ QLineEdit{
     </property>
     <property name="font">
      <font>
-      <pointsize>-1</pointsize>
+      <family>Century Gothic</family>
+      <pointsize>14</pointsize>
      </font>
     </property>
     <property name="text">
@@ -88,7 +94,8 @@ QLineEdit{
     </property>
     <property name="font">
      <font>
-      <pointsize>-1</pointsize>
+      <family>Century Gothic</family>
+      <pointsize>14</pointsize>
      </font>
     </property>
     <property name="text">
@@ -106,7 +113,8 @@ QLineEdit{
     </property>
     <property name="font">
      <font>
-      <pointsize>-1</pointsize>
+      <family>Century Gothic</family>
+      <pointsize>14</pointsize>
      </font>
     </property>
     <property name="text">
@@ -124,7 +132,8 @@ QLineEdit{
     </property>
     <property name="font">
      <font>
-      <pointsize>-1</pointsize>
+      <family>Century Gothic</family>
+      <pointsize>14</pointsize>
      </font>
     </property>
     <property name="text">
@@ -142,7 +151,8 @@ QLineEdit{
     </property>
     <property name="font">
      <font>
-      <pointsize>-1</pointsize>
+      <family>Century Gothic</family>
+      <pointsize>14</pointsize>
      </font>
     </property>
     <property name="text">
@@ -160,7 +170,8 @@ QLineEdit{
     </property>
     <property name="font">
      <font>
-      <pointsize>-1</pointsize>
+      <family>Century Gothic</family>
+      <pointsize>14</pointsize>
      </font>
     </property>
     <property name="text">
@@ -196,7 +207,8 @@ QLineEdit{
     </property>
     <property name="font">
      <font>
-      <pointsize>-1</pointsize>
+      <family>Century Gothic</family>
+      <pointsize>14</pointsize>
      </font>
     </property>
     <property name="text">
@@ -250,7 +262,8 @@ QLineEdit{
     </property>
     <property name="font">
      <font>
-      <pointsize>-1</pointsize>
+      <family>Century Gothic</family>
+      <pointsize>14</pointsize>
      </font>
     </property>
     <property name="text">

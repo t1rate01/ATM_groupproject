@@ -87,6 +87,7 @@ void CreditWindow::getwithdrawdataSlot(QNetworkReply *reply)
         test=json_obj["affectedRows"].toInt();
         creditwithdrawmanager->deleteLater();
         if(test>0){
+            time10=0;
             timer10sek->stop();
             emit nextwindow(6);
             this->close();
@@ -191,6 +192,8 @@ void CreditWindow::on_btn500_clicked()
 void CreditWindow::on_btnBack_clicked()
 {
     timer10sek->stop();
+    time10=0;
+    emit resettimer30();
     emit backtomainmenu();
     time10 = 0;
     this->close();
