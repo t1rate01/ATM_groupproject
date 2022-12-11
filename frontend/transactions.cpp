@@ -95,6 +95,7 @@ QString Transactions::parseDate(QString dateQString) //ottaa vastaan QStringin p
 
 void Transactions::TokenEditor(QJsonDocument doc) //Ottaa vastaan QJsonDocumentin, pilkkoo sen neljään columniin ja luo rivin jokaisesta transactionista.
 {
+    ui->transactions_Table->setRowCount(0);
     ui->transactions_Table->setColumnCount(4);  //Asetetaan columnien määrä ja otsikot, kaikkia columneja joita sql:stä saadaan ei käytetä
     ui->transactions_Table->setHorizontalHeaderLabels({" Date ", " Time ", " Type ", " Amount "});
 
