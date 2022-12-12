@@ -75,14 +75,3 @@ void MainWindow::loginSlot(QNetworkReply *reply)
     }
 }
 
-
-
-
-
-
-
-void MainWindow::on_lineEdit_cardnum_cursorPositionChanged(int arg1, int arg2)
-{
-
-}
-
