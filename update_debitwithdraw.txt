@@ -1,0 +1,17 @@
+CREATE DEFINER=`root`@`localhost` PROCEDURE `debit_withdraw`(in cardid INT, in summa INT)
+BEGIN
+Declare balancetest INT DEFAULT 0;
+declare savings INT default 0;
+START TRANSACTION;
+set savings =(summa/100)*(select savingsmode from account where id_card=cardid);
+UPDATE account SET account_balance = account_balance-summa-savings WHERE id_card=cardid AND account_balance-summa-savings>=0;
+SET balancetest=row_count();
+IF (balancetest>0) THEN
+COMMIT;
+INSERT INTO logs (id_account,log,log_time,amount) VALUES ((select id_account FROM account where id_card = cardid),"Debit withdraw",NOW(),summa);
+ELSE ROLLBACK;
+END IF;
+IF (savings>0) AND (balancetest>0) THEN
+Insert into logs (id_account,log,log_time,amount) VALUES ((select id_account from account where id_card = cardid),"Savingmode on, sent to designated savings acc",NOW(),savings);
+END IF;
+END
