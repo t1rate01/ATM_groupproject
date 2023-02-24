@@ -26,9 +26,9 @@ rest api functions and routes, that took advantage of the database procedures as
 
 # My part in this project:
 
--Database and procedures
--Rest api parts my frontend objects use
--Front end classes: Session, login(mainwindow), Debitmainmenu, creditmainmenu, askforreceipt, receiptwindow.
+- Database and procedures  
+- Rest api parts my frontend objects use  
+- Front end classes: Session, login(mainwindow), Debitmainmenu, creditmainmenu, askforreceipt, receiptwindow.  
 
 (PLEASE NOTE: According to the merge history of the project it appears almost everything was added by me.
 It looks like this because all the merging/stitching before main was done in my branch, since I needed to ensure
