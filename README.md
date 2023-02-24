@@ -30,7 +30,7 @@ rest api functions and routes, that took advantage of the database procedures as
 - Rest api parts my frontend objects use  
 - Front end classes: Session, login(mainwindow), Debitmainmenu, creditmainmenu, askforreceipt, receiptwindow.  
 
-(PLEASE NOTE: According to the merge history of the project it appears almost everything was added by me.
-It looks like this because all the merging/stitching before main was done in my branch, since I needed to ensure
-that the updates work with my session class. Most of the time the updates were not merged in to my branch, the code
-was copied from their texts to ensure working background paths in QT.)
+> (PLEASE NOTE: According to the merge history of the project it appears almost everything was added by me.
+> It looks like this because all the merging/stitching before main was done in my branch, since I needed to ensure
+> that the updates work with my session class. Most of the time the updates were not merged in to my branch, the code
+> was copied from their texts to ensure working background paths in QT.)
