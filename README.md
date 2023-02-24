@@ -1,9 +1,9 @@
-ATM PROJECT Oulu University of Applied Sciences group_2
+# ATM PROJECT Oulu University of Applied Sciences group_2
 Presented 12.12.2022
 
 Built with MySQL, node.js / express.jsv for backend and C++/QT for frontend.
 
-Members:
+## Members:
 
 Kolehmainen Niko, Virta Emilia, Mäki Jussi, Lampinen Roosa, **and me: Rantanen Tero**
 
@@ -24,7 +24,7 @@ After this stage we divided the tasks based on each ones interest, available tim
 We divided the tasks based on the front end steps, and everyone added/edited/built the necessary 
 rest api functions and routes, that took advantage of the database procedures as much as possible.
 
-My part in this project:
+# My part in this project:
 
 -Database and procedures
 -Rest api parts my frontend objects use
