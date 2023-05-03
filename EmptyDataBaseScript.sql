@@ -242,3 +242,15 @@ DELIMITER ;
 SET SQL_MODE=@OLD_SQL_MODE;
 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS;
 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS;
+
+-- Create a new user
+INSERT INTO `group_2`.`owner` (`fname`, `lname`) VALUES ('Debit', 'Demo');
+INSERT INTO `group_2`.`owner` (`fname`, `lname`) VALUES ('Crebit', 'Demo');
+
+-- Call the `new_card` 
+CALL `group_2`.`new_card`((SELECT `id_owner` FROM `group_2`.`owner` WHERE `fname` = 'Debit' AND `lname` = 'Demo'), '0000', '0000', 0);
+CALL `group_2`.`new_card`((SELECT `id_owner` FROM `group_2`.`owner` WHERE `fname` = 'Crebit' AND `lname` = 'Demo'), '1111', '1111', 5000);
+
+-- Call `make_card_account`
+CALL `group_2`.`make_card_account`((SELECT `id_card` FROM `group_2`.`card` WHERE `id_owner` = (SELECT `id_owner` FROM `group_2`.`owner` WHERE `fname` = 'Debit' AND `lname` = 'Demo')));
+CALL `group_2`.`make_card_account`((SELECT `id_card` FROM `group_2`.`card` WHERE `id_owner` = (SELECT `id_owner` FROM `group_2`.`owner` WHERE `fname` = 'Crebit' AND `lname` = 'Demo')));
