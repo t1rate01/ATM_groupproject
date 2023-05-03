@@ -3,6 +3,9 @@ Presented 12.12.2022
 
 Built with MySQL, node.js / express.jsv for backend and C++/QT for frontend.
 
+There is now an updated SQL script file to that also creates two cards to use for application demo purpose.
+Cardnumbers are "0000" and "1111", passwords are "0000" and "1111".
+
 ## Members:
 
 Kolehmainen Niko, Virta Emilia, Mäki Jussi, Lampinen Roosa, **and me: Rantanen Tero**
