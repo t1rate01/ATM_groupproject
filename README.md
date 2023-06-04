@@ -4,7 +4,8 @@ Presented 12.12.2022
 Built with MySQL, node.js / express.jsv for backend and C++/QT for frontend.
 
 There is now an updated SQL script file to that also creates two cards to use for application demo purpose.
-Cardnumbers are "0000" and "1111", passwords are "0000" and "1111".
+Cardnumbers are "0000" and "1111", passwords are "0000" and "1111".  
+Does not connect to an external database, needs a locally hosted database. MySQL workbench was used when creating the database and UniServer to run it locally for school presentation. Please use the SQL script provided to create a local database with demo content if testing the application.
 
 ## Members:
 
